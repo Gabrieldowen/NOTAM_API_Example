@@ -1,0 +1,1 @@
+Before compiling make sure to create a credentials file named "credentials.py" with variables "clientID" and "clientSecret" and making sure to not commit these confidential keys to the public repository
