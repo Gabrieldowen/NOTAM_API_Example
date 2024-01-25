@@ -15,4 +15,4 @@ print(f"{req.headers}\n\n")
 print(f"{req.text}\n\n")
 
 with open("TestData/TestNOTAM.json", 'w') as json_file:
-    json.dump(parsed_req['items'], json_file)
+    json.dump(parsed_req, json_file)
