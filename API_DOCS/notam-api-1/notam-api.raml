@@ -1,0 +1,36 @@
+#%RAML 1.0
+title: Notam API
+baseUri: https://{domain}/notamapi/{version}
+version: v1
+baseUriParameters:
+  domain:
+    displayName: Domain Name (by environment)
+    type: string
+    enum: [dev-cloud-1b-alb-api.faa.gov, external-api.faa.gov]
+    default: external-api.faa.gov
+description: A Notice to Airmen (NOTAM) is the real-time notification component of the FAA's Aeronautical Information System and contains up-to-date information related to any change in the National Airspace System (NAS).
+mediaType:
+  - application/json
+protocols:
+  - HTTPS
+
+traits:
+  client-id-required:
+    headers:
+      client_id:
+        type: string
+      client_secret:
+        type: string
+  query: !include query/trait.raml      
+
+/notams:
+  get:
+    is: [client-id-required,query]
+    displayName: Notams
+    description: Geolocation in json Format
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include example/response.json
+              

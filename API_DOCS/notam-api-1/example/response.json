@@ -1,0 +1,20 @@
+{
+  "pageSize": 10,
+  "pageNum": 3,
+  "totalCount": 124,
+  "totalPages": 13,
+  "items": [
+    {
+      "type": "Point",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0
+        ]
+      },
+      "properties": {
+        "name": "Dinagat Islands"
+      }
+    }
+  ]
+}
