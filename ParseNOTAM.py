@@ -1,7 +1,7 @@
 import json
 
 # File path where the JSON data is saved
-file_path = "TestData/TestNOTAM.json"
+file_path = "static/TestData/TestNOTAM.json"
 
 # Reading JSON data from the file
 with open(file_path, 'r') as json_file:
