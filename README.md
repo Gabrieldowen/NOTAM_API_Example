@@ -6,4 +6,3 @@ To run app:
 2) run 'python3 app.py'
 3) if "Port 5000 is in use by another program" either find and kill whatever is running on that port or specify host
 	and port explicitly 'python3 app.py --host=0.0.0.0 --port=8080'
-'
