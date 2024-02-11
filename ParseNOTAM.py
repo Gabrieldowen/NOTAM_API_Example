@@ -1,17 +1,21 @@
 import json
 import models
 
-def ParseNOTAM():
-    # File path where the JSON data is saved
-    file_path = "static/TestData/TestNOTAM.json"
+def ParseNOTAM(json_data = None):
 
-    # Reading JSON data from the file
-    with open(file_path, 'r') as json_file:
-        loaded_data = json.load(json_file)
+    if json_data is None:
+        print("*********************\n USING TEST DATA \n*********************")
+        # File path where the test JSON data is saved
+        file_path = "static/TestData/TestNOTAM.json"
+
+        # Reading JSON data from the file
+        with open(file_path, 'r') as json_file:
+            json_data = json.load(json_file)
+
 
     # create a class for each NOTAM
     NOTAMs = []
-    for item in loaded_data['items']:
+    for item in json_data['items']:
         NOTAMs.append(models.Notam(item['properties']['coreNOTAMData']['notam']))
         
     return NOTAMs
