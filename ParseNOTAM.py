@@ -1,5 +1,5 @@
 import json
-import models
+import Models
 
 def ParseNOTAM(json_data = None):
 

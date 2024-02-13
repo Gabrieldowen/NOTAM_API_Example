@@ -22,3 +22,14 @@ class Notam:
         self.icaoLocation = data.get('icaoLocation', None)
         self.coordinates = data.get('coordinates', None)
         self.radius = data.get('radius', None)
+
+class NotamRequest:
+    def __init__(self, data):
+        self.responseFormat = data.get('responseFormat', None)
+        self.effectiveStartDate =  data.get('effectiveStartDate', None)
+        self.effectiveEndDate =  data.get('effectiveEndDate', None)
+        self.locationLongitude =  data.get('locationLongitude', None)
+        self.locationLatitude =  data.get('locationLatitude', None)
+        self.locationRadius =  data.get('locationRadius', None)
+        self.sortBy =  data.get('sortBy', None)
+        self.sortOrder =  data.get('sortOrder', None)
