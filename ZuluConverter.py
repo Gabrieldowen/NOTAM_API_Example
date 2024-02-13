@@ -7,10 +7,11 @@ def convert_cst_to_zulu(cst_datetime):
     # Define time zones
     cst_tz = timezone('America/Chicago')  # Central Standard Time
     zulu_tz = timezone('UTC')  # Coordinated Universal Time (Zulu)
-
+    date_format = "%Y-%m-%d %H:%M:%S"
+    cst = datetime.strptime(cst_datetime, date_format)
     # Localize the input CST datetime
-    localized_cst = cst_tz.localize(cst_datetime)
-
+    localized_cst = cst_tz.localize(cst)
+    
     # Convert the localized CST datetime to Zulu time
     zulu_datetime = localized_cst.astimezone(zulu_tz)
     
@@ -18,7 +19,7 @@ def convert_cst_to_zulu(cst_datetime):
 
     return zulu_datetime_formatted
 
-print(convert_cst_to_zulu(datetime.today()))
+
 
 
 #EST to Zulu
