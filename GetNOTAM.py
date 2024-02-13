@@ -12,16 +12,18 @@ url = 'https://external-api.faa.gov/notamapi/v1/notams'
 # User inputs
 effectiveStartDate = input("Enter effective start date (YYYY-MM-DD HH:MM:SS): ")
 effectiveEndDate = input("Enter effective end date (YYYY-MM-DD HH:MM:SS): ")
-locationLongitude = input("Enter longitude: ")
-locationLatitude = input("Enter latitude: ")
+location = input("Enter airport: ")
+
+airLocation = AirportsLatLongConverter.get_lat_and_lon(location)
+
 
 effectiveStartDate = ZuluConverter.convert_cst_to_zulu(effectiveStartDate)
 effectiveEndDate = ZuluConverter.convert_cst_to_zulu(effectiveEndDate)
 
 # Construct the URL with the required parameters
 url = (f"{url}?responseFormat=geoJson&effectiveStartDate={effectiveStartDate}"
-       f"&effectiveEndDate={effectiveEndDate}&locationLongitude={locationLongitude}"
-       f"&locationLatitude={locationLatitude}&locationRadius=50"
+       f"&effectiveEndDate={effectiveEndDate}&locationLongitude={airLocation[1]}"
+       f"&locationLatitude={airLocation[0]}&locationRadius=50"
        f"&sortBy=notamType&sortOrder=Asc")
 
 headers = {'client_id': credentials.clientID, 'client_secret': credentials.clientSecret}

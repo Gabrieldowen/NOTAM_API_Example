@@ -16,7 +16,5 @@ def get_lat_and_lon(input_airport):
 
     return [lat, lon]
 
-print(get_lat_and_lon('JFK'))   # returns vector
-print(get_lat_and_lon('JFK')[0])    # returns lat
-print(get_lat_and_lon('JFK')[1])    # returns lon
+
 
