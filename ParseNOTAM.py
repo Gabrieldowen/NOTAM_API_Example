@@ -16,7 +16,7 @@ def ParseNOTAM(json_data = None):
     # create a class for each NOTAM
     NOTAMs = []
     for item in json_data['items']:
-        NOTAMs.append(models.Notam(item['properties']['coreNOTAMData']['notam']))
+        NOTAMs.append(Models.Notam(item['properties']['coreNOTAMData']['notam']))
         
     return NOTAMs
 

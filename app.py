@@ -9,7 +9,7 @@ def index():
 
     # If form is submitted
     if request.method == 'POST':
-        NotamRequest = models.NotamRequest(request.form)
+        NotamRequest = Models.NotamRequest(request.form)
 
         # pass the form to getNOTAM to make API request
         # apiOutput = GetNOTAM.getNOTAM(NotamRequest)
