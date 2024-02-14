@@ -6,11 +6,17 @@ import urllib.parse
 import os
 import ZuluConverter
 import AirportsLatLongConverter
+import pandas as pd
 
 
 
 # Base URL for the NOTAM API
 
+
+def merge_two_dicts(x, y):
+    z = x.copy()   # start with keys and values of x
+    z.update(y)    # modifies z with keys and values of y
+    return z
 
 def startNotam():
 # User inputs
@@ -29,11 +35,12 @@ def startNotam():
     
     
 
-def getNotam(effectiveStartDate, effectiveEndDate, long, lat):
+def getNotam(effectiveStartDate, effectiveEndDate, long, lat, pageNum):
     url = 'https://external-api.faa.gov/notamapi/v1/notams'
     url = (f"{url}?responseFormat=geoJson&effectiveStartDate={effectiveStartDate}"
        f"&effectiveEndDate={effectiveEndDate}&locationLongitude={long}"
        f"&locationLatitude={lat}&locationRadius=25"
+       f"&pageNum={pageNum}&pageSize=50"
        f"&sortBy=notamType&sortOrder=Asc")
 
     headers = {'client_id': credentials.clientID, 'client_secret': credentials.clientSecret}
@@ -42,33 +49,49 @@ def getNotam(effectiveStartDate, effectiveEndDate, long, lat):
     req = requests.get(url, headers=headers)
     
     parsed_req = req.json()
+    
 
-    return req, parsed_req
+    return parsed_req
+    
+def buildNotam(effectiveStartDate, effectiveEndDate, long, lat,combined_core_notam_data):
+    initial_response = getNotam(effectiveStartDate, effectiveEndDate, long, lat, pageNum=1)
+    total_pages = initial_response.get('totalPages', 1)
+
+    # Loop through all pages
+    for page_num in range(1, total_pages + 1):
+        page_response = getNotam(effectiveStartDate, effectiveEndDate, long, lat, pageNum=page_num)
+        page_items = page_response.get('items', [])
+
+        # Extract 'coreNOTAMData' from each item
+
+        core_notam_data = [item['properties']['coreNOTAMData']['notam'] for item in page_items if 'coreNOTAMData' in item['properties']]
+        if core_notam_data not in combined_core_notam_data:
+            combined_core_notam_data.extend(core_notam_data)
+    return combined_core_notam_data
 
 def runNotam():
     effectiveStartDate, effectiveEndDate, long, lat = startNotam()
     
-    req, parsed_req = getNotam(effectiveStartDate, effectiveEndDate, long, lat)
-    res = req.json()
+    combined_core_notam_data = []
+    # Initial call to get the total number of pages
+    
+    combined_core_notam_data = buildNotam(effectiveStartDate, effectiveEndDate, long, lat, combined_core_notam_data)
+    print(len(combined_core_notam_data))
     wlong = float(long)+10
-    wlat = float(lat)+10
-    areq, sreq  = getNotam(effectiveStartDate, effectiveEndDate, str(wlong), str(wlat))
-    print(res)
-    print(sreq)
-    merged_dict = {}
-
-    # Combine keys and values from both dictionaries
-    combined_items = {**res, **sreq}
+    wlat = float(long)+10
+    initial_response = buildNotam(effectiveStartDate, effectiveEndDate, str(wlong), str(lat), combined_core_notam_data)
+    print(len(combined_core_notam_data))
     
-    print(combined_items)
-
     
-
+    
+    
     # File handling
     directory = "TestData"
     if not os.path.exists(directory):
         os.makedirs(directory)
 
     with open(os.path.join(directory, "TestNOTAM.json"), 'w') as json_file:
-        json.dump(parsed_req, json_file)
+        json.dump(combined_core_notam_data, json_file)
+
+   
 runNotam()
