@@ -64,9 +64,11 @@ def buildNotam(effectiveStartDate, effectiveEndDate, long, lat,combined_core_not
 
         # Extract 'coreNOTAMData' from each item
 
-        core_notam_data = [item['properties']['coreNOTAMData']['notam'] for item in page_items if 'coreNOTAMData' in item['properties']]
-        if core_notam_data not in combined_core_notam_data:
-            combined_core_notam_data.extend(core_notam_data)
+        for item in page_items:
+            if 'coreNOTAMData' in item['properties']:
+                core_notam_data = item['properties']['coreNOTAMData']['notam']
+                if core_notam_data not in combined_core_notam_data:
+                    combined_core_notam_data.append(core_notam_data)
     return combined_core_notam_data
 
 def runNotam():
@@ -77,8 +79,8 @@ def runNotam():
     
     combined_core_notam_data = buildNotam(effectiveStartDate, effectiveEndDate, long, lat, combined_core_notam_data)
     print(len(combined_core_notam_data))
-    wlong = float(long)+10
-    wlat = float(long)+10
+    wlong = float(long)+0.16667
+    wlat = float(long)+0.16667
     initial_response = buildNotam(effectiveStartDate, effectiveEndDate, str(wlong), str(lat), combined_core_notam_data)
     print(len(combined_core_notam_data))
     
