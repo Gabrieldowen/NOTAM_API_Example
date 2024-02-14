@@ -24,7 +24,7 @@ def nextPoint(startLat, startLong, bearingDegrees, distanceNm=100):
 
     # Convert latitude and longitude to radians
     startLanRad = radians(startLat)
-    startLongRad = radians(startLon)
+    startLongRad = radians(startLong)
     bearingRad = radians(bearingDegrees)
 
     # Calculate angular distance
