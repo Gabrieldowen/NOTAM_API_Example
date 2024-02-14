@@ -45,25 +45,25 @@ def nextPoint(startLat, startLong, bearingDegrees, distanceNm=100):
     return destLat, destLong
 
 # used geeksforgeeks.org
-def getDistance(lat1, lon1, lat2, lon2):
+def getDistance(startLat, startLong, destLat, destLong):
     earthRadiusNm = 3440.065  # Radius of the Earth in nautical miles
 
     # Convert latitude and longitude from degrees to radians
-    lat1, lon1, lat2, lon2 = map(radians, [lat1, lon1, lat2, lon2])
+    startLat, startLong, destLat, destLong = map(radians, [startLat, startLong, destLat, destLong])
 
     # Calculate differences
-    dlat = lat2 - lat1
-    dlon = lon2 - lon1
+    latDifference = destLat - startLat
+    longDifference = destLong - startLong
 
     # Calculate distance using Haversine formula
-    a = sin(dlat / 2) ** 2 + cos(lat1) * cos(lat2) * sin(dlon / 2) ** 2
+    a = sin(latDifference / 2) ** 2 + cos(startLat) * cos(destLat) * sin(longDifference / 2) ** 2
     c = 2 * asin(sqrt(a))
     distanceNm = earthRadiusNm * c
 
     return distanceNm
 
 # pathWidth is the desired scaned distance from play diameter, radius is radius of circle passed to NOTAM
-def getMinimalCirclesPath( startLat = 32.7767, startLong = 96.7970, destLat = 39.7392, destLong = 104.9903, radius = 100,  pathWidth = 50 ):
+def getPath( startLat, startLong, destLat, destLong, radius, pathWidth):
     # TODO For actual application you would need to capture N/S/E/W
 
     # list of coordinates returned to call API with
@@ -87,5 +87,13 @@ def getMinimalCirclesPath( startLat = 32.7767, startLong = 96.7970, destLat = 39
     return coordList
        
 
+"""
+# THIS IS AN EXAMPLE
+# uncomment and run `python3 MinimalCirclesPath.py` to see example of what getPath() returns
 
-print(getMinimalCirclesPath())
+pathList = getPath(startLat = 32.7767, startLong = 96.7970, destLat = 39.7392, destLong = 104.9903, radius = 100,  pathWidth = 50)
+for i,item in enumerate(pathList):
+    print(f"point #{i+1}) {item}\n")
+
+"""
+
