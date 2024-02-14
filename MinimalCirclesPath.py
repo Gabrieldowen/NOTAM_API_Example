@@ -1,4 +1,4 @@
-from math import sin, cos, radians, asin, atan2, sqrt, degrees, ceil
+from math import sin, cos, radians, asin, atan2, sqrt, degrees, ceil, floor
 
 def calculateBearing(startLat, startLon, destLat, destLon):
     startLatRad = radians(startLat)
@@ -79,10 +79,11 @@ def getMinimalCirclesPath( startLat = 32.7767, startLong = 96.7970, destLat = 39
     bearing = calculateBearing(startLat, startLong, destLat, destLong)
 
     # loops for each step until passed the destination
-    for _ in range(ceil(totalDistance/stepDistance)):
+    for _ in range(floor(totalDistance/stepDistance)):
         nextCircle = nextPoint(coordList[-1][0],coordList[-1][1], bearing, stepDistance)
         coordList.append(nextCircle)
 
+    coordList.append((destLat, destLong))
     return coordList
        
 
