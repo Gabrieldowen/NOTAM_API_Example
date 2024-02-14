@@ -9,7 +9,7 @@
                 <label for="responseFormat" class="form-label">Response Format</label>
                 <input type="text" class="form-control" id="responseFormat" name="responseFormat">
             </div>
-			<div class="row">
+	    <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="effectiveStartDate" class="form-label">Effective Start Date</label>
                     <input type="text" class="form-control datepicker" id="effectiveStartDate" name="effectiveStartDate" placeholder="mm-dd-yyyy" autocomplete="off">
@@ -19,7 +19,7 @@
                     <input type="text" class="form-control datepicker" id="effectiveEndDate" name="effectiveEndDate" placeholder="mm-dd-yyyy" autocomplete="off">
                 </div>
             </div>
-			<div class="row">
+	    <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="start" class="form-label">Start</label>
                     <input type="text" class="form-control" id="start" name="start" placeholder="LAX" autocomplete="off">
@@ -29,6 +29,10 @@
                     <input type="text" class="form-control" id="Destination" name="Destination" placeholder="LAX" autocomplete="off">
                 </div>
             </div>
+			
+		<div id="additionalDestinations"></div>
+            	<button type="button" class="btn btn-secondary" onclick="addDestination()">Add Another Destination</button>
+			
             <div class="mb-3">
                 <label for="locationRadius" class="form-label">Location Radius</label>
                 <input type="text" class="form-control" id="locationRadius" name="locationRadius">
@@ -38,7 +42,7 @@
                     <label for="sortBy" class="form-label">Sort By</label>
                     <select class="form-select" id="sortBy" name="sortBy">
                         <option value="impact">Impact on Flight Operations</option>
-						<option value="severity">Severity</option>
+			<option value="severity">Severity</option>
                         <option value="type">Type of NOTAM</option>
                     </select>
                 </div>
@@ -66,6 +70,31 @@
             todayHighlight: true,
         });
     });
+	
+	var destinationCounter = 2;
+
+	function addDestination() {
+		var additionalDestinationsDiv = document.getElementById('additionalDestinations');
+
+		// Create a new destination row if there are no rows or the last row is full
+		if (!additionalDestinationsDiv.lastChild || additionalDestinationsDiv.lastChild.childElementCount === 2) {
+			var destinationRow = document.createElement('div');
+			destinationRow.classList.add('row');
+        		additionalDestinationsDiv.appendChild(destinationRow);
+		}
+
+		// Create Destination Location input
+		var destinationLocationInput = document.createElement('div');
+		destinationLocationInput.classList.add('col-md-6', 'mb-3');
+		destinationLocationInput.innerHTML = '<label for="destinationLocation' + destinationCounter + '" class="form-label">Destination Location ' + destinationCounter + '</label>' +
+			'<input type="text" class="form-control" name="destinationLocation' + destinationCounter + '">';
+
+		// Append the destination input to the last destination row
+		additionalDestinationsDiv.lastChild.appendChild(destinationLocationInput);
+
+		// Increment the destination counter for the next input
+		destinationCounter++;
+	}
 </script>
 
 {% endblock %}
