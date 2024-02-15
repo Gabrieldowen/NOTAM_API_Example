@@ -9,14 +9,6 @@ import AirportsLatLongConverter
 
 
 
-# Base URL for the NOTAM API
-
-
-def merge_two_dicts(x, y):
-    z = x.copy()   # start with keys and values of x
-    z.update(y)    # modifies z with keys and values of y
-    return z
-
 def startNotam():
 # User inputs
     effectiveStartDate = input("Enter effective start date (YYYY-MM-DD HH:MM:SS): ")
@@ -30,7 +22,6 @@ def startNotam():
 
     effectiveStartDate = ZuluConverter.convert_cst_to_zulu(effectiveStartDate)
     effectiveEndDate = ZuluConverter.convert_cst_to_zulu(effectiveEndDate)
-    headers = {'client_id': credentials.clientID, 'client_secret': credentials.clientSecret}
     
     return effectiveStartDate, effectiveEndDate, airLocation[1], airLocation[0], finalAirLocation[1], finalAirLocation[0]
     
