@@ -6,7 +6,6 @@ import urllib.parse
 import os
 import ZuluConverter
 import AirportsLatLongConverter
-import pandas as pd
 
 
 
@@ -23,15 +22,17 @@ def startNotam():
     effectiveStartDate = input("Enter effective start date (YYYY-MM-DD HH:MM:SS): ")
     effectiveEndDate = input("Enter effective end date (YYYY-MM-DD HH:MM:SS): ")
     location = input("Enter airport: ")
+    finalLocation = input("Enter ending airport: ")
 
     airLocation = AirportsLatLongConverter.get_lat_and_lon(location)
+    finalAirLocation = AirportsLatLongConverter.get_lat_and_lon(finalLocation)
 
 
     effectiveStartDate = ZuluConverter.convert_cst_to_zulu(effectiveStartDate)
     effectiveEndDate = ZuluConverter.convert_cst_to_zulu(effectiveEndDate)
     headers = {'client_id': credentials.clientID, 'client_secret': credentials.clientSecret}
     
-    return effectiveStartDate, effectiveEndDate, airLocation[1], airLocation[0]
+    return effectiveStartDate, effectiveEndDate, airLocation[1], airLocation[0], finalAirLocation[1], finalAirLocation[0]
     
     
 
@@ -72,19 +73,26 @@ def buildNotam(effectiveStartDate, effectiveEndDate, long, lat,combined_core_not
     return combined_core_notam_data
 
 def runNotam():
-    effectiveStartDate, effectiveEndDate, long, lat = startNotam()
+    effectiveStartDate, effectiveEndDate, long, lat, fLong, fLat = startNotam()
     
     combined_core_notam_data = []
     # Initial call to get the total number of pages
     
     combined_core_notam_data = buildNotam(effectiveStartDate, effectiveEndDate, long, lat, combined_core_notam_data)
     print(len(combined_core_notam_data))
-    wlong = float(long)+0.16667
-    wlat = float(long)+0.16667
-    initial_response = buildNotam(effectiveStartDate, effectiveEndDate, str(wlong), str(lat), combined_core_notam_data)
-    print(len(combined_core_notam_data))
+    wlong = float(long)
+    wlat = float(lat)
     
-    
+    while wlong >= fLong or wlat <= fLat:
+        combined_core_notam_data = buildNotam(effectiveStartDate, effectiveEndDate, str(wlong), str(wlat), combined_core_notam_data)
+        if wlong >= fLong:
+            wlong = wlong - 0.16667
+        if wlat <= fLat:
+            wlat = wlat + 0.16667
+        print(wlat)
+        print(wlong)
+        print(len(combined_core_notam_data))
+   
     
     
     # File handling
