@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+ <div class="container mt-5">
+        <h1>NOTAM Information</h1>
+        <div class="row row-cols-1 row-cols-md-2 g-4">
+            {% for notam in notams %}
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">NOTAM ID: {{ notam.id }}</h5>
+                        <p class="card-text"><strong>Series:</strong> {{ notam.series }}</p>
+                        <p class="card-text"><strong>Number:</strong> {{ notam.number }}</p>
+                        <p class="card-text"><strong>Type:</strong> {{ notam.type }}</p>
+                        <p class="card-text"><strong>Issued:</strong> {{ notam.issued }}</p>
+                        <!-- Add other attributes here -->
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
