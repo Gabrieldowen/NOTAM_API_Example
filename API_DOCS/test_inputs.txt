@@ -1,0 +1,35 @@
+Los Angeles International Airport (LAX), USA
+
+Longitude: -118.4085
+Latitude: 33.9416
+Radius: 50 nm (about 92.6 kilometers)
+Heathrow Airport (LHR), London, UK
+
+Longitude: -0.4543
+Latitude: 51.4700
+Radius: 30 nm (about 55.56 kilometers)
+Sydney Kingsford Smith Airport (SYD), Australia
+
+Longitude: 151.1772
+Latitude: -33.9399
+Radius: 75 nm (about 138.9 kilometers)
+Tokyo Haneda Airport (HND), Japan
+
+Longitude: 139.7811
+Latitude: 35.5494
+Radius: 100 nm (about 185.2 kilometers)
+Dubai International Airport (DXB), UAE
+
+Longitude: 55.3644
+Latitude: 25.2528
+Radius: 40 nm (about 74.08 kilometers)
+Johannesburg O.R. Tambo International Airport (JNB), South Africa
+
+Longitude: 28.246
+Latitude: -26.1392
+Radius: 20 nm (about 37.04 kilometers)
+Rio de Janeiro, Santos Dumont Airport (SDU), Brazil
+
+Longitude: -43.1631
+Latitude: -22.9109
+Radius: 10 nm (about 18.52 kilometers)
