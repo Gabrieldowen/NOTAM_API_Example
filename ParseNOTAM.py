@@ -21,3 +21,4 @@ def ParseNOTAM(json_data = None):
     return NOTAMs
 
 ParseNOTAM()
+

@@ -64,6 +64,7 @@ def getDistance(startLat, startLong, destLat, destLong):
 
 # pathWidth is the desired scaned distance from play diameter, radius is radius of circle passed to NOTAM
 def getPath( startLat, startLong, destLat, destLong, radius, pathWidth):
+
     # TODO For actual application you would need to capture N/S/E/W
 
     # list of coordinates returned to call API with
@@ -86,6 +87,7 @@ def getPath( startLat, startLong, destLat, destLong, radius, pathWidth):
     coordList.append((destLat, destLong))
     return coordList
        
+
 
 """
 # THIS IS AN EXAMPLE
