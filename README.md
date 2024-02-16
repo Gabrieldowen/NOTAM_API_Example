@@ -1,5 +1,9 @@
 Before compiling make sure to create a credentials file named "credentials.py" with variables "clientID" and "clientSecret" and making sure to not commit these confidential keys to the public repository
 
+
+Need run 'pip install airportsdata' to install the sirportsdata to be able to pull lat and long given airport data. 
+
+
 To run app:
 
 1) make sure you have flask downloaded on your system

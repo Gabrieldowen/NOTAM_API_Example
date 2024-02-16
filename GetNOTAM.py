@@ -8,7 +8,13 @@ import ZuluConverter
 import AirportsLatLongConverter
 
 
-
+#startNotam: Takes all user input from the user
+#@returns effectiveStartDate: User inputed start flight time
+#         effectiveEndDate: User inputed end flight time
+#         airLocation[1]: lat for start location
+#         airLocation[0]: long for start location
+#         finalAirLocation[1]: lat for end location
+#         finalAirLocation[0]: long for end location
 def startNotam():
 # User inputs
     effectiveStartDate = input("Enter effective start date (YYYY-MM-DD HH:MM:SS): ")
@@ -26,7 +32,8 @@ def startNotam():
     return effectiveStartDate, effectiveEndDate, airLocation[1], airLocation[0], finalAirLocation[1], finalAirLocation[0]
     
     
-
+#getNotam: takes the lat, long, start and end time and the page number then runs an API call to the FAA for a json of the api
+#@returns parsed_req: the json of the request
 def getNotam(effectiveStartDate, effectiveEndDate, long, lat, pageNum):
     url = 'https://external-api.faa.gov/notamapi/v1/notams'
     url = (f"{url}?responseFormat=geoJson&effectiveStartDate={effectiveStartDate}"
@@ -37,15 +44,20 @@ def getNotam(effectiveStartDate, effectiveEndDate, long, lat, pageNum):
 
     headers = {'client_id': credentials.clientID, 'client_secret': credentials.clientSecret}
 
-    # Sending the GET request
     req = requests.get(url, headers=headers)
     
     parsed_req = req.json()
     
 
     return parsed_req
-    
-def buildNotam(effectiveStartDate, effectiveEndDate, long, lat,combined_core_notam_data):
+
+#buildNotam: does multiple API call of a location given in inputs and combines all Jsons of each page into a single Json file
+#@returns: combinded_core_notam_data, the combinded Json of all pages for one location
+#         effectiveEndDate: User inputed end flight time
+#         long: lat for a location
+#         lat: long for a location
+#         combined_core_notam_data: a Json being built by runNotam of all Jsons for a path
+def buildNotam(effectiveStartDate, effectiveEndDate, long, lat, combined_core_notam_data):
     initial_response = getNotam(effectiveStartDate, effectiveEndDate, long, lat, pageNum=1)
     total_pages = initial_response.get('totalPages', 1)
 
@@ -54,8 +66,6 @@ def buildNotam(effectiveStartDate, effectiveEndDate, long, lat,combined_core_not
         page_response = getNotam(effectiveStartDate, effectiveEndDate, long, lat, pageNum=page_num)
         page_items = page_response.get('items', [])
 
-        # Extract 'coreNOTAMData' from each item
-
         for item in page_items:
             if 'coreNOTAMData' in item['properties']:
                 core_notam_data = item['properties']['coreNOTAMData']['notam']
@@ -63,11 +73,11 @@ def buildNotam(effectiveStartDate, effectiveEndDate, long, lat,combined_core_not
                     combined_core_notam_data.append(core_notam_data)
     return combined_core_notam_data
 
+#runNotam: takes user input and does multiple buildNotam calls along a path in order 
 def runNotam():
     effectiveStartDate, effectiveEndDate, long, lat, fLong, fLat = startNotam()
     
     combined_core_notam_data = []
-    # Initial call to get the total number of pages
     
     combined_core_notam_data = buildNotam(effectiveStartDate, effectiveEndDate, long, lat, combined_core_notam_data)
     print(len(combined_core_notam_data))
