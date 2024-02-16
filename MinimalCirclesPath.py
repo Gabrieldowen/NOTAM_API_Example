@@ -74,7 +74,7 @@ def getPath( startLat, startLong, destLat, destLong, radius, pathWidth):
     totalDistance = getDistance(startLat, startLong, destLat, destLong)
 
     # gets step distance (pythagorean theorum)
-    stepDistance = sqrt((radius)**2-(pathWidth/2)**2)
+    stepDistance = 2 * sqrt((radius)**2-(pathWidth/2)**2)
 
     # gets direction
     bearing = calculateBearing(startLat, startLong, destLat, destLong)
