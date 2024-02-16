@@ -1,9 +1,45 @@
+
 {% extends 'base.html' %}
 
 {% block content %}
 <div class="container">
     <h1>Welcome to My Flask App</h1>
-    <p>This is a Bootstrap-styled page.</p>
-    <button type="button" class="btn btn-primary">Bootstrap Button</button>
+      <div class="container mt-5">
+        <form method="POST">
+            <div class="mb-3">
+                <label for="responseFormat" class="form-label">Response Format</label>
+                <input type="text" class="form-control" id="responseFormat" name="responseFormat">
+            </div>
+            <div class="mb-3">
+                <label for="effectiveStartDate" class="form-label">Effective Start Date</label>
+                <input type="text" class="form-control" id="effectiveStartDate" name="effectiveStartDate">
+            </div>
+            <div class="mb-3">
+                <label for="effectiveEndDate" class="form-label">Effective End Date</label>
+                <input type="text" class="form-control" id="effectiveEndDate" name="effectiveEndDate">
+            </div>
+            <div class="mb-3">
+                <label for="locationLongitude" class="form-label">Location Longitude</label>
+                <input type="text" class="form-control" id="locationLongitude" name="locationLongitude">
+            </div>
+            <div class="mb-3">
+                <label for="locationLatitude" class="form-label">Location Latitude</label>
+                <input type="text" class="form-control" id="locationLatitude" name="locationLatitude">
+            </div>
+            <div class="mb-3">
+                <label for="locationRadius" class="form-label">Location Radius</label>
+                <input type="text" class="form-control" id="locationRadius" name="locationRadius">
+            </div>
+            <div class="mb-3">
+                <label for="sortBy" class="form-label">Sort By</label>
+                <input type="text" class="form-control" id="sortBy" name="sortBy">
+            </div>
+            <div class="mb-3">
+                <label for="sortOrder" class="form-label">Sort Order</label>
+                <input type="text" class="form-control" id="sortOrder" name="sortOrder">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
 </div>
 {% endblock %}
