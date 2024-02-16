@@ -3,7 +3,7 @@
 # Remove the output JSON file(s)
 echo "Removing output JSON files..."
 rm -f TestData/TestNOTAM.json
-
+rm -f TestData/norman.json
 # Optionally, remove all JSON files in the directory if needed
 # rm -f /path/to/your/TestData/*.json
 
