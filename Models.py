@@ -25,11 +25,15 @@ class Notam:
 
 class NotamRequest:
     def __init__(self, data):
+        self.startAirport = data.get('startAirport', None)
+        self.destAirport = data.get('destAirport', None)
         self.responseFormat = data.get('responseFormat', None)
         self.effectiveStartDate =  data.get('effectiveStartDate', None)
         self.effectiveEndDate =  data.get('effectiveEndDate', None)
-        self.locationLongitude =  data.get('locationLongitude', None)
-        self.locationLatitude =  data.get('locationLatitude', None)
+        self.startLong =  data.get('startLong', None)
+        self.startLat =  data.get('startLat', None)
+        self.destLong =  data.get('destLong', None)
+        self.destLat =  data.get('destLat', None)
         self.locationRadius =  data.get('locationRadius', None)
         self.sortBy =  data.get('sortBy', None)
         self.sortOrder =  data.get('sortOrder', None)
