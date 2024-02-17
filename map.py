@@ -3,55 +3,74 @@ import matplotlib.pyplot as plt
 from shapely.geometry import Point, Polygon
 import json
 
-# Assuming `notams_data` is the JSON data you provided
-notams_data = {
-    # ... your NOTAM data ...
-}
+# Define the coordinates for the Los Angeles area of interest
+# The coordinates here are just an example, adjust the latitude and longitude to cover your desired area
+LA_bounds = Polygon([
+    (-118.7, 33.7),  # Bottom left
+    (-117.5, 33.7),  # Bottom right
+    (-117.5, 34.3),  # Top right
+    (-118.7, 34.3)   # Top left
+])
 
-# Function to convert NOTAM coordinate string to a (longitude, latitude) tuple
-def convert_notam_coord_to_lon_lat(coord_str):
-    lat_deg = int(coord_str[0:2])
-    lat_min = int(coord_str[2:4])
-    lat_sec = int(coord_str[4:6])
-    lat = lat_deg + (lat_min / 60) + (lat_sec / 3600)
+# Define a GeoDataFrame for the area of interest around Los Angeles
+LA_area = gpd.GeoDataFrame([1], geometry=[LA_bounds], crs="EPSG:4326")
 
-    lon_deg = int(coord_str[7:10])
-    lon_min = int(coord_str[10:12])
-    lon_sec = int(coord_str[12:14])
-    lon = -(lon_deg + (lon_min / 60) + (lon_sec / 3600))  # Negative for Western Hemisphere
+# Function to read NOTAM data from a JSON file
+def read_notam_data_from_json(file_path):
+    with open(file_path, 'r') as file:
+        data = json.load(file)
+    return data
 
-    return (lon, lat)
+# Load NOTAMs data from JSON file
+notams_data = read_notam_data_from_json('LA.json')
 
-# Extract geometries from NOTAMs
-notam_geometries = []
+# Extract geometries from NOTAMs and check if they are in the LA area
+inside_LA = []
+outside_LA = []
 for item in notams_data['items']:
-    geom_collection = item['geometry']['geometries']
-    for geom in geom_collection:
-        if geom['type'] == 'Point':
-            coords = convert_notam_coord_to_lon_lat(item['properties']['coreNOTAMData']['notam']['coordinates'])
-            notam_geometries.append(Point(coords))
-        elif geom['type'] == 'Polygon':
-            coords = [(lon, lat) for lon, lat in geom['coordinates'][0]]
-            notam_geometries.append(Polygon(coords))
+    if 'geometry' in item and 'geometries' in item['geometry']:
+        for geom in item['geometry']['geometries']:
+            notam_geom = None
+            if geom['type'] == 'Point':
+                notam_geom = Point(geom['coordinates'])
+            elif geom['type'] == 'Polygon':
+                notam_geom = Polygon(geom['coordinates'][0])
+            
+            if notam_geom is not None:
+                if LA_area.geometry.contains(notam_geom).bool():
+                    inside_LA.append(notam_geom)
+                else:
+                    outside_LA.append(notam_geom)
 
-# Create a GeoDataFrame from the NOTAM geometries
-notam_gdf = gpd.GeoDataFrame(geometry=notam_geometries)
+# Create GeoDataFrames for NOTAMs inside and outside the LA area
+inside_LA_gdf = gpd.GeoDataFrame(geometry=inside_LA, crs="EPSG:4326")
+outside_LA_gdf = gpd.GeoDataFrame(geometry=outside_LA, crs="EPSG:4326")
 
-# Load the US shapefile
-us_map = gpd.read_file('/path/to/ne_10m_admin_0_countries_usa.shp')
-
-# Filter the GeoDataFrame to only include the United States
-us = us_map[us_map['ADMIN'] == 'United States of America']
+# Load the US map (assuming you have it as a GeoJSON or Shapefile)
+us_map = gpd.read_file('us.geojson')  # Change to your file path
 
 # Plot the US map
-fig, ax = plt.subplots(figsize=(15, 20))
-us.plot(ax=ax, color='lightgrey')
+fig, ax = plt.subplots(figsize=(15, 20))  # Adjust the figure size as needed
+us_map.plot(ax=ax, color='lightgrey')
 
-# Overlay the NOTAM geometries on the map
-notam_gdf.plot(ax=ax, color='red', markersize=5)
+# Plot NOTAMs inside the LA area in green
+inside_LA_gdf.plot(ax=ax, color='green', markersize=5)
 
-# Set plot limits if necessary
-# ax.set_xlim([-130, -65])
-# ax.set_ylim([24, 50])
+# Plot NOTAMs outside the LA area in red
+outside_LA_gdf.plot(ax=ax, color='red', markersize=5)
+
+# Plot the LA area
+LA_area.plot(ax=ax, edgecolor='black', color='none')
+
+# Set the x and y axis limits to the bounds of the US map
+bounds = us_map.total_bounds
+ax.set_xlim(bounds[0], bounds[2])
+ax.set_ylim(bounds[1], bounds[3])
+
+# Remove axis off
+ax.set_axis_off()
+
+# Add a title to the plot
+ax.set_title('US Map with Active NOTAMs (Green inside LA area, Red outside)', fontsize=20)
 
 plt.show()

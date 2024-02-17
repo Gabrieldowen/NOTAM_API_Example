@@ -330,6 +330,49 @@
             "properties": {
                 "coreNOTAMData": {
                     "notamEvent": {
+                        "scenario": "114"
+                    },
+                    "notam": {
+                        "id": "NOTAM_1_71335267",
+                        "number": "02/101",
+                        "type": "N",
+                        "issued": "2024-02-06T18:50:00.000Z",
+                        "location": "ZFW",
+                        "effectiveStart": "2024-02-06T18:50:00.000Z",
+                        "effectiveEnd": "2024-04-30T23:59:00.000Z",
+                        "text": "OBST WIND TURBINE FARM WI AN AREA DEFINED AS 6.6NM RADIUS OF 353632N0984905W (6.8NM NW CLK) 1811FT (550FT AGL) NOT LGTD",
+                        "classification": "DOM",
+                        "accountId": "FTW",
+                        "lastUpdated": "2024-02-06T18:50:00.000Z",
+                        "icaoLocation": "KZFW",
+                        "coordinates": "353632N0984905W"
+                    },
+                    "notamTranslation": [
+                        {
+                            "type": "LOCAL_FORMAT",
+                            "simpleText": "!FTW 02/101 ZFW OBST WIND TURBINE FARM WI AN AREA DEFINED AS 6.6NM RADIUS OF 353632N0984905W (6.8NM NW CLK) 1811FT (550FT AGL) NOT LGTD 2402061850-2404302359"
+                        }
+                    ]
+                }
+            },
+            "geometry": {
+                "type": "GeometryCollection",
+                "geometries": [
+                    {
+                        "type": "Point",
+                        "coordinates": [
+                            -98.82,
+                            35.61
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "coreNOTAMData": {
+                    "notamEvent": {
                         "scenario": "106"
                     },
                     "notam": {
@@ -363,55 +406,39 @@
             "properties": {
                 "coreNOTAMData": {
                     "notamEvent": {
-                        "scenario": "816"
+                        "scenario": "6000"
                     },
                     "notam": {
-                        "id": "NOTAM_1_64624892",
-                        "number": "2/6540",
+                        "id": "NOTAM_1_68509003",
+                        "series": "A",
+                        "number": "A0231/23",
                         "type": "N",
-                        "issued": "2022-06-09T17:15:00.000Z",
+                        "issued": "2023-05-18T21:57:00.000Z",
+                        "affectedFIR": "KZFW",
+                        "selectionCode": "QCBLS",
+                        "minimumFL": "000",
+                        "maximumFL": "999",
                         "location": "ZFW",
-                        "effectiveStart": "2022-06-09T17:14:00.000Z",
-                        "effectiveEnd": "2024-06-09T17:14:00.000Z",
-                        "text": "TX..ROUTE ZFW.\nV68 JOKES, TX TO STEEP, TX MOCA 4400.\n2206091714-2406091714EST",
-                        "classification": "FDC",
-                        "accountId": "FDC",
-                        "lastUpdated": "2022-06-09T17:18:00.000Z",
+                        "effectiveStart": "2023-05-18T21:50:00.000Z",
+                        "effectiveEnd": "2023-06-05T22:00:00.000Z",
+                        "text": "ZFW AIRSPACE ADS-B, AUTO DEPENDENT SURVEILLANCE \nREBROADCAST (ADS-R), TFC INFO SERVICE BCST (TIS-B), FLT INFO \nSERVICE BCST (FIS-B) SERVICES MAY NOT BE AVBL WI AN AREA DEFINED AS \n139NM RADIUS OF 353335N1015910W.\nAP AIRSPACE AFFECTED MAY INCLUDE ELK, CSM, HHF, GAG, PAA, WWR, PYX.",
+                        "classification": "INTL",
+                        "accountId": "KZFW",
+                        "lastUpdated": "2023-05-18T21:57:00.000Z",
                         "icaoLocation": "KZFW",
-                        "coordinates": "3137N10108W"
+                        "lowerLimit": "SFC",
+                        "upperLimit": "8000FT."
                     },
                     "notamTranslation": [
                         {
-                            "type": "LOCAL_FORMAT",
-                            "simpleText": "!FDC 2/6540 ZFW TX..ROUTE ZFW.\nV68 JOKES, TX TO STEEP, TX MOCA 4400.\n2206091714-2406091714EST"
-                        },
-                        {
                             "type": "ICAO",
-                            "formattedText": "Q) KFIR/QXXXX/I/NBO/A/000/999/latNlongW025\nA) locationIndicatorICAO\nB) 2206091714\nC) 2301191711EST\nE) ROUTE undefined,undefined,undefined\nundefined undefined...\nundefined"
+                            "formattedText": "A0231/23 NOTAMN\nQ) KZFW/QCBLS////000/999/\nA) KZFW\nB) 2305182150\nC) 2306052200 EST\nE) ZFW AIRSPACE ADS-B, AUTO DEPENDENT SURVEILLANCE\nREBROADCAST (ADS-R), TFC INFO SERVICE BCST (TIS-B), FLT INFO\nSERVICE BCST (FIS-B) SERVICES MAY NOT BE AVBL WI AN AREA DEFINED AS\n139NM RADIUS OF 353335N1015910W.\nAP AIRSPACE AFFECTED MAY INCLUDE ELK, CSM, HHF, GAG, PAA, WWR, PYX.\nF) SFC  G) 8000FT."
                         }
                     ]
                 }
             },
             "geometry": {
-                "type": "GeometryCollection",
-                "geometries": [
-                    {
-                        "type": "Point",
-                        "additionalGeometryData": {},
-                        "coordinates": [
-                            -101.848508333333,
-                            31.8869277777778
-                        ]
-                    },
-                    {
-                        "type": "Point",
-                        "additionalGeometryData": {},
-                        "coordinates": [
-                            -101.134686111111,
-                            31.6272472222222
-                        ]
-                    }
-                ]
+                "type": "GeometryCollection"
             }
         },
         {
@@ -419,43 +446,77 @@
             "properties": {
                 "coreNOTAMData": {
                     "notamEvent": {
-                        "scenario": "101"
+                        "scenario": "6000"
                     },
                     "notam": {
-                        "id": "NOTAM_1_71321677",
-                        "number": "02/074",
+                        "id": "NOTAM_1_68881811",
+                        "series": "A",
+                        "number": "A0325/23",
                         "type": "N",
-                        "issued": "2024-02-05T16:19:00.000Z",
+                        "issued": "2023-06-27T23:17:00.000Z",
+                        "affectedFIR": "KZFW",
+                        "selectionCode": "QXXXX",
+                        "minimumFL": "000",
+                        "maximumFL": "999",
                         "location": "ZFW",
-                        "effectiveStart": "2024-02-05T16:19:00.000Z",
-                        "effectiveEnd": "2024-02-26T23:00:00.000Z",
-                        "text": "AIRSPACE UAS WI AN AREA DEFINED AS 5NM RADIUS OF 325636N1024913W (2NM SE E57) SFC-400FT AGL DLY 1618-2300",
-                        "classification": "DOM",
-                        "accountId": "FTW",
-                        "lastUpdated": "2024-02-05T16:19:00.000Z",
+                        "effectiveStart": "2023-06-29T04:01:00.000Z",
+                        "effectiveEnd": "2025-06-29T04:01:00.000Z",
+                        "text": "ZFW AIRSPACE RDO ALTIMETER UNREL WI FORT WORTH ARTCC\nAIRSPACE SFC-5000FT AGL. AUTOLAND, HUD TO TOUCHDOWN, ENHANCED FLT \nVISION SYSTEMS TO TOUCHDOWN NOT AUTHORIZED EXC FOR RDO ALTIMETER \nTOLERANT ACFT AND ACFT USING APPROVED ALTERNATIVE METHODS OF \nCOMPLIANCE.HEL OPS REQUIRING RDO ALTIMETER DATA TO INCLUDE OFFSHORE \nINSTRUMENT OPS, HOVER AUTOPILOT MODES, SAR AUTOPILOT MODES, AND CAT \nA/B/PERFORMANCE CLASS TKOF AND LDG NOT AUTHORIZED EXC FOR RDO \nALTIMETER TOLERANT ROTORCRAFT AND ROTORCRAFT USING APPROVED \nALTERNATIVE METHODS OF COMPLIANCE. DUE TO 5G C-BAND INTERFERENCE \nPLUS SEE AIRWORTHINESS DIRECTIVE2023-10-02, 2023-11-07 AND DOMESTIC \nNOTICES",
+                        "classification": "INTL",
+                        "accountId": "KZFW",
+                        "lastUpdated": "2023-06-27T23:18:00.000Z",
                         "icaoLocation": "KZFW",
-                        "schedule": "Daily:1619-2300~DLY 1618-2300",
-                        "coordinates": "325636N1024913W"
+                        "lowerLimit": "SFC",
+                        "upperLimit": "5000FT AGL"
                     },
                     "notamTranslation": [
                         {
-                            "type": "LOCAL_FORMAT",
-                            "simpleText": "!FTW 02/074 ZFW AIRSPACE UAS WI AN AREA DEFINED AS 5NM RADIUS OF 325636N1024913W (2NM SE E57) SFC-400FT AGL DLY 1618-2300 2402051619-2402262300"
+                            "type": "ICAO",
+                            "formattedText": "A0325/23 NOTAMN\nQ) KZFW/QXXXX////000/999/\nA) KZFW\nB) 2306290401\nC) 2506290401\nE) ZFW AIRSPACE RDO ALTIMETER UNREL WI FORT WORTH ARTCC\nAIRSPACE SFC-5000FT AGL. AUTOLAND, HUD TO TOUCHDOWN, ENHANCED FLT\nVISION SYSTEMS TO TOUCHDOWN NOT AUTHORIZED EXC FOR RDO ALTIMETER\nTOLERANT ACFT AND ACFT USING APPROVED ALTERNATIVE METHODS OF\nCOMPLIANCE.HEL OPS REQUIRING RDO ALTIMETER DATA TO INCLUDE OFFSHORE\nINSTRUMENT OPS, HOVER AUTOPILOT MODES, SAR AUTOPILOT MODES, AND CAT\nA/B/PERFORMANCE CLASS TKOF AND LDG NOT AUTHORIZED EXC FOR RDO\nALTIMETER TOLERANT ROTORCRAFT AND ROTORCRAFT USING APPROVED\nALTERNATIVE METHODS OF COMPLIANCE. DUE TO 5G C-BAND INTERFERENCE\nPLUS SEE AIRWORTHINESS DIRECTIVE2023-10-02, 2023-11-07 AND DOMESTIC\nNOTICES\nF) SFC  G) 5000FT AGL"
                         }
                     ]
                 }
             },
             "geometry": {
-                "type": "GeometryCollection",
-                "geometries": [
-                    {
-                        "type": "Point",
-                        "coordinates": [
-                            -102.82,
-                            32.94
-                        ]
-                    }
-                ]
+                "type": "GeometryCollection"
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "coreNOTAMData": {
+                    "notamEvent": {
+                        "scenario": "6000"
+                    },
+                    "notam": {
+                        "id": "NOTAM_1_66094343",
+                        "series": "A",
+                        "number": "A0529/22",
+                        "type": "N",
+                        "issued": "2022-11-14T18:34:00.000Z",
+                        "affectedFIR": "KZFW",
+                        "selectionCode": "QXXXX",
+                        "minimumFL": "000",
+                        "maximumFL": "999",
+                        "location": "ZFW",
+                        "effectiveStart": "2022-11-14T18:27:00.000Z",
+                        "effectiveEnd": "2024-11-14T18:24:00.000Z",
+                        "text": "ZFW TX..ROUTE ZFW.\nV568 MILLSAP (MQP) VORTAC, TX TO KARYN, TX MEA 3100 NORTHWESTBOUND,\n3000 SOUTHEASTBOUND.",
+                        "classification": "INTL",
+                        "accountId": "KZFW",
+                        "lastUpdated": "2022-11-14T18:35:00.000Z",
+                        "icaoLocation": "KZFW"
+                    },
+                    "notamTranslation": [
+                        {
+                            "type": "ICAO",
+                            "formattedText": "A0529/22 NOTAMN\nQ) KZFW/QXXXX////000/999/\nA) KZFW\nB) 2211141827\nC) 2411141824 EST\nE) ZFW TX..ROUTE ZFW.\nV568 MILLSAP (MQP) VORTAC, TX TO KARYN, TX MEA 3100 NORTHWESTBOUND,\n3000 SOUTHEASTBOUND."
+                        }
+                    ]
+                }
+            },
+            "geometry": {
+                "type": "GeometryCollection"
             }
         },
         {
@@ -466,24 +527,24 @@
                         "scenario": "114"
                     },
                     "notam": {
-                        "id": "NOTAM_1_71222535",
-                        "number": "01/762",
+                        "id": "NOTAM_1_67846005",
+                        "number": "03/402",
                         "type": "N",
-                        "issued": "2024-01-28T14:24:00.000Z",
+                        "issued": "2023-03-15T20:30:00.000Z",
                         "location": "ZFW",
-                        "effectiveStart": "2024-01-28T14:14:00.000Z",
-                        "effectiveEnd": "2024-02-26T23:59:00.000Z",
-                        "text": "OBST WIND TURBINE FARM WI AN AREA DEFINED AS 8NM RADIUS OF 340631N1012025W (5.7NM W 41F) 3694FT (430FT AGL) NOT LGTD",
+                        "effectiveStart": "2023-03-15T20:30:00.000Z",
+                        "effectiveEnd": "2024-03-31T23:59:00.000Z",
+                        "text": "OBST WIND TURBINE FARM WI AN AREA DEFINED AS 10NM RADIUS OF 321600N1002650W (12NM S SWW) 2200FT (360FT AGL) NOT LGTD",
                         "classification": "DOM",
                         "accountId": "FTW",
-                        "lastUpdated": "2024-01-28T14:24:00.000Z",
+                        "lastUpdated": "2023-03-15T20:30:00.000Z",
                         "icaoLocation": "KZFW",
-                        "coordinates": "340631N1012025W"
+                        "coordinates": "321600N1002650W"
                     },
                     "notamTranslation": [
                         {
                             "type": "LOCAL_FORMAT",
-                            "simpleText": "!FTW 01/762 ZFW OBST WIND TURBINE FARM WI AN AREA DEFINED AS 8NM RADIUS OF 340631N1012025W (5.7NM W 41F) 3694FT (430FT AGL) NOT LGTD 2401281414-2402262359EST"
+                            "simpleText": "!FTW 03/402 ZFW OBST WIND TURBINE FARM WI AN AREA DEFINED AS 10NM RADIUS OF 321600N1002650W (12NM S SWW) 2200FT (360FT AGL) NOT LGTD 2303152030-2403312359"
                         }
                     ]
                 }
@@ -494,8 +555,92 @@
                     {
                         "type": "Point",
                         "coordinates": [
-                            -101.34,
-                            34.11
+                            -100.45,
+                            32.27
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "coreNOTAMData": {
+                    "notamEvent": {
+                        "scenario": "551"
+                    },
+                    "notam": {
+                        "id": "NOTAM_1_71309482",
+                        "number": "02/053",
+                        "type": "N",
+                        "issued": "2024-02-04T13:09:00.000Z",
+                        "affectedFIR": "ZFW",
+                        "minimumFL": "000",
+                        "maximumFL": "999",
+                        "location": "ZFW",
+                        "effectiveStart": "2024-02-04T13:00:00.000Z",
+                        "effectiveEnd": "2024-06-03T13:00:00.000Z",
+                        "text": "COM FORT WORTH REMOTE COM A/G 292.5 U/S",
+                        "classification": "DOM",
+                        "accountId": "FTW",
+                        "lastUpdated": "2024-02-04T13:09:00.000Z",
+                        "icaoLocation": "KZFW",
+                        "radius": "5"
+                    },
+                    "notamTranslation": [
+                        {
+                            "type": "LOCAL_FORMAT",
+                            "simpleText": "!FTW 02/053 ZFW COM FORT WORTH REMOTE COM A/G 292.5 U/S 2402041300-2406031300"
+                        },
+                        {
+                            "type": "ICAO",
+                            "formattedText": "02/053 NOTAMN\nQ)KZFW/QXXXX/IV/NBO/A/000/999/005\nA) KZFW\nB) 2402041300\nC) 2406031300\nE) COM FORT WORTH REMOTE COM A/G 292.5 U/S"
+                        }
+                    ]
+                }
+            },
+            "geometry": {
+                "type": "GeometryCollection"
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "coreNOTAMData": {
+                    "notamEvent": {
+                        "scenario": "114"
+                    },
+                    "notam": {
+                        "id": "NOTAM_1_71326378",
+                        "number": "02/083",
+                        "type": "N",
+                        "issued": "2024-02-06T00:05:00.000Z",
+                        "location": "ZFW",
+                        "effectiveStart": "2024-02-06T00:05:00.000Z",
+                        "effectiveEnd": "2024-03-06T23:59:00.000Z",
+                        "text": "OBST WIND TURBINE FARM WI AN AREA DEFINED AS 12NM RADIUS OF 313230N0965231W (9.7NM SE 73F) 568FT (499FT AGL) \nNOT LGTD",
+                        "classification": "DOM",
+                        "accountId": "FTW",
+                        "lastUpdated": "2024-02-06T00:05:00.000Z",
+                        "icaoLocation": "KZFW",
+                        "coordinates": "313230N0965231W"
+                    },
+                    "notamTranslation": [
+                        {
+                            "type": "LOCAL_FORMAT",
+                            "simpleText": "!FTW 02/083 ZFW OBST WIND TURBINE FARM WI AN AREA DEFINED AS 12NM RADIUS OF 313230N0965231W (9.7NM SE 73F) 568FT (499FT AGL) \nNOT LGTD 2402060005-2403062359"
+                        }
+                    ]
+                }
+            },
+            "geometry": {
+                "type": "GeometryCollection",
+                "geometries": [
+                    {
+                        "type": "Point",
+                        "coordinates": [
+                            -96.88,
+                            31.54
                         ]
                     }
                 ]
@@ -546,27 +691,27 @@
             "properties": {
                 "coreNOTAMData": {
                     "notamEvent": {
-                        "scenario": "101"
+                        "scenario": "114"
                     },
                     "notam": {
-                        "id": "NOTAM_1_70637488",
-                        "number": "12/454",
+                        "id": "NOTAM_1_71072473",
+                        "number": "01/540",
                         "type": "N",
-                        "issued": "2023-12-19T20:43:00.000Z",
+                        "issued": "2024-01-19T08:30:00.000Z",
                         "location": "ZFW",
-                        "effectiveStart": "2023-12-19T20:43:00.000Z",
-                        "effectiveEnd": "2024-06-19T23:59:00.000Z",
-                        "text": "AIRSPACE UAS WI AN AREA DEFINED AS 6NM RADIUS OF 320918N1033054W (17.6NM W E26) SFC-400FT AGL",
+                        "effectiveStart": "2024-01-19T08:28:00.000Z",
+                        "effectiveEnd": "2024-02-19T00:59:00.000Z",
+                        "text": "OBST WIND TURBINE FARM WI AN AREA DEFINED AS 4.3NM RADIUS OF 341136N993314W (13NM SW F05) 1500FT (462FT AGL) NOT LGTD",
                         "classification": "DOM",
                         "accountId": "FTW",
-                        "lastUpdated": "2023-12-19T20:43:00.000Z",
+                        "lastUpdated": "2024-01-19T08:30:00.000Z",
                         "icaoLocation": "KZFW",
-                        "coordinates": "320918N1033054W"
+                        "coordinates": "341136N993314W"
                     },
                     "notamTranslation": [
                         {
                             "type": "LOCAL_FORMAT",
-                            "simpleText": "!FTW 12/454 ZFW AIRSPACE UAS WI AN AREA DEFINED AS 6NM RADIUS OF 320918N1033054W (17.6NM W E26) SFC-400FT AGL 2312192043-2406192359"
+                            "simpleText": "!FTW 01/540 ZFW OBST WIND TURBINE FARM WI AN AREA DEFINED AS 4.3NM RADIUS OF 341136N993314W (13NM SW F05) 1500FT (462FT AGL) NOT LGTD\n 2401190828-2402190059"
                         }
                     ]
                 }
@@ -577,8 +722,8 @@
                     {
                         "type": "Point",
                         "coordinates": [
-                            -103.52,
-                            32.16
+                            -993.52,
+                            34.19
                         ]
                     }
                 ]
@@ -752,736 +897,6 @@
             "properties": {
                 "coreNOTAMData": {
                     "notamEvent": {
-                        "scenario": "816"
-                    },
-                    "notam": {
-                        "id": "NOTAM_1_63931922",
-                        "number": "2/0704",
-                        "type": "N",
-                        "issued": "2022-03-29T17:47:00.000Z",
-                        "location": "ZFW",
-                        "effectiveStart": "2022-03-29T17:45:00.000Z",
-                        "effectiveEnd": "2024-04-10T17:45:00.000Z",
-                        "text": "AR..ROUTE ZFW.\nV278 WEEBR, AR TO WARLO, AR MEA 4000.\nV278 WARLO, AR TO HAMPT, AR NA EXCEPT FOR ACFT EQUIPPED WITH SUITABLE RNAV SYSTEM WITH GPS.\nTXK VOR UNUSABLE. 2203291745-2404101745EST",
-                        "classification": "FDC",
-                        "accountId": "FDC",
-                        "lastUpdated": "2022-03-29T17:50:00.000Z",
-                        "icaoLocation": "KZFW",
-                        "coordinates": "3333N09230W"
-                    },
-                    "notamTranslation": [
-                        {
-                            "type": "LOCAL_FORMAT",
-                            "simpleText": "!FDC 2/0704 ZFW AR..ROUTE ZFW.\nV278 WEEBR, AR TO WARLO, AR MEA 4000.\nV278 WARLO, AR TO HAMPT, AR NA EXCEPT FOR ACFT EQUIPPED WITH SUITABLE RNAV SYSTEM WITH GPS.\nTXK VOR UNUSABLE. 2203291745-2404101745EST"
-                        },
-                        {
-                            "type": "ICAO",
-                            "formattedText": "Q) KFIR/QXXXX/I/NBO/A/000/999/latNlongW025\nA) locationIndicatorICAO\nB) 2203291745\nC) 2404101744EST\nE) ROUTE undefined,undefined,undefined\nundefined undefined...\nundefined"
-                        }
-                    ]
-                }
-            },
-            "geometry": {
-                "type": "GeometryCollection",
-                "geometries": [
-                    {
-                        "type": "Point",
-                        "additionalGeometryData": {},
-                        "coordinates": [
-                            -93.6995166666667,
-                            33.5245166666667
-                        ]
-                    },
-                    {
-                        "type": "Point",
-                        "additionalGeometryData": {},
-                        "coordinates": [
-                            -93.0498861111111,
-                            33.540325
-                        ]
-                    },
-                    {
-                        "type": "Point",
-                        "additionalGeometryData": {},
-                        "coordinates": [
-                            -93.0498861111111,
-                            33.540325
-                        ]
-                    },
-                    {
-                        "type": "Point",
-                        "additionalGeometryData": {},
-                        "coordinates": [
-                            -92.5030166666667,
-                            33.5509472222222
-                        ]
-                    }
-                ]
-            }
-        },
-        {
-            "type": "Feature",
-            "properties": {
-                "coreNOTAMData": {
-                    "notamEvent": {
-                        "scenario": "6000"
-                    },
-                    "notam": {
-                        "id": "NOTAM_1_63932008",
-                        "series": "A",
-                        "number": "A0158/22",
-                        "type": "N",
-                        "issued": "2022-03-29T17:49:00.000Z",
-                        "affectedFIR": "KZFW",
-                        "selectionCode": "QXXXX",
-                        "minimumFL": "000",
-                        "maximumFL": "999",
-                        "location": "ZFW",
-                        "effectiveStart": "2022-03-29T17:45:00.000Z",
-                        "effectiveEnd": "2024-04-10T17:45:00.000Z",
-                        "text": "V278 WEEBR, AR TO WARLO, AR MEA 4000.\nV278 WARLO, AR TO HAMPT, AR NA EXCEPT FOR ACFT EQUIPPED WITH\nSUITABLE RNAV SYSTEM WITH GPS.\nTXK VOR UNUSABLE.",
-                        "classification": "INTL",
-                        "accountId": "KZFW",
-                        "lastUpdated": "2022-03-29T17:50:00.000Z",
-                        "icaoLocation": "KZFW"
-                    },
-                    "notamTranslation": [
-                        {
-                            "type": "ICAO",
-                            "formattedText": "A0158/22 NOTAMN\nQ) KZFW/QXXXX////000/999/\nA) KZFW\nB) 2203291745\nC) 2404101745 EST\nE) V278 WEEBR, AR TO WARLO, AR MEA 4000.\nV278 WARLO, AR TO HAMPT, AR NA EXCEPT FOR ACFT EQUIPPED WITH\nSUITABLE RNAV SYSTEM WITH GPS.\nTXK VOR UNUSABLE."
-                        }
-                    ]
-                }
-            },
-            "geometry": {
-                "type": "GeometryCollection"
-            }
-        },
-        {
-            "type": "Feature",
-            "properties": {
-                "coreNOTAMData": {
-                    "notamEvent": {
-                        "scenario": "114"
-                    },
-                    "notam": {
-                        "id": "NOTAM_1_71366065",
-                        "number": "02/161",
-                        "type": "N",
-                        "issued": "2024-02-09T04:39:00.000Z",
-                        "location": "ZFW",
-                        "effectiveStart": "2024-02-09T04:39:00.000Z",
-                        "effectiveEnd": "2024-02-23T06:00:00.000Z",
-                        "text": "OBST WIND TURBINE FARM WI AN AREA DEFINED AS 8NM RADIUS OF 354304N0984909W (4.3NM W 1O4) 1837FT (550FT AGL) \nNOT LGTD",
-                        "classification": "DOM",
-                        "accountId": "FTW",
-                        "lastUpdated": "2024-02-09T04:39:00.000Z",
-                        "icaoLocation": "KZFW",
-                        "coordinates": "354304N0984909W"
-                    },
-                    "notamTranslation": [
-                        {
-                            "type": "LOCAL_FORMAT",
-                            "simpleText": "!FTW 02/161 ZFW OBST WIND TURBINE FARM WI AN AREA DEFINED AS 8NM RADIUS OF 354304N0984909W (4.3NM W 1O4) 1837FT (550FT AGL) \nNOT LGTD 2402090439-2402230600"
-                        }
-                    ]
-                }
-            },
-            "geometry": {
-                "type": "GeometryCollection",
-                "geometries": [
-                    {
-                        "type": "Point",
-                        "coordinates": [
-                            -98.82,
-                            35.72
-                        ]
-                    }
-                ]
-            }
-        },
-        {
-            "type": "Feature",
-            "properties": {
-                "coreNOTAMData": {
-                    "notamEvent": {
-                        "scenario": "101"
-                    },
-                    "notam": {
-                        "id": "NOTAM_1_71219095",
-                        "number": "4/8685",
-                        "type": "N",
-                        "issued": "2024-01-28T04:01:00.000Z",
-                        "selectionCode": "QXXXX",
-                        "location": "ZFW",
-                        "effectiveStart": "2024-01-28T04:00:00.000Z",
-                        "effectiveEnd": "2024-02-26T22:00:00.000Z",
-                        "text": "AIRSPACE ADS-B, AUTO DEPENDENT SURVEILLANCE \nREBROADCAST (ADS-R), TFC INFO SERVICE BCST (TIS-B), FLT INFO \nSERVICE BCST (FIS-B) SERVICES MAY NOT BE AVBL WI AN AREA DEFINED AS \n57NM RADIUS OF 334443N1010955W.\nAP AIRSPACE AFFECTED MAY INCLUDE F49, LBB, PVW, 41F, 8F3, 3F6.\n4000FT-5000FT",
-                        "classification": "FDC",
-                        "accountId": "FDC",
-                        "lastUpdated": "2024-01-28T04:02:00.000Z",
-                        "icaoLocation": "KZFW"
-                    },
-                    "notamTranslation": [
-                        {
-                            "type": "LOCAL_FORMAT",
-                            "simpleText": "!FDC 4/8685 ZFW AIRSPACE ADS-B, AUTO DEPENDENT SURVEILLANCE \nREBROADCAST (ADS-R), TFC INFO SERVICE BCST (TIS-B), FLT INFO \nSERVICE BCST (FIS-B) SERVICES MAY NOT BE AVBL WI AN AREA DEFINED AS \n57NM RADIUS OF 334443N1010955W.\nAP AIRSPACE AFFECTED MAY INCLUDE F49, LBB, PVW, 41F, 8F3, 3F6.\n4000FT-5000FT\n2401280400-2402262200EST"
-                        }
-                    ]
-                }
-            },
-            "geometry": {
-                "type": "GeometryCollection"
-            }
-        },
-        {
-            "type": "Feature",
-            "properties": {
-                "coreNOTAMData": {
-                    "notamEvent": {
-                        "scenario": "6000"
-                    },
-                    "notam": {
-                        "id": "NOTAM_1_71219108",
-                        "series": "A",
-                        "number": "A0049/24",
-                        "type": "N",
-                        "issued": "2024-01-28T04:02:00.000Z",
-                        "affectedFIR": "KZFW",
-                        "selectionCode": "QCBLS",
-                        "minimumFL": "040",
-                        "maximumFL": "050",
-                        "location": "ZFW",
-                        "effectiveStart": "2024-01-28T04:00:00.000Z",
-                        "effectiveEnd": "2024-02-26T22:00:00.000Z",
-                        "text": "ZFW AIRSPACE ADS-B, AUTO DEPENDENT SURVEILLANCE \nREBROADCAST (ADS-R), TFC INFO SERVICE BCST (TIS-B), FLT INFO \nSERVICE BCST (FIS-B) SERVICES MAY NOT BE AVBL WI AN AREA DEFINED AS \n57NM RADIUS OF 334443N1010955W.\nAP AIRSPACE AFFECTED MAY INCLUDE F49, LBB, PVW, 41F, 8F3, 3F6.",
-                        "classification": "INTL",
-                        "accountId": "KZFW",
-                        "lastUpdated": "2024-01-28T04:02:00.000Z",
-                        "icaoLocation": "KZFW",
-                        "lowerLimit": "4000FT",
-                        "upperLimit": "5000FT"
-                    },
-                    "notamTranslation": [
-                        {
-                            "type": "ICAO",
-                            "formattedText": "A0049/24 NOTAMN\nQ) KZFW/QCBLS////040/050/\nA) KZFW\nB) 2401280400\nC) 2402262200 EST\nE) ZFW AIRSPACE ADS-B, AUTO DEPENDENT SURVEILLANCE\nREBROADCAST (ADS-R), TFC INFO SERVICE BCST (TIS-B), FLT INFO\nSERVICE BCST (FIS-B) SERVICES MAY NOT BE AVBL WI AN AREA DEFINED AS\n57NM RADIUS OF 334443N1010955W.\nAP AIRSPACE AFFECTED MAY INCLUDE F49, LBB, PVW, 41F, 8F3, 3F6.\nF) 4000FT  G)  5000FT"
-                        }
-                    ]
-                }
-            },
-            "geometry": {
-                "type": "GeometryCollection"
-            }
-        },
-        {
-            "type": "Feature",
-            "properties": {
-                "coreNOTAMData": {
-                    "notamEvent": {
-                        "scenario": "114"
-                    },
-                    "notam": {
-                        "id": "NOTAM_1_71336438",
-                        "number": "02/105",
-                        "type": "N",
-                        "issued": "2024-02-06T20:53:00.000Z",
-                        "location": "ZFW",
-                        "effectiveStart": "2024-02-06T20:53:00.000Z",
-                        "effectiveEnd": "2024-05-31T23:59:00.000Z",
-                        "text": "OBST WIND TURBINE FARM WI AN AREA DEFINED AS 5.5NM RADIUS OF 322912N0993422W (7.2NM NE ABI) 2403FT (533FT AGL) NOT LGTD",
-                        "classification": "DOM",
-                        "accountId": "FTW",
-                        "lastUpdated": "2024-02-06T20:53:00.000Z",
-                        "icaoLocation": "KZFW",
-                        "coordinates": "322912N0993422W"
-                    },
-                    "notamTranslation": [
-                        {
-                            "type": "LOCAL_FORMAT",
-                            "simpleText": "!FTW 02/105 ZFW OBST WIND TURBINE FARM WI AN AREA DEFINED AS 5.5NM RADIUS OF 322912N0993422W (7.2NM NE ABI) 2403FT (533FT AGL) NOT LGTD 2402062053-2405312359"
-                        }
-                    ]
-                }
-            },
-            "geometry": {
-                "type": "GeometryCollection",
-                "geometries": [
-                    {
-                        "type": "Point",
-                        "coordinates": [
-                            -99.57,
-                            32.49
-                        ]
-                    }
-                ]
-            }
-        },
-        {
-            "type": "Feature",
-            "properties": {
-                "coreNOTAMData": {
-                    "notamEvent": {
-                        "scenario": "6000"
-                    },
-                    "notam": {
-                        "id": "NOTAM_1_68509003",
-                        "series": "A",
-                        "number": "A0231/23",
-                        "type": "N",
-                        "issued": "2023-05-18T21:57:00.000Z",
-                        "affectedFIR": "KZFW",
-                        "selectionCode": "QCBLS",
-                        "minimumFL": "000",
-                        "maximumFL": "999",
-                        "location": "ZFW",
-                        "effectiveStart": "2023-05-18T21:50:00.000Z",
-                        "effectiveEnd": "2023-06-05T22:00:00.000Z",
-                        "text": "ZFW AIRSPACE ADS-B, AUTO DEPENDENT SURVEILLANCE \nREBROADCAST (ADS-R), TFC INFO SERVICE BCST (TIS-B), FLT INFO \nSERVICE BCST (FIS-B) SERVICES MAY NOT BE AVBL WI AN AREA DEFINED AS \n139NM RADIUS OF 353335N1015910W.\nAP AIRSPACE AFFECTED MAY INCLUDE ELK, CSM, HHF, GAG, PAA, WWR, PYX.",
-                        "classification": "INTL",
-                        "accountId": "KZFW",
-                        "lastUpdated": "2023-05-18T21:57:00.000Z",
-                        "icaoLocation": "KZFW",
-                        "lowerLimit": "SFC",
-                        "upperLimit": "8000FT."
-                    },
-                    "notamTranslation": [
-                        {
-                            "type": "ICAO",
-                            "formattedText": "A0231/23 NOTAMN\nQ) KZFW/QCBLS////000/999/\nA) KZFW\nB) 2305182150\nC) 2306052200 EST\nE) ZFW AIRSPACE ADS-B, AUTO DEPENDENT SURVEILLANCE\nREBROADCAST (ADS-R), TFC INFO SERVICE BCST (TIS-B), FLT INFO\nSERVICE BCST (FIS-B) SERVICES MAY NOT BE AVBL WI AN AREA DEFINED AS\n139NM RADIUS OF 353335N1015910W.\nAP AIRSPACE AFFECTED MAY INCLUDE ELK, CSM, HHF, GAG, PAA, WWR, PYX.\nF) SFC  G) 8000FT."
-                        }
-                    ]
-                }
-            },
-            "geometry": {
-                "type": "GeometryCollection"
-            }
-        },
-        {
-            "type": "Feature",
-            "properties": {
-                "coreNOTAMData": {
-                    "notamEvent": {
-                        "scenario": "6000"
-                    },
-                    "notam": {
-                        "id": "NOTAM_1_68881811",
-                        "series": "A",
-                        "number": "A0325/23",
-                        "type": "N",
-                        "issued": "2023-06-27T23:17:00.000Z",
-                        "affectedFIR": "KZFW",
-                        "selectionCode": "QXXXX",
-                        "minimumFL": "000",
-                        "maximumFL": "999",
-                        "location": "ZFW",
-                        "effectiveStart": "2023-06-29T04:01:00.000Z",
-                        "effectiveEnd": "2025-06-29T04:01:00.000Z",
-                        "text": "ZFW AIRSPACE RDO ALTIMETER UNREL WI FORT WORTH ARTCC\nAIRSPACE SFC-5000FT AGL. AUTOLAND, HUD TO TOUCHDOWN, ENHANCED FLT \nVISION SYSTEMS TO TOUCHDOWN NOT AUTHORIZED EXC FOR RDO ALTIMETER \nTOLERANT ACFT AND ACFT USING APPROVED ALTERNATIVE METHODS OF \nCOMPLIANCE.HEL OPS REQUIRING RDO ALTIMETER DATA TO INCLUDE OFFSHORE \nINSTRUMENT OPS, HOVER AUTOPILOT MODES, SAR AUTOPILOT MODES, AND CAT \nA/B/PERFORMANCE CLASS TKOF AND LDG NOT AUTHORIZED EXC FOR RDO \nALTIMETER TOLERANT ROTORCRAFT AND ROTORCRAFT USING APPROVED \nALTERNATIVE METHODS OF COMPLIANCE. DUE TO 5G C-BAND INTERFERENCE \nPLUS SEE AIRWORTHINESS DIRECTIVE2023-10-02, 2023-11-07 AND DOMESTIC \nNOTICES",
-                        "classification": "INTL",
-                        "accountId": "KZFW",
-                        "lastUpdated": "2023-06-27T23:18:00.000Z",
-                        "icaoLocation": "KZFW",
-                        "lowerLimit": "SFC",
-                        "upperLimit": "5000FT AGL"
-                    },
-                    "notamTranslation": [
-                        {
-                            "type": "ICAO",
-                            "formattedText": "A0325/23 NOTAMN\nQ) KZFW/QXXXX////000/999/\nA) KZFW\nB) 2306290401\nC) 2506290401\nE) ZFW AIRSPACE RDO ALTIMETER UNREL WI FORT WORTH ARTCC\nAIRSPACE SFC-5000FT AGL. AUTOLAND, HUD TO TOUCHDOWN, ENHANCED FLT\nVISION SYSTEMS TO TOUCHDOWN NOT AUTHORIZED EXC FOR RDO ALTIMETER\nTOLERANT ACFT AND ACFT USING APPROVED ALTERNATIVE METHODS OF\nCOMPLIANCE.HEL OPS REQUIRING RDO ALTIMETER DATA TO INCLUDE OFFSHORE\nINSTRUMENT OPS, HOVER AUTOPILOT MODES, SAR AUTOPILOT MODES, AND CAT\nA/B/PERFORMANCE CLASS TKOF AND LDG NOT AUTHORIZED EXC FOR RDO\nALTIMETER TOLERANT ROTORCRAFT AND ROTORCRAFT USING APPROVED\nALTERNATIVE METHODS OF COMPLIANCE. DUE TO 5G C-BAND INTERFERENCE\nPLUS SEE AIRWORTHINESS DIRECTIVE2023-10-02, 2023-11-07 AND DOMESTIC\nNOTICES\nF) SFC  G) 5000FT AGL"
-                        }
-                    ]
-                }
-            },
-            "geometry": {
-                "type": "GeometryCollection"
-            }
-        },
-        {
-            "type": "Feature",
-            "properties": {
-                "coreNOTAMData": {
-                    "notamEvent": {
-                        "scenario": "114"
-                    },
-                    "notam": {
-                        "id": "NOTAM_1_67846005",
-                        "number": "03/402",
-                        "type": "N",
-                        "issued": "2023-03-15T20:30:00.000Z",
-                        "location": "ZFW",
-                        "effectiveStart": "2023-03-15T20:30:00.000Z",
-                        "effectiveEnd": "2024-03-31T23:59:00.000Z",
-                        "text": "OBST WIND TURBINE FARM WI AN AREA DEFINED AS 10NM RADIUS OF 321600N1002650W (12NM S SWW) 2200FT (360FT AGL) NOT LGTD",
-                        "classification": "DOM",
-                        "accountId": "FTW",
-                        "lastUpdated": "2023-03-15T20:30:00.000Z",
-                        "icaoLocation": "KZFW",
-                        "coordinates": "321600N1002650W"
-                    },
-                    "notamTranslation": [
-                        {
-                            "type": "LOCAL_FORMAT",
-                            "simpleText": "!FTW 03/402 ZFW OBST WIND TURBINE FARM WI AN AREA DEFINED AS 10NM RADIUS OF 321600N1002650W (12NM S SWW) 2200FT (360FT AGL) NOT LGTD 2303152030-2403312359"
-                        }
-                    ]
-                }
-            },
-            "geometry": {
-                "type": "GeometryCollection",
-                "geometries": [
-                    {
-                        "type": "Point",
-                        "coordinates": [
-                            -100.45,
-                            32.27
-                        ]
-                    }
-                ]
-            }
-        },
-        {
-            "type": "Feature",
-            "properties": {
-                "coreNOTAMData": {
-                    "notamEvent": {
-                        "scenario": "551"
-                    },
-                    "notam": {
-                        "id": "NOTAM_1_71309482",
-                        "number": "02/053",
-                        "type": "N",
-                        "issued": "2024-02-04T13:09:00.000Z",
-                        "affectedFIR": "ZFW",
-                        "minimumFL": "000",
-                        "maximumFL": "999",
-                        "location": "ZFW",
-                        "effectiveStart": "2024-02-04T13:00:00.000Z",
-                        "effectiveEnd": "2024-06-03T13:00:00.000Z",
-                        "text": "COM FORT WORTH REMOTE COM A/G 292.5 U/S",
-                        "classification": "DOM",
-                        "accountId": "FTW",
-                        "lastUpdated": "2024-02-04T13:09:00.000Z",
-                        "icaoLocation": "KZFW",
-                        "radius": "5"
-                    },
-                    "notamTranslation": [
-                        {
-                            "type": "LOCAL_FORMAT",
-                            "simpleText": "!FTW 02/053 ZFW COM FORT WORTH REMOTE COM A/G 292.5 U/S 2402041300-2406031300"
-                        },
-                        {
-                            "type": "ICAO",
-                            "formattedText": "02/053 NOTAMN\nQ)KZFW/QXXXX/IV/NBO/A/000/999/005\nA) KZFW\nB) 2402041300\nC) 2406031300\nE) COM FORT WORTH REMOTE COM A/G 292.5 U/S"
-                        }
-                    ]
-                }
-            },
-            "geometry": {
-                "type": "GeometryCollection"
-            }
-        },
-        {
-            "type": "Feature",
-            "properties": {
-                "coreNOTAMData": {
-                    "notamEvent": {
-                        "scenario": "114"
-                    },
-                    "notam": {
-                        "id": "NOTAM_1_71326378",
-                        "number": "02/083",
-                        "type": "N",
-                        "issued": "2024-02-06T00:05:00.000Z",
-                        "location": "ZFW",
-                        "effectiveStart": "2024-02-06T00:05:00.000Z",
-                        "effectiveEnd": "2024-03-06T23:59:00.000Z",
-                        "text": "OBST WIND TURBINE FARM WI AN AREA DEFINED AS 12NM RADIUS OF 313230N0965231W (9.7NM SE 73F) 568FT (499FT AGL) \nNOT LGTD",
-                        "classification": "DOM",
-                        "accountId": "FTW",
-                        "lastUpdated": "2024-02-06T00:05:00.000Z",
-                        "icaoLocation": "KZFW",
-                        "coordinates": "313230N0965231W"
-                    },
-                    "notamTranslation": [
-                        {
-                            "type": "LOCAL_FORMAT",
-                            "simpleText": "!FTW 02/083 ZFW OBST WIND TURBINE FARM WI AN AREA DEFINED AS 12NM RADIUS OF 313230N0965231W (9.7NM SE 73F) 568FT (499FT AGL) \nNOT LGTD 2402060005-2403062359"
-                        }
-                    ]
-                }
-            },
-            "geometry": {
-                "type": "GeometryCollection",
-                "geometries": [
-                    {
-                        "type": "Point",
-                        "coordinates": [
-                            -96.88,
-                            31.54
-                        ]
-                    }
-                ]
-            }
-        },
-        {
-            "type": "Feature",
-            "properties": {
-                "coreNOTAMData": {
-                    "notamEvent": {
-                        "scenario": "6000"
-                    },
-                    "notam": {
-                        "id": "NOTAM_1_64624928",
-                        "series": "A",
-                        "number": "A0265/22",
-                        "type": "N",
-                        "issued": "2022-06-09T17:18:00.000Z",
-                        "affectedFIR": "KZFW",
-                        "selectionCode": "QXXXX",
-                        "minimumFL": "000",
-                        "maximumFL": "999",
-                        "location": "ZFW",
-                        "effectiveStart": "2022-06-09T17:14:00.000Z",
-                        "effectiveEnd": "2024-06-09T17:14:00.000Z",
-                        "text": "ROUTE ZFW.\nV68 JOKES, TX TO STEEP, TX MOCA 4400.",
-                        "classification": "INTL",
-                        "accountId": "KZFW",
-                        "lastUpdated": "2022-06-09T17:18:00.000Z",
-                        "icaoLocation": "KZFW"
-                    },
-                    "notamTranslation": [
-                        {
-                            "type": "ICAO",
-                            "formattedText": "A0265/22 NOTAMN\nQ) KZFW/QXXXX////000/999/\nA) KZFW\nB) 2206091714\nC) 2406091714 EST\nE) ROUTE ZFW.\nV68 JOKES, TX TO STEEP, TX MOCA 4400."
-                        }
-                    ]
-                }
-            },
-            "geometry": {
-                "type": "GeometryCollection"
-            }
-        },
-        {
-            "type": "Feature",
-            "properties": {
-                "coreNOTAMData": {
-                    "notamEvent": {
-                        "scenario": "114"
-                    },
-                    "notam": {
-                        "id": "NOTAM_1_71072473",
-                        "number": "01/540",
-                        "type": "N",
-                        "issued": "2024-01-19T08:30:00.000Z",
-                        "location": "ZFW",
-                        "effectiveStart": "2024-01-19T08:28:00.000Z",
-                        "effectiveEnd": "2024-02-19T00:59:00.000Z",
-                        "text": "OBST WIND TURBINE FARM WI AN AREA DEFINED AS 4.3NM RADIUS OF 341136N993314W (13NM SW F05) 1500FT (462FT AGL) NOT LGTD",
-                        "classification": "DOM",
-                        "accountId": "FTW",
-                        "lastUpdated": "2024-01-19T08:30:00.000Z",
-                        "icaoLocation": "KZFW",
-                        "coordinates": "341136N993314W"
-                    },
-                    "notamTranslation": [
-                        {
-                            "type": "LOCAL_FORMAT",
-                            "simpleText": "!FTW 01/540 ZFW OBST WIND TURBINE FARM WI AN AREA DEFINED AS 4.3NM RADIUS OF 341136N993314W (13NM SW F05) 1500FT (462FT AGL) NOT LGTD\n 2401190828-2402190059"
-                        }
-                    ]
-                }
-            },
-            "geometry": {
-                "type": "GeometryCollection",
-                "geometries": [
-                    {
-                        "type": "Point",
-                        "coordinates": [
-                            -993.52,
-                            34.19
-                        ]
-                    }
-                ]
-            }
-        },
-        {
-            "type": "Feature",
-            "properties": {
-                "coreNOTAMData": {
-                    "notamEvent": {
-                        "scenario": "114"
-                    },
-                    "notam": {
-                        "id": "NOTAM_1_71041398",
-                        "number": "01/505",
-                        "type": "N",
-                        "issued": "2024-01-17T21:34:00.000Z",
-                        "location": "ZFW",
-                        "effectiveStart": "2024-01-17T21:34:00.000Z",
-                        "effectiveEnd": "2024-03-02T23:59:00.000Z",
-                        "text": "OBST WIND TURBINE FARM WI AN AREA DEFINED AS 5NM RADIUS OF 321656N0991003W (9.4NM SW GZN) 1784FT (657FT AGL) NOT LGTD",
-                        "classification": "DOM",
-                        "accountId": "FTW",
-                        "lastUpdated": "2024-01-17T21:34:00.000Z",
-                        "icaoLocation": "KZFW",
-                        "coordinates": "321656N0991003W"
-                    },
-                    "notamTranslation": [
-                        {
-                            "type": "LOCAL_FORMAT",
-                            "simpleText": "!FTW 01/505 ZFW OBST WIND TURBINE FARM WI AN AREA DEFINED AS 5NM RADIUS OF 321656N0991003W (9.4NM SW GZN) 1784FT (657FT AGL)  NOT LGTD 2401172134-2403022359"
-                        }
-                    ]
-                }
-            },
-            "geometry": {
-                "type": "GeometryCollection",
-                "geometries": [
-                    {
-                        "type": "Point",
-                        "coordinates": [
-                            -99.17,
-                            32.28
-                        ]
-                    }
-                ]
-            }
-        },
-        {
-            "type": "Feature",
-            "properties": {
-                "coreNOTAMData": {
-                    "notamEvent": {
-                        "scenario": "114"
-                    },
-                    "notam": {
-                        "id": "NOTAM_1_71193218",
-                        "number": "01/721",
-                        "type": "N",
-                        "issued": "2024-01-25T22:08:00.000Z",
-                        "location": "ZFW",
-                        "effectiveStart": "2024-01-25T22:00:00.000Z",
-                        "effectiveEnd": "2024-02-25T23:59:00.000Z",
-                        "text": "OBST WIND TURBINE FARM WI AN AREA DEFINED AS 5.85NM RADIUS OF 315503N1005958W (37.6NM SE BPG) 2794FT (400FT AGL) NOT LGTD",
-                        "classification": "DOM",
-                        "accountId": "FTW",
-                        "lastUpdated": "2024-01-25T22:08:00.000Z",
-                        "icaoLocation": "KZFW",
-                        "coordinates": "315503N1005958W"
-                    },
-                    "notamTranslation": [
-                        {
-                            "type": "LOCAL_FORMAT",
-                            "simpleText": "!FTW 01/721 ZFW OBST WIND TURBINE FARM WI AN AREA DEFINED AS 5.85NM RADIUS OF 315503N1005958W (37.6NM SE BPG) 2794FT (400FT AGL) NOT LGTD 2401252200-2402252359EST"
-                        }
-                    ]
-                }
-            },
-            "geometry": {
-                "type": "GeometryCollection",
-                "geometries": [
-                    {
-                        "type": "Point",
-                        "coordinates": [
-                            -101.0,
-                            31.92
-                        ]
-                    }
-                ]
-            }
-        },
-        {
-            "type": "Feature",
-            "properties": {
-                "coreNOTAMData": {
-                    "notamEvent": {
-                        "scenario": "101"
-                    },
-                    "notam": {
-                        "id": "NOTAM_1_69828853",
-                        "number": "10/100",
-                        "type": "N",
-                        "issued": "2023-10-04T20:51:00.000Z",
-                        "location": "ZFW",
-                        "effectiveStart": "2023-10-05T12:47:00.000Z",
-                        "effectiveEnd": "2024-10-31T01:32:00.000Z",
-                        "text": "AIRSPACE PJE WI AN AREA DEFINED AS 5NM RADIUS OF 325720N1023216W (15.7NM ENE E57) SFC-13500FT",
-                        "classification": "DOM",
-                        "accountId": "FTW",
-                        "lastUpdated": "2023-10-04T20:51:00.000Z",
-                        "icaoLocation": "KZFW",
-                        "coordinates": "325720N1023216W"
-                    },
-                    "notamTranslation": [
-                        {
-                            "type": "LOCAL_FORMAT",
-                            "simpleText": "!FTW 10/100 ZFW AIRSPACE PJE WI AN AREA DEFINED AS 5NM RADIUS OF 325720N1023216W (15.7NM ENE E57) SFC-13500FT 2310051247-2410310132"
-                        }
-                    ]
-                }
-            },
-            "geometry": {
-                "type": "GeometryCollection",
-                "geometries": [
-                    {
-                        "type": "Point",
-                        "coordinates": [
-                            -102.54,
-                            32.96
-                        ]
-                    }
-                ]
-            }
-        },
-        {
-            "type": "Feature",
-            "properties": {
-                "coreNOTAMData": {
-                    "notamEvent": {
-                        "scenario": "114"
-                    },
-                    "notam": {
-                        "id": "NOTAM_1_71364263",
-                        "number": "02/158",
-                        "type": "N",
-                        "issued": "2024-02-08T23:49:00.000Z",
-                        "location": "ZFW",
-                        "effectiveStart": "2024-02-08T23:49:00.000Z",
-                        "effectiveEnd": "2024-02-22T23:59:00.000Z",
-                        "text": "OBST WIND TURBINE FARM WI AN AREA DEFINED AS 5.8NM RADIUS OF 321150N1001435W (20.3NM SE SWW) 2909FT (389FT AGL) \nNOT LGTD",
-                        "classification": "DOM",
-                        "accountId": "FTW",
-                        "lastUpdated": "2024-02-08T23:49:00.000Z",
-                        "icaoLocation": "KZFW",
-                        "coordinates": "321150N1001435W"
-                    },
-                    "notamTranslation": [
-                        {
-                            "type": "LOCAL_FORMAT",
-                            "simpleText": "!FTW 02/158 ZFW OBST WIND TURBINE FARM WI AN AREA DEFINED AS 5.8NM RADIUS OF 321150N1001435W (20.3NM SE SWW) 2909FT (389FT AGL) \nNOT LGTD 2402082349-2402222359"
-                        }
-                    ]
-                }
-            },
-            "geometry": {
-                "type": "GeometryCollection",
-                "geometries": [
-                    {
-                        "type": "Point",
-                        "coordinates": [
-                            -100.24,
-                            32.2
-                        ]
-                    }
-                ]
-            }
-        },
-        {
-            "type": "Feature",
-            "properties": {
-                "coreNOTAMData": {
-                    "notamEvent": {
                         "scenario": "114"
                     },
                     "notam": {
@@ -1518,44 +933,6 @@
                         ]
                     }
                 ]
-            }
-        },
-        {
-            "type": "Feature",
-            "properties": {
-                "coreNOTAMData": {
-                    "notamEvent": {
-                        "scenario": "6000"
-                    },
-                    "notam": {
-                        "id": "NOTAM_1_70504503",
-                        "series": "A",
-                        "number": "A0603/23",
-                        "type": "N",
-                        "issued": "2023-12-07T21:09:00.000Z",
-                        "affectedFIR": "KZFW",
-                        "selectionCode": "QXXXX",
-                        "minimumFL": "000",
-                        "maximumFL": "999",
-                        "location": "ZFW",
-                        "effectiveStart": "2023-12-08T12:30:00.000Z",
-                        "effectiveEnd": "PERM",
-                        "text": "ZFW COM DOMESTIC CPDLC AVBL ON KUSA",
-                        "classification": "INTL",
-                        "accountId": "KZFW",
-                        "lastUpdated": "2023-12-07T21:10:00.000Z",
-                        "icaoLocation": "KZFW"
-                    },
-                    "notamTranslation": [
-                        {
-                            "type": "ICAO",
-                            "formattedText": "A0603/23 NOTAMN\nQ) KZFW/QXXXX////000/999/\nA) KZFW\nB) 2312081230\nC) PERM\nE) ZFW COM DOMESTIC CPDLC AVBL ON KUSA"
-                        }
-                    ]
-                }
-            },
-            "geometry": {
-                "type": "GeometryCollection"
             }
         },
         {
@@ -1639,6 +1016,202 @@
             "properties": {
                 "coreNOTAMData": {
                     "notamEvent": {
+                        "scenario": "100005"
+                    },
+                    "notam": {
+                        "id": "NOTAM_1_36311273",
+                        "number": "9/2934",
+                        "type": "N",
+                        "issued": "2009-01-26T22:13:00.000Z",
+                        "location": "ZFW",
+                        "effectiveStart": "2009-01-26T22:13:00.000Z",
+                        "effectiveEnd": "PERM",
+                        "text": "TX.. FLIGHT RESTRICTION. DALLAS, TEXAS.  \n   PURSUANT TO 49 USC 40103(B), THE FEDERAL AVIATION ADMINISTRATION \n(FAA) CLASSIFIES THE AIRSPACE DEFINED IN THIS NOTAM AS 'NATIONAL \nDEFENSE AIRSPACE'. ANY PERSON WHO KNOWINGLY OR WILLFULLY VIOLATES \nTHE RULES CONCERNING OPERATIONS IN THIS AIRSPACE MAY BE SUBJECT TO \nCERTAIN CRIMINAL PENALTIES UNDER 49 USC 46307.  PILOTS WHO DO NOT \nADHERE TO THE FOLLOWING PROCEDURES MAY BE INTERCEPTED, DETAINED \nAND INTERVIEWED BY LAW ENFORCEMENT/SECURITY PERSONNEL.  PURSUANT \nTO TITLE 14, SECTION 91.141 OF THE CODE OF FEDERAL REGULATIONS, \nAIRCRAFT FLIGHT OPERATIONS ARE PROHIBITED WITHIN THE FOLLOWING \nAREA(S) UNLESS OTHERWISE AUTHORIZED BY ATC \n  \nWITHIN A 1 NMR OF 325321N/0964835W OR THE CVE085004.8 UP TO AND \nINCLUDING 1500 FT AGL EFFECTIVE IMMEDIATELY UNTIL FURTHER NOTICE.",
+                        "classification": "FDC",
+                        "accountId": "FDC",
+                        "lastUpdated": "2015-10-08T05:55:00.000Z",
+                        "icaoLocation": "KZFW"
+                    },
+                    "notamTranslation": [
+                        {
+                            "type": "LOCAL_FORMAT",
+                            "simpleText": "!FDC 9/2934 ZFW TX.. FLIGHT RESTRICTION. DALLAS, TEXAS.  \n   PURSUANT TO 49 USC 40103(B), THE FEDERAL AVIATION ADMINISTRATION \n(FAA) CLASSIFIES THE AIRSPACE DEFINED IN THIS NOTAM AS &apos;NATIONAL \nDEFENSE AIRSPACE&apos;. ANY PERSON WHO KNOWINGLY OR WILLFULLY VIOLATES \nTHE RULES CONCERNING OPERATIONS IN THIS AIRSPACE MAY BE SUBJECT TO \nCERTAIN CRIMINAL PENALTIES UNDER 49 USC 46307.  PILOTS WHO DO NOT \nADHERE TO THE FOLLOWING PROCEDURES MAY BE INTERCEPTED, DETAINED \nAND INTERVIEWED BY LAW ENFORCEMENT/SECURITY PERSONNEL.  PURSUANT \nTO TITLE 14, SECTION 91.141 OF THE CODE OF FEDERAL REGULATIONS, \nAIRCRAFT FLIGHT OPERATIONS ARE PROHIBITED WITHIN THE FOLLOWING \nAREA(S) UNLESS OTHERWISE AUTHORIZED BY ATC \n  \nWITHIN A 1 NMR OF 325321N/0964835W OR THE CVE085004.8 UP TO AND \nINCLUDING 1500 FT AGL EFFECTIVE IMMEDIATELY UNTIL FURTHER NOTICE."
+                        }
+                    ]
+                }
+            },
+            "geometry": {
+                "type": "GeometryCollection",
+                "geometries": [
+                    {
+                        "type": "Polygon",
+                        "heightInformation": {
+                            "upperLevel": "1500",
+                            "uomUpperLevel": "FT",
+                            "lowerLevel": "0",
+                            "uomLowerLevel": "FT"
+                        },
+                        "coordinates": [
+                            [
+                                [
+                                    -96.80972222,
+                                    32.905866
+                                ],
+                                [
+                                    -96.80628462,
+                                    32.90561226
+                                ],
+                                [
+                                    -96.80295153,
+                                    32.90485873
+                                ],
+                                [
+                                    -96.79982427,
+                                    32.90362832
+                                ],
+                                [
+                                    -96.79699789,
+                                    32.90195846
+                                ],
+                                [
+                                    -96.79455831,
+                                    32.89989988
+                                ],
+                                [
+                                    -96.79257964,
+                                    32.89751517
+                                ],
+                                [
+                                    -96.79112198,
+                                    32.8948768
+                                ],
+                                [
+                                    -96.79022959,
+                                    32.89206496
+                                ],
+                                [
+                                    -96.78992953,
+                                    32.8891651
+                                ],
+                                [
+                                    -96.79023086,
+                                    32.88626534
+                                ],
+                                [
+                                    -96.79112437,
+                                    32.88345377
+                                ],
+                                [
+                                    -96.79258285,
+                                    32.88081581
+                                ],
+                                [
+                                    -96.79456197,
+                                    32.8784316
+                                ],
+                                [
+                                    -96.79700155,
+                                    32.87637356
+                                ],
+                                [
+                                    -96.79982748,
+                                    32.8747042
+                                ],
+                                [
+                                    -96.80295391,
+                                    32.87347421
+                                ],
+                                [
+                                    -96.80628589,
+                                    32.87272095
+                                ],
+                                [
+                                    -96.80972222,
+                                    32.87246729
+                                ],
+                                [
+                                    -96.81315855,
+                                    32.87272095
+                                ],
+                                [
+                                    -96.81649053,
+                                    32.87347421
+                                ],
+                                [
+                                    -96.81961696,
+                                    32.8747042
+                                ],
+                                [
+                                    -96.82244289,
+                                    32.87637356
+                                ],
+                                [
+                                    -96.82488247,
+                                    32.8784316
+                                ],
+                                [
+                                    -96.82686159,
+                                    32.88081581
+                                ],
+                                [
+                                    -96.82832007,
+                                    32.88345377
+                                ],
+                                [
+                                    -96.82921358,
+                                    32.88626534
+                                ],
+                                [
+                                    -96.82951491,
+                                    32.8891651
+                                ],
+                                [
+                                    -96.82921485,
+                                    32.89206496
+                                ],
+                                [
+                                    -96.82832246,
+                                    32.8948768
+                                ],
+                                [
+                                    -96.8268648,
+                                    32.89751517
+                                ],
+                                [
+                                    -96.82488613,
+                                    32.89989988
+                                ],
+                                [
+                                    -96.82244655,
+                                    32.90195846
+                                ],
+                                [
+                                    -96.81962017,
+                                    32.90362832
+                                ],
+                                [
+                                    -96.81649291,
+                                    32.90485873
+                                ],
+                                [
+                                    -96.81315982,
+                                    32.90561226
+                                ],
+                                [
+                                    -96.80972222,
+                                    32.905866
+                                ]
+                            ]
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "coreNOTAMData": {
+                    "notamEvent": {
                         "scenario": "101"
                     },
                     "notam": {
@@ -1659,87 +1232,6 @@
                         {
                             "type": "LOCAL_FORMAT",
                             "simpleText": "!FTW 01/081 ZFW AIRSPACE AIRDROP WI AN AREA DEFINED AS 3NM EITHER SIDE OF A LINE FM SJT333037 TO SJT028027 SFC-3500FT MON-FRI 1630-0300 2401051630-2501040300"
-                        }
-                    ]
-                }
-            },
-            "geometry": {
-                "type": "GeometryCollection"
-            }
-        },
-        {
-            "type": "Feature",
-            "properties": {
-                "coreNOTAMData": {
-                    "notamEvent": {
-                        "scenario": "114"
-                    },
-                    "notam": {
-                        "id": "NOTAM_1_71335267",
-                        "number": "02/101",
-                        "type": "N",
-                        "issued": "2024-02-06T18:50:00.000Z",
-                        "location": "ZFW",
-                        "effectiveStart": "2024-02-06T18:50:00.000Z",
-                        "effectiveEnd": "2024-04-30T23:59:00.000Z",
-                        "text": "OBST WIND TURBINE FARM WI AN AREA DEFINED AS 6.6NM RADIUS OF 353632N0984905W (6.8NM NW CLK) 1811FT (550FT AGL) NOT LGTD",
-                        "classification": "DOM",
-                        "accountId": "FTW",
-                        "lastUpdated": "2024-02-06T18:50:00.000Z",
-                        "icaoLocation": "KZFW",
-                        "coordinates": "353632N0984905W"
-                    },
-                    "notamTranslation": [
-                        {
-                            "type": "LOCAL_FORMAT",
-                            "simpleText": "!FTW 02/101 ZFW OBST WIND TURBINE FARM WI AN AREA DEFINED AS 6.6NM RADIUS OF 353632N0984905W (6.8NM NW CLK) 1811FT (550FT AGL) NOT LGTD 2402061850-2404302359"
-                        }
-                    ]
-                }
-            },
-            "geometry": {
-                "type": "GeometryCollection",
-                "geometries": [
-                    {
-                        "type": "Point",
-                        "coordinates": [
-                            -98.82,
-                            35.61
-                        ]
-                    }
-                ]
-            }
-        },
-        {
-            "type": "Feature",
-            "properties": {
-                "coreNOTAMData": {
-                    "notamEvent": {
-                        "scenario": "6000"
-                    },
-                    "notam": {
-                        "id": "NOTAM_1_68728874",
-                        "series": "A",
-                        "number": "A0282/23",
-                        "type": "N",
-                        "issued": "2023-06-12T15:06:00.000Z",
-                        "affectedFIR": "KZFW",
-                        "selectionCode": "QXXXX",
-                        "minimumFL": "000",
-                        "maximumFL": "999",
-                        "location": "ZFW",
-                        "effectiveStart": "2023-06-12T15:05:00.000Z",
-                        "effectiveEnd": "2023-06-15T09:01:00.000Z",
-                        "text": "ZFW OK..ROUTE ZFW ZKC ZME.\nV74 MALTS, OK TO FORT SMITH (FSM) VORTAC, AR MEA 3100.",
-                        "classification": "INTL",
-                        "accountId": "KZFW",
-                        "lastUpdated": "2023-06-12T15:07:00.000Z",
-                        "icaoLocation": "KZFW"
-                    },
-                    "notamTranslation": [
-                        {
-                            "type": "ICAO",
-                            "formattedText": "A0282/23 NOTAMN\nQ) KZFW/QXXXX////000/999/\nA) KZFW\nB) 2306121505\nC) 2306150901 EST\nE) ZFW OK..ROUTE ZFW ZKC ZME.\nV74 MALTS, OK TO FORT SMITH (FSM) VORTAC, AR MEA 3100."
                         }
                     ]
                 }
@@ -1829,186 +1321,74 @@
             "properties": {
                 "coreNOTAMData": {
                     "notamEvent": {
+                        "scenario": "114"
+                    },
+                    "notam": {
+                        "id": "NOTAM_1_71222535",
+                        "number": "01/762",
+                        "type": "N",
+                        "issued": "2024-01-28T14:24:00.000Z",
+                        "location": "ZFW",
+                        "effectiveStart": "2024-01-28T14:14:00.000Z",
+                        "effectiveEnd": "2024-02-26T23:59:00.000Z",
+                        "text": "OBST WIND TURBINE FARM WI AN AREA DEFINED AS 8NM RADIUS OF 340631N1012025W (5.7NM W 41F) 3694FT (430FT AGL) NOT LGTD",
+                        "classification": "DOM",
+                        "accountId": "FTW",
+                        "lastUpdated": "2024-01-28T14:24:00.000Z",
+                        "icaoLocation": "KZFW",
+                        "coordinates": "340631N1012025W"
+                    },
+                    "notamTranslation": [
+                        {
+                            "type": "LOCAL_FORMAT",
+                            "simpleText": "!FTW 01/762 ZFW OBST WIND TURBINE FARM WI AN AREA DEFINED AS 8NM RADIUS OF 340631N1012025W (5.7NM W 41F) 3694FT (430FT AGL) NOT LGTD 2401281414-2402262359EST"
+                        }
+                    ]
+                }
+            },
+            "geometry": {
+                "type": "GeometryCollection",
+                "geometries": [
+                    {
+                        "type": "Point",
+                        "coordinates": [
+                            -101.34,
+                            34.11
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "coreNOTAMData": {
+                    "notamEvent": {
                         "scenario": "6000"
                     },
                     "notam": {
-                        "id": "NOTAM_1_66094343",
+                        "id": "NOTAM_1_64624928",
                         "series": "A",
-                        "number": "A0529/22",
+                        "number": "A0265/22",
                         "type": "N",
-                        "issued": "2022-11-14T18:34:00.000Z",
+                        "issued": "2022-06-09T17:18:00.000Z",
                         "affectedFIR": "KZFW",
                         "selectionCode": "QXXXX",
                         "minimumFL": "000",
                         "maximumFL": "999",
                         "location": "ZFW",
-                        "effectiveStart": "2022-11-14T18:27:00.000Z",
-                        "effectiveEnd": "2024-11-14T18:24:00.000Z",
-                        "text": "ZFW TX..ROUTE ZFW.\nV568 MILLSAP (MQP) VORTAC, TX TO KARYN, TX MEA 3100 NORTHWESTBOUND,\n3000 SOUTHEASTBOUND.",
+                        "effectiveStart": "2022-06-09T17:14:00.000Z",
+                        "effectiveEnd": "2024-06-09T17:14:00.000Z",
+                        "text": "ROUTE ZFW.\nV68 JOKES, TX TO STEEP, TX MOCA 4400.",
                         "classification": "INTL",
                         "accountId": "KZFW",
-                        "lastUpdated": "2022-11-14T18:35:00.000Z",
+                        "lastUpdated": "2022-06-09T17:18:00.000Z",
                         "icaoLocation": "KZFW"
                     },
                     "notamTranslation": [
                         {
                             "type": "ICAO",
-                            "formattedText": "A0529/22 NOTAMN\nQ) KZFW/QXXXX////000/999/\nA) KZFW\nB) 2211141827\nC) 2411141824 EST\nE) ZFW TX..ROUTE ZFW.\nV568 MILLSAP (MQP) VORTAC, TX TO KARYN, TX MEA 3100 NORTHWESTBOUND,\n3000 SOUTHEASTBOUND."
-                        }
-                    ]
-                }
-            },
-            "geometry": {
-                "type": "GeometryCollection"
-            }
-        },
-        {
-            "type": "Feature",
-            "properties": {
-                "coreNOTAMData": {
-                    "notamEvent": {
-                        "scenario": "551"
-                    },
-                    "notam": {
-                        "id": "NOTAM_1_71309500",
-                        "number": "02/054",
-                        "type": "N",
-                        "issued": "2024-02-04T13:09:00.000Z",
-                        "affectedFIR": "ZFW",
-                        "minimumFL": "000",
-                        "maximumFL": "999",
-                        "location": "ZFW",
-                        "effectiveStart": "2024-02-04T13:00:00.000Z",
-                        "effectiveEnd": "2024-06-03T13:00:00.000Z",
-                        "text": "COM FORT WORTH REMOTE COM A/G 284.1 U/S",
-                        "classification": "DOM",
-                        "accountId": "FTW",
-                        "lastUpdated": "2024-02-04T13:09:00.000Z",
-                        "icaoLocation": "KZFW",
-                        "radius": "5"
-                    },
-                    "notamTranslation": [
-                        {
-                            "type": "LOCAL_FORMAT",
-                            "simpleText": "!FTW 02/054 ZFW COM FORT WORTH REMOTE COM A/G 284.1 U/S 2402041300-2406031300"
-                        },
-                        {
-                            "type": "ICAO",
-                            "formattedText": "02/054 NOTAMN\nQ)KZFW/QXXXX/IV/NBO/A/000/999/005\nA) KZFW\nB) 2402041300\nC) 2406031300\nE) COM FORT WORTH REMOTE COM A/G 284.1 U/S"
-                        }
-                    ]
-                }
-            },
-            "geometry": {
-                "type": "GeometryCollection"
-            }
-        },
-        {
-            "type": "Feature",
-            "properties": {
-                "coreNOTAMData": {
-                    "notamEvent": {
-                        "scenario": "6000"
-                    },
-                    "notam": {
-                        "id": "NOTAM_1_70196124",
-                        "series": "A",
-                        "number": "A0553/23",
-                        "type": "N",
-                        "issued": "2023-11-09T20:23:00.000Z",
-                        "affectedFIR": "KZFW",
-                        "selectionCode": "QCBLS",
-                        "minimumFL": "030",
-                        "maximumFL": "040",
-                        "location": "ZFW",
-                        "effectiveStart": "2023-11-09T20:20:00.000Z",
-                        "effectiveEnd": "2023-11-27T22:00:00.000Z",
-                        "text": "ZFW AIRSPACE ADS-B, AUTO DEPENDENT SURVEILLANCE \nREBROADCAST (ADS-R), TFC INFO SERVICE BCST (TIS-B), FLT INFO\nSERVICE BCST (FIS-B) SERVICES MAY NOT BE AVBL WI AN AREA DEFINED AS \n33NM RADIUS OF 323229N1010629W. AP AIRSPACE AFFECTED MAY INCLUDE \nSNK, SWW, BPG.",
-                        "classification": "INTL",
-                        "accountId": "KZFW",
-                        "lastUpdated": "2023-11-09T20:24:00.000Z",
-                        "icaoLocation": "KZFW",
-                        "lowerLimit": "3000FT",
-                        "upperLimit": "4000FT"
-                    },
-                    "notamTranslation": [
-                        {
-                            "type": "ICAO",
-                            "formattedText": "A0553/23 NOTAMN\nQ) KZFW/QCBLS////030/040/\nA) KZFW\nB) 2311092020\nC) 2311272200 EST\nE) ZFW AIRSPACE ADS-B, AUTO DEPENDENT SURVEILLANCE\nREBROADCAST (ADS-R), TFC INFO SERVICE BCST (TIS-B), FLT INFO\nSERVICE BCST (FIS-B) SERVICES MAY NOT BE AVBL WI AN AREA DEFINED AS\n33NM RADIUS OF 323229N1010629W. AP AIRSPACE AFFECTED MAY INCLUDE\nSNK, SWW, BPG.\nF) 3000FT G) 4000FT"
-                        }
-                    ]
-                }
-            },
-            "geometry": {
-                "type": "GeometryCollection"
-            }
-        },
-        {
-            "type": "Feature",
-            "properties": {
-                "coreNOTAMData": {
-                    "notamEvent": {
-                        "scenario": "101"
-                    },
-                    "notam": {
-                        "id": "NOTAM_1_71314464",
-                        "number": "02/061",
-                        "type": "N",
-                        "issued": "2024-02-05T01:43:00.000Z",
-                        "location": "ZFW",
-                        "effectiveStart": "2024-02-05T14:00:00.000Z",
-                        "effectiveEnd": "2024-02-29T23:59:00.000Z",
-                        "text": "AIRSPACE UAS WI AN AREA DEFINED AS 6NM RADIUS OF ADM066069 (19NM SSW MLC) SFC-3500FT AGL DLY 1400-2359",
-                        "classification": "DOM",
-                        "accountId": "FTW",
-                        "lastUpdated": "2024-02-05T01:43:00.000Z",
-                        "icaoLocation": "KZFW",
-                        "schedule": "Daily:1400-2359~DLY 1400-2359"
-                    },
-                    "notamTranslation": [
-                        {
-                            "type": "LOCAL_FORMAT",
-                            "simpleText": "!FTW 02/061 ZFW AIRSPACE UAS WI AN AREA DEFINED AS 6NM RADIUS OF ADM066069 (19NM SSW MLC) SFC-3500FT AGL DLY 1400-2359 2402051400-2402292359"
-                        }
-                    ]
-                }
-            },
-            "geometry": {
-                "type": "GeometryCollection"
-            }
-        },
-        {
-            "type": "Feature",
-            "properties": {
-                "coreNOTAMData": {
-                    "notamEvent": {
-                        "scenario": "6000"
-                    },
-                    "notam": {
-                        "id": "NOTAM_1_68462923",
-                        "series": "A",
-                        "number": "A0227/23",
-                        "type": "N",
-                        "issued": "2023-05-14T12:32:00.000Z",
-                        "affectedFIR": "KZFW",
-                        "selectionCode": "QCBLS",
-                        "minimumFL": "040",
-                        "maximumFL": "080",
-                        "location": "ZFW",
-                        "effectiveStart": "2023-05-14T12:26:00.000Z",
-                        "effectiveEnd": "2023-05-22T22:00:00.000Z",
-                        "text": "ZFW AIRSPACE ADS-B, AUTO DEPENDENT SURVEILLANCE \nREBROADCAST (ADS-R), TFC INFO SERVICE BCST (TIS-B), FLT INFO \nSERVICE BCST (FIS-B) SERVICES MAY NOT BE AVBL WI AN AREA DEFINED AS \n102NM RADIUS OF 350134N1033337W. AP AIRSPACE AFFECTED MAY \nINCLUDE AMA, LNN, CVN, LSV, CAO, DHT, DUX, TDW.",
-                        "classification": "INTL",
-                        "accountId": "KZFW",
-                        "lastUpdated": "2023-05-14T12:33:00.000Z",
-                        "icaoLocation": "KZFW",
-                        "lowerLimit": "4000FT",
-                        "upperLimit": "8000FT"
-                    },
-                    "notamTranslation": [
-                        {
-                            "type": "ICAO",
-                            "formattedText": "A0227/23 NOTAMN\nQ) KZFW/QCBLS////040/080/\nA) KZFW\nB) 2305141226\nC) 2305222200 EST\nE) ZFW AIRSPACE ADS-B, AUTO DEPENDENT SURVEILLANCE\nREBROADCAST (ADS-R), TFC INFO SERVICE BCST (TIS-B), FLT INFO\nSERVICE BCST (FIS-B) SERVICES MAY NOT BE AVBL WI AN AREA DEFINED AS\n102NM RADIUS OF 350134N1033337W. AP AIRSPACE AFFECTED MAY\nINCLUDE AMA, LNN, CVN, LSV, CAO, DHT, DUX, TDW.\nF) 4000FT G) 8000FT"
+                            "formattedText": "A0265/22 NOTAMN\nQ) KZFW/QXXXX////000/999/\nA) KZFW\nB) 2206091714\nC) 2406091714 EST\nE) ROUTE ZFW.\nV68 JOKES, TX TO STEEP, TX MOCA 4400."
                         }
                     ]
                 }
@@ -2178,27 +1558,812 @@
             "properties": {
                 "coreNOTAMData": {
                     "notamEvent": {
-                        "scenario": "100026"
+                        "scenario": "816"
                     },
                     "notam": {
-                        "id": "NOTAM_1_67085928",
-                        "number": "2/0932",
+                        "id": "NOTAM_1_63931922",
+                        "number": "2/0704",
                         "type": "N",
-                        "issued": "2022-11-14T18:28:00.000Z",
-                        "selectionCode": "QXXXX",
+                        "issued": "2022-03-29T17:47:00.000Z",
                         "location": "ZFW",
-                        "effectiveStart": "2022-11-14T18:27:00.000Z",
-                        "effectiveEnd": "2024-11-14T18:24:00.000Z",
-                        "text": "TX..ROUTE ZFW.\nV568 MILLSAP (MQP) VORTAC, TX TO KARYN, TX MEA 3100 NORTHWESTBOUND,\n3000 SOUTHEASTBOUND.",
+                        "effectiveStart": "2022-03-29T17:45:00.000Z",
+                        "effectiveEnd": "2024-04-10T17:45:00.000Z",
+                        "text": "AR..ROUTE ZFW.\nV278 WEEBR, AR TO WARLO, AR MEA 4000.\nV278 WARLO, AR TO HAMPT, AR NA EXCEPT FOR ACFT EQUIPPED WITH SUITABLE RNAV SYSTEM WITH GPS.\nTXK VOR UNUSABLE. 2203291745-2404101745EST",
                         "classification": "FDC",
                         "accountId": "FDC",
-                        "lastUpdated": "2023-01-22T07:49:00.000Z",
+                        "lastUpdated": "2022-03-29T17:50:00.000Z",
+                        "icaoLocation": "KZFW",
+                        "coordinates": "3333N09230W"
+                    },
+                    "notamTranslation": [
+                        {
+                            "type": "LOCAL_FORMAT",
+                            "simpleText": "!FDC 2/0704 ZFW AR..ROUTE ZFW.\nV278 WEEBR, AR TO WARLO, AR MEA 4000.\nV278 WARLO, AR TO HAMPT, AR NA EXCEPT FOR ACFT EQUIPPED WITH SUITABLE RNAV SYSTEM WITH GPS.\nTXK VOR UNUSABLE. 2203291745-2404101745EST"
+                        },
+                        {
+                            "type": "ICAO",
+                            "formattedText": "Q) KFIR/QXXXX/I/NBO/A/000/999/latNlongW025\nA) locationIndicatorICAO\nB) 2203291745\nC) 2404101744EST\nE) ROUTE undefined,undefined,undefined\nundefined undefined...\nundefined"
+                        }
+                    ]
+                }
+            },
+            "geometry": {
+                "type": "GeometryCollection",
+                "geometries": [
+                    {
+                        "type": "Point",
+                        "additionalGeometryData": {},
+                        "coordinates": [
+                            -93.6995166666667,
+                            33.5245166666667
+                        ]
+                    },
+                    {
+                        "type": "Point",
+                        "additionalGeometryData": {},
+                        "coordinates": [
+                            -93.0498861111111,
+                            33.540325
+                        ]
+                    },
+                    {
+                        "type": "Point",
+                        "additionalGeometryData": {},
+                        "coordinates": [
+                            -93.0498861111111,
+                            33.540325
+                        ]
+                    },
+                    {
+                        "type": "Point",
+                        "additionalGeometryData": {},
+                        "coordinates": [
+                            -92.5030166666667,
+                            33.5509472222222
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "coreNOTAMData": {
+                    "notamEvent": {
+                        "scenario": "6000"
+                    },
+                    "notam": {
+                        "id": "NOTAM_1_63932008",
+                        "series": "A",
+                        "number": "A0158/22",
+                        "type": "N",
+                        "issued": "2022-03-29T17:49:00.000Z",
+                        "affectedFIR": "KZFW",
+                        "selectionCode": "QXXXX",
+                        "minimumFL": "000",
+                        "maximumFL": "999",
+                        "location": "ZFW",
+                        "effectiveStart": "2022-03-29T17:45:00.000Z",
+                        "effectiveEnd": "2024-04-10T17:45:00.000Z",
+                        "text": "V278 WEEBR, AR TO WARLO, AR MEA 4000.\nV278 WARLO, AR TO HAMPT, AR NA EXCEPT FOR ACFT EQUIPPED WITH\nSUITABLE RNAV SYSTEM WITH GPS.\nTXK VOR UNUSABLE.",
+                        "classification": "INTL",
+                        "accountId": "KZFW",
+                        "lastUpdated": "2022-03-29T17:50:00.000Z",
+                        "icaoLocation": "KZFW"
+                    },
+                    "notamTranslation": [
+                        {
+                            "type": "ICAO",
+                            "formattedText": "A0158/22 NOTAMN\nQ) KZFW/QXXXX////000/999/\nA) KZFW\nB) 2203291745\nC) 2404101745 EST\nE) V278 WEEBR, AR TO WARLO, AR MEA 4000.\nV278 WARLO, AR TO HAMPT, AR NA EXCEPT FOR ACFT EQUIPPED WITH\nSUITABLE RNAV SYSTEM WITH GPS.\nTXK VOR UNUSABLE."
+                        }
+                    ]
+                }
+            },
+            "geometry": {
+                "type": "GeometryCollection"
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "coreNOTAMData": {
+                    "notamEvent": {
+                        "scenario": "114"
+                    },
+                    "notam": {
+                        "id": "NOTAM_1_71366065",
+                        "number": "02/161",
+                        "type": "N",
+                        "issued": "2024-02-09T04:39:00.000Z",
+                        "location": "ZFW",
+                        "effectiveStart": "2024-02-09T04:39:00.000Z",
+                        "effectiveEnd": "2024-02-23T06:00:00.000Z",
+                        "text": "OBST WIND TURBINE FARM WI AN AREA DEFINED AS 8NM RADIUS OF 354304N0984909W (4.3NM W 1O4) 1837FT (550FT AGL) \nNOT LGTD",
+                        "classification": "DOM",
+                        "accountId": "FTW",
+                        "lastUpdated": "2024-02-09T04:39:00.000Z",
+                        "icaoLocation": "KZFW",
+                        "coordinates": "354304N0984909W"
+                    },
+                    "notamTranslation": [
+                        {
+                            "type": "LOCAL_FORMAT",
+                            "simpleText": "!FTW 02/161 ZFW OBST WIND TURBINE FARM WI AN AREA DEFINED AS 8NM RADIUS OF 354304N0984909W (4.3NM W 1O4) 1837FT (550FT AGL) \nNOT LGTD 2402090439-2402230600"
+                        }
+                    ]
+                }
+            },
+            "geometry": {
+                "type": "GeometryCollection",
+                "geometries": [
+                    {
+                        "type": "Point",
+                        "coordinates": [
+                            -98.82,
+                            35.72
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "coreNOTAMData": {
+                    "notamEvent": {
+                        "scenario": "6000"
+                    },
+                    "notam": {
+                        "id": "NOTAM_1_70504503",
+                        "series": "A",
+                        "number": "A0603/23",
+                        "type": "N",
+                        "issued": "2023-12-07T21:09:00.000Z",
+                        "affectedFIR": "KZFW",
+                        "selectionCode": "QXXXX",
+                        "minimumFL": "000",
+                        "maximumFL": "999",
+                        "location": "ZFW",
+                        "effectiveStart": "2023-12-08T12:30:00.000Z",
+                        "effectiveEnd": "PERM",
+                        "text": "ZFW COM DOMESTIC CPDLC AVBL ON KUSA",
+                        "classification": "INTL",
+                        "accountId": "KZFW",
+                        "lastUpdated": "2023-12-07T21:10:00.000Z",
+                        "icaoLocation": "KZFW"
+                    },
+                    "notamTranslation": [
+                        {
+                            "type": "ICAO",
+                            "formattedText": "A0603/23 NOTAMN\nQ) KZFW/QXXXX////000/999/\nA) KZFW\nB) 2312081230\nC) PERM\nE) ZFW COM DOMESTIC CPDLC AVBL ON KUSA"
+                        }
+                    ]
+                }
+            },
+            "geometry": {
+                "type": "GeometryCollection"
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "coreNOTAMData": {
+                    "notamEvent": {
+                        "scenario": "816"
+                    },
+                    "notam": {
+                        "id": "NOTAM_1_71083093",
+                        "number": "4/5700",
+                        "type": "N",
+                        "issued": "2024-01-19T16:34:00.000Z",
+                        "location": "ZFW",
+                        "effectiveStart": "2024-01-19T16:34:00.000Z",
+                        "effectiveEnd": "2026-01-20T16:30:00.000Z",
+                        "text": "OK..ROUTE ZFW.\nV210 OKMULGEE (OKM) VOR/DME, OK R-230 TO MINGG, OK MEA 4500.\nOKM VOR/DME UNUSABLE R-230 UNUSABLE BELOW 4500. 2401191634-2601201630EST",
+                        "classification": "FDC",
+                        "accountId": "FDC",
+                        "lastUpdated": "2024-01-19T16:34:00.000Z",
+                        "icaoLocation": "KZFW",
+                        "coordinates": "3507N09657W"
+                    },
+                    "notamTranslation": [
+                        {
+                            "type": "LOCAL_FORMAT",
+                            "simpleText": "!FDC 4/5700 ZFW OK..ROUTE ZFW.\nV210 OKMULGEE (OKM) VOR/DME, OK R-230 TO MINGG, OK MEA 4500.\nOKM VOR/DME UNUSABLE R-230 UNUSABLE BELOW 4500. 2401191634-2601201630EST"
+                        },
+                        {
+                            "type": "ICAO",
+                            "formattedText": "Q) KFDC/QARCH/IV/BO/E/000/999/\nA) KZFW\nB) 2401191634\nC) 2601201630EST\nE) KZFW OK...ROUTE KZFW.\nV210 OKMULGEE (OKM) VOR/DME, OK R-230 TO MINGG, OK MEA 4500.\nOKM VOR/DME UNUSABLE R-230 UNUSABLE BELOW 4500."
+                        }
+                    ]
+                }
+            },
+            "geometry": {
+                "type": "GeometryCollection",
+                "geometries": [
+                    {
+                        "type": "Point",
+                        "additionalGeometryData": {},
+                        "coordinates": [
+                            -95.8659543611111,
+                            35.6930743333333
+                        ]
+                    },
+                    {
+                        "type": "Point",
+                        "additionalGeometryData": {},
+                        "coordinates": [
+                            -96.9554666666667,
+                            35.1288527777778
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "coreNOTAMData": {
+                    "notamEvent": {
+                        "scenario": "6000"
+                    },
+                    "notam": {
+                        "id": "NOTAM_1_71083121",
+                        "series": "A",
+                        "number": "A0024/24",
+                        "type": "N",
+                        "issued": "2024-01-19T16:35:00.000Z",
+                        "affectedFIR": "KZFW",
+                        "selectionCode": "QXXXX",
+                        "minimumFL": "000",
+                        "maximumFL": "999",
+                        "location": "ZFW",
+                        "effectiveStart": "2024-01-19T16:34:00.000Z",
+                        "effectiveEnd": "2026-01-20T16:30:00.000Z",
+                        "text": "ZFW OK..ROUTE ZFW.\nV210 OKMULGEE (OKM) VOR/DME, OK R-230 TO MINGG, OK MEA 4500.\nOKM VOR/DME UNUSABLE R-230 UNUSABLE BELOW 4500.",
+                        "classification": "INTL",
+                        "accountId": "KZFW",
+                        "lastUpdated": "2024-01-19T16:35:00.000Z",
+                        "icaoLocation": "KZFW"
+                    },
+                    "notamTranslation": [
+                        {
+                            "type": "ICAO",
+                            "formattedText": "A0024/24 NOTAMN\nQ) KZFW/QXXXX////000/999/\nA) KZFW\nB) 2401191634\nC) 2601201630 EST\nE) ZFW OK..ROUTE ZFW.\nV210 OKMULGEE (OKM) VOR/DME, OK R-230 TO MINGG, OK MEA 4500.\nOKM VOR/DME UNUSABLE R-230 UNUSABLE BELOW 4500."
+                        }
+                    ]
+                }
+            },
+            "geometry": {
+                "type": "GeometryCollection"
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "coreNOTAMData": {
+                    "notamEvent": {
+                        "scenario": "6000"
+                    },
+                    "notam": {
+                        "id": "NOTAM_1_65943289",
+                        "series": "A",
+                        "number": "A0497/22",
+                        "type": "N",
+                        "issued": "2022-10-31T19:23:00.000Z",
+                        "affectedFIR": "KZFW",
+                        "selectionCode": "QXXXX",
+                        "minimumFL": "000",
+                        "maximumFL": "999",
+                        "location": "ZFW",
+                        "effectiveStart": "2022-10-31T19:21:00.000Z",
+                        "effectiveEnd": "2024-10-31T19:21:00.000Z",
+                        "text": "V74 MALTS, OK TO FORT SMITH (FSM) VORTAC, AR MEA 3100.",
+                        "classification": "INTL",
+                        "accountId": "KZFW",
+                        "lastUpdated": "2022-10-31T19:23:00.000Z",
+                        "icaoLocation": "KZFW"
+                    },
+                    "notamTranslation": [
+                        {
+                            "type": "ICAO",
+                            "formattedText": "A0497/22 NOTAMN\nQ) KZFW/QXXXX////000/999/\nA) KZFW\nB) 2210311921\nC) 2410311921 EST\nE)\nV74 MALTS, OK TO FORT SMITH (FSM) VORTAC, AR MEA 3100."
+                        }
+                    ]
+                }
+            },
+            "geometry": {
+                "type": "GeometryCollection"
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "coreNOTAMData": {
+                    "notamEvent": {
+                        "scenario": "114"
+                    },
+                    "notam": {
+                        "id": "NOTAM_1_71161459",
+                        "number": "01/666",
+                        "type": "N",
+                        "issued": "2024-01-24T07:28:00.000Z",
+                        "location": "ZFW",
+                        "effectiveStart": "2024-01-24T07:25:00.000Z",
+                        "effectiveEnd": "2024-02-24T23:59:00.000Z",
+                        "text": "OBST WIND TURBINE FARM WI AN AREA DEFINED AS 8.4NM RADIUS OF 331130N993445W (18.2NM SE F75) 1629FT (680FT AGL) NOT LGTD",
+                        "classification": "DOM",
+                        "accountId": "FTW",
+                        "lastUpdated": "2024-01-24T07:28:00.000Z",
+                        "icaoLocation": "KZFW",
+                        "coordinates": "331130N993445W"
+                    },
+                    "notamTranslation": [
+                        {
+                            "type": "LOCAL_FORMAT",
+                            "simpleText": "!FTW 01/666 ZFW OBST WIND TURBINE FARM WI AN AREA DEFINED AS 8.4NM RADIUS OF 331130N993445W (18.2NM SE F75) 1629FT (680FT AGL) NOT LGTD 2401240725-2402242359EST"
+                        }
+                    ]
+                }
+            },
+            "geometry": {
+                "type": "GeometryCollection",
+                "geometries": [
+                    {
+                        "type": "Point",
+                        "coordinates": [
+                            -993.73,
+                            33.19
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "coreNOTAMData": {
+                    "notamEvent": {
+                        "scenario": "6000"
+                    },
+                    "notam": {
+                        "id": "NOTAM_1_68728874",
+                        "series": "A",
+                        "number": "A0282/23",
+                        "type": "N",
+                        "issued": "2023-06-12T15:06:00.000Z",
+                        "affectedFIR": "KZFW",
+                        "selectionCode": "QXXXX",
+                        "minimumFL": "000",
+                        "maximumFL": "999",
+                        "location": "ZFW",
+                        "effectiveStart": "2023-06-12T15:05:00.000Z",
+                        "effectiveEnd": "2023-06-15T09:01:00.000Z",
+                        "text": "ZFW OK..ROUTE ZFW ZKC ZME.\nV74 MALTS, OK TO FORT SMITH (FSM) VORTAC, AR MEA 3100.",
+                        "classification": "INTL",
+                        "accountId": "KZFW",
+                        "lastUpdated": "2023-06-12T15:07:00.000Z",
+                        "icaoLocation": "KZFW"
+                    },
+                    "notamTranslation": [
+                        {
+                            "type": "ICAO",
+                            "formattedText": "A0282/23 NOTAMN\nQ) KZFW/QXXXX////000/999/\nA) KZFW\nB) 2306121505\nC) 2306150901 EST\nE) ZFW OK..ROUTE ZFW ZKC ZME.\nV74 MALTS, OK TO FORT SMITH (FSM) VORTAC, AR MEA 3100."
+                        }
+                    ]
+                }
+            },
+            "geometry": {
+                "type": "GeometryCollection"
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "coreNOTAMData": {
+                    "notamEvent": {
+                        "scenario": "101"
+                    },
+                    "notam": {
+                        "id": "NOTAM_1_71219095",
+                        "number": "4/8685",
+                        "type": "N",
+                        "issued": "2024-01-28T04:01:00.000Z",
+                        "selectionCode": "QXXXX",
+                        "location": "ZFW",
+                        "effectiveStart": "2024-01-28T04:00:00.000Z",
+                        "effectiveEnd": "2024-02-26T22:00:00.000Z",
+                        "text": "AIRSPACE ADS-B, AUTO DEPENDENT SURVEILLANCE \nREBROADCAST (ADS-R), TFC INFO SERVICE BCST (TIS-B), FLT INFO \nSERVICE BCST (FIS-B) SERVICES MAY NOT BE AVBL WI AN AREA DEFINED AS \n57NM RADIUS OF 334443N1010955W.\nAP AIRSPACE AFFECTED MAY INCLUDE F49, LBB, PVW, 41F, 8F3, 3F6.\n4000FT-5000FT",
+                        "classification": "FDC",
+                        "accountId": "FDC",
+                        "lastUpdated": "2024-01-28T04:02:00.000Z",
                         "icaoLocation": "KZFW"
                     },
                     "notamTranslation": [
                         {
                             "type": "LOCAL_FORMAT",
-                            "simpleText": "!FDC 2/0932 ZFW TX..ROUTE ZFW.\nV568 MILLSAP (MQP) VORTAC, TX TO KARYN, TX MEA 3100 NORTHWESTBOUND,\n3000 SOUTHEASTBOUND.\n2211141827-2411141824EST"
+                            "simpleText": "!FDC 4/8685 ZFW AIRSPACE ADS-B, AUTO DEPENDENT SURVEILLANCE \nREBROADCAST (ADS-R), TFC INFO SERVICE BCST (TIS-B), FLT INFO \nSERVICE BCST (FIS-B) SERVICES MAY NOT BE AVBL WI AN AREA DEFINED AS \n57NM RADIUS OF 334443N1010955W.\nAP AIRSPACE AFFECTED MAY INCLUDE F49, LBB, PVW, 41F, 8F3, 3F6.\n4000FT-5000FT\n2401280400-2402262200EST"
+                        }
+                    ]
+                }
+            },
+            "geometry": {
+                "type": "GeometryCollection"
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "coreNOTAMData": {
+                    "notamEvent": {
+                        "scenario": "6000"
+                    },
+                    "notam": {
+                        "id": "NOTAM_1_71219108",
+                        "series": "A",
+                        "number": "A0049/24",
+                        "type": "N",
+                        "issued": "2024-01-28T04:02:00.000Z",
+                        "affectedFIR": "KZFW",
+                        "selectionCode": "QCBLS",
+                        "minimumFL": "040",
+                        "maximumFL": "050",
+                        "location": "ZFW",
+                        "effectiveStart": "2024-01-28T04:00:00.000Z",
+                        "effectiveEnd": "2024-02-26T22:00:00.000Z",
+                        "text": "ZFW AIRSPACE ADS-B, AUTO DEPENDENT SURVEILLANCE \nREBROADCAST (ADS-R), TFC INFO SERVICE BCST (TIS-B), FLT INFO \nSERVICE BCST (FIS-B) SERVICES MAY NOT BE AVBL WI AN AREA DEFINED AS \n57NM RADIUS OF 334443N1010955W.\nAP AIRSPACE AFFECTED MAY INCLUDE F49, LBB, PVW, 41F, 8F3, 3F6.",
+                        "classification": "INTL",
+                        "accountId": "KZFW",
+                        "lastUpdated": "2024-01-28T04:02:00.000Z",
+                        "icaoLocation": "KZFW",
+                        "lowerLimit": "4000FT",
+                        "upperLimit": "5000FT"
+                    },
+                    "notamTranslation": [
+                        {
+                            "type": "ICAO",
+                            "formattedText": "A0049/24 NOTAMN\nQ) KZFW/QCBLS////040/050/\nA) KZFW\nB) 2401280400\nC) 2402262200 EST\nE) ZFW AIRSPACE ADS-B, AUTO DEPENDENT SURVEILLANCE\nREBROADCAST (ADS-R), TFC INFO SERVICE BCST (TIS-B), FLT INFO\nSERVICE BCST (FIS-B) SERVICES MAY NOT BE AVBL WI AN AREA DEFINED AS\n57NM RADIUS OF 334443N1010955W.\nAP AIRSPACE AFFECTED MAY INCLUDE F49, LBB, PVW, 41F, 8F3, 3F6.\nF) 4000FT  G)  5000FT"
+                        }
+                    ]
+                }
+            },
+            "geometry": {
+                "type": "GeometryCollection"
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "coreNOTAMData": {
+                    "notamEvent": {
+                        "scenario": "114"
+                    },
+                    "notam": {
+                        "id": "NOTAM_1_71336438",
+                        "number": "02/105",
+                        "type": "N",
+                        "issued": "2024-02-06T20:53:00.000Z",
+                        "location": "ZFW",
+                        "effectiveStart": "2024-02-06T20:53:00.000Z",
+                        "effectiveEnd": "2024-05-31T23:59:00.000Z",
+                        "text": "OBST WIND TURBINE FARM WI AN AREA DEFINED AS 5.5NM RADIUS OF 322912N0993422W (7.2NM NE ABI) 2403FT (533FT AGL) NOT LGTD",
+                        "classification": "DOM",
+                        "accountId": "FTW",
+                        "lastUpdated": "2024-02-06T20:53:00.000Z",
+                        "icaoLocation": "KZFW",
+                        "coordinates": "322912N0993422W"
+                    },
+                    "notamTranslation": [
+                        {
+                            "type": "LOCAL_FORMAT",
+                            "simpleText": "!FTW 02/105 ZFW OBST WIND TURBINE FARM WI AN AREA DEFINED AS 5.5NM RADIUS OF 322912N0993422W (7.2NM NE ABI) 2403FT (533FT AGL) NOT LGTD 2402062053-2405312359"
+                        }
+                    ]
+                }
+            },
+            "geometry": {
+                "type": "GeometryCollection",
+                "geometries": [
+                    {
+                        "type": "Point",
+                        "coordinates": [
+                            -99.57,
+                            32.49
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "coreNOTAMData": {
+                    "notamEvent": {
+                        "scenario": "816"
+                    },
+                    "notam": {
+                        "id": "NOTAM_1_64624892",
+                        "number": "2/6540",
+                        "type": "N",
+                        "issued": "2022-06-09T17:15:00.000Z",
+                        "location": "ZFW",
+                        "effectiveStart": "2022-06-09T17:14:00.000Z",
+                        "effectiveEnd": "2024-06-09T17:14:00.000Z",
+                        "text": "TX..ROUTE ZFW.\nV68 JOKES, TX TO STEEP, TX MOCA 4400.\n2206091714-2406091714EST",
+                        "classification": "FDC",
+                        "accountId": "FDC",
+                        "lastUpdated": "2022-06-09T17:18:00.000Z",
+                        "icaoLocation": "KZFW",
+                        "coordinates": "3137N10108W"
+                    },
+                    "notamTranslation": [
+                        {
+                            "type": "LOCAL_FORMAT",
+                            "simpleText": "!FDC 2/6540 ZFW TX..ROUTE ZFW.\nV68 JOKES, TX TO STEEP, TX MOCA 4400.\n2206091714-2406091714EST"
+                        },
+                        {
+                            "type": "ICAO",
+                            "formattedText": "Q) KFIR/QXXXX/I/NBO/A/000/999/latNlongW025\nA) locationIndicatorICAO\nB) 2206091714\nC) 2301191711EST\nE) ROUTE undefined,undefined,undefined\nundefined undefined...\nundefined"
+                        }
+                    ]
+                }
+            },
+            "geometry": {
+                "type": "GeometryCollection",
+                "geometries": [
+                    {
+                        "type": "Point",
+                        "additionalGeometryData": {},
+                        "coordinates": [
+                            -101.848508333333,
+                            31.8869277777778
+                        ]
+                    },
+                    {
+                        "type": "Point",
+                        "additionalGeometryData": {},
+                        "coordinates": [
+                            -101.134686111111,
+                            31.6272472222222
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "coreNOTAMData": {
+                    "notamEvent": {
+                        "scenario": "101"
+                    },
+                    "notam": {
+                        "id": "NOTAM_1_71321677",
+                        "number": "02/074",
+                        "type": "N",
+                        "issued": "2024-02-05T16:19:00.000Z",
+                        "location": "ZFW",
+                        "effectiveStart": "2024-02-05T16:19:00.000Z",
+                        "effectiveEnd": "2024-02-26T23:00:00.000Z",
+                        "text": "AIRSPACE UAS WI AN AREA DEFINED AS 5NM RADIUS OF 325636N1024913W (2NM SE E57) SFC-400FT AGL DLY 1618-2300",
+                        "classification": "DOM",
+                        "accountId": "FTW",
+                        "lastUpdated": "2024-02-05T16:19:00.000Z",
+                        "icaoLocation": "KZFW",
+                        "schedule": "Daily:1619-2300~DLY 1618-2300",
+                        "coordinates": "325636N1024913W"
+                    },
+                    "notamTranslation": [
+                        {
+                            "type": "LOCAL_FORMAT",
+                            "simpleText": "!FTW 02/074 ZFW AIRSPACE UAS WI AN AREA DEFINED AS 5NM RADIUS OF 325636N1024913W (2NM SE E57) SFC-400FT AGL DLY 1618-2300 2402051619-2402262300"
+                        }
+                    ]
+                }
+            },
+            "geometry": {
+                "type": "GeometryCollection",
+                "geometries": [
+                    {
+                        "type": "Point",
+                        "coordinates": [
+                            -102.82,
+                            32.94
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "coreNOTAMData": {
+                    "notamEvent": {
+                        "scenario": "551"
+                    },
+                    "notam": {
+                        "id": "NOTAM_1_71309500",
+                        "number": "02/054",
+                        "type": "N",
+                        "issued": "2024-02-04T13:09:00.000Z",
+                        "affectedFIR": "ZFW",
+                        "minimumFL": "000",
+                        "maximumFL": "999",
+                        "location": "ZFW",
+                        "effectiveStart": "2024-02-04T13:00:00.000Z",
+                        "effectiveEnd": "2024-06-03T13:00:00.000Z",
+                        "text": "COM FORT WORTH REMOTE COM A/G 284.1 U/S",
+                        "classification": "DOM",
+                        "accountId": "FTW",
+                        "lastUpdated": "2024-02-04T13:09:00.000Z",
+                        "icaoLocation": "KZFW",
+                        "radius": "5"
+                    },
+                    "notamTranslation": [
+                        {
+                            "type": "LOCAL_FORMAT",
+                            "simpleText": "!FTW 02/054 ZFW COM FORT WORTH REMOTE COM A/G 284.1 U/S 2402041300-2406031300"
+                        },
+                        {
+                            "type": "ICAO",
+                            "formattedText": "02/054 NOTAMN\nQ)KZFW/QXXXX/IV/NBO/A/000/999/005\nA) KZFW\nB) 2402041300\nC) 2406031300\nE) COM FORT WORTH REMOTE COM A/G 284.1 U/S"
+                        }
+                    ]
+                }
+            },
+            "geometry": {
+                "type": "GeometryCollection"
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "coreNOTAMData": {
+                    "notamEvent": {
+                        "scenario": "6000"
+                    },
+                    "notam": {
+                        "id": "NOTAM_1_70196124",
+                        "series": "A",
+                        "number": "A0553/23",
+                        "type": "N",
+                        "issued": "2023-11-09T20:23:00.000Z",
+                        "affectedFIR": "KZFW",
+                        "selectionCode": "QCBLS",
+                        "minimumFL": "030",
+                        "maximumFL": "040",
+                        "location": "ZFW",
+                        "effectiveStart": "2023-11-09T20:20:00.000Z",
+                        "effectiveEnd": "2023-11-27T22:00:00.000Z",
+                        "text": "ZFW AIRSPACE ADS-B, AUTO DEPENDENT SURVEILLANCE \nREBROADCAST (ADS-R), TFC INFO SERVICE BCST (TIS-B), FLT INFO\nSERVICE BCST (FIS-B) SERVICES MAY NOT BE AVBL WI AN AREA DEFINED AS \n33NM RADIUS OF 323229N1010629W. AP AIRSPACE AFFECTED MAY INCLUDE \nSNK, SWW, BPG.",
+                        "classification": "INTL",
+                        "accountId": "KZFW",
+                        "lastUpdated": "2023-11-09T20:24:00.000Z",
+                        "icaoLocation": "KZFW",
+                        "lowerLimit": "3000FT",
+                        "upperLimit": "4000FT"
+                    },
+                    "notamTranslation": [
+                        {
+                            "type": "ICAO",
+                            "formattedText": "A0553/23 NOTAMN\nQ) KZFW/QCBLS////030/040/\nA) KZFW\nB) 2311092020\nC) 2311272200 EST\nE) ZFW AIRSPACE ADS-B, AUTO DEPENDENT SURVEILLANCE\nREBROADCAST (ADS-R), TFC INFO SERVICE BCST (TIS-B), FLT INFO\nSERVICE BCST (FIS-B) SERVICES MAY NOT BE AVBL WI AN AREA DEFINED AS\n33NM RADIUS OF 323229N1010629W. AP AIRSPACE AFFECTED MAY INCLUDE\nSNK, SWW, BPG.\nF) 3000FT G) 4000FT"
+                        }
+                    ]
+                }
+            },
+            "geometry": {
+                "type": "GeometryCollection"
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "coreNOTAMData": {
+                    "notamEvent": {
+                        "scenario": "101"
+                    },
+                    "notam": {
+                        "id": "NOTAM_1_71314464",
+                        "number": "02/061",
+                        "type": "N",
+                        "issued": "2024-02-05T01:43:00.000Z",
+                        "location": "ZFW",
+                        "effectiveStart": "2024-02-05T14:00:00.000Z",
+                        "effectiveEnd": "2024-02-29T23:59:00.000Z",
+                        "text": "AIRSPACE UAS WI AN AREA DEFINED AS 6NM RADIUS OF ADM066069 (19NM SSW MLC) SFC-3500FT AGL DLY 1400-2359",
+                        "classification": "DOM",
+                        "accountId": "FTW",
+                        "lastUpdated": "2024-02-05T01:43:00.000Z",
+                        "icaoLocation": "KZFW",
+                        "schedule": "Daily:1400-2359~DLY 1400-2359"
+                    },
+                    "notamTranslation": [
+                        {
+                            "type": "LOCAL_FORMAT",
+                            "simpleText": "!FTW 02/061 ZFW AIRSPACE UAS WI AN AREA DEFINED AS 6NM RADIUS OF ADM066069 (19NM SSW MLC) SFC-3500FT AGL DLY 1400-2359 2402051400-2402292359"
+                        }
+                    ]
+                }
+            },
+            "geometry": {
+                "type": "GeometryCollection"
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "coreNOTAMData": {
+                    "notamEvent": {
+                        "scenario": "101"
+                    },
+                    "notam": {
+                        "id": "NOTAM_1_70637488",
+                        "number": "12/454",
+                        "type": "N",
+                        "issued": "2023-12-19T20:43:00.000Z",
+                        "location": "ZFW",
+                        "effectiveStart": "2023-12-19T20:43:00.000Z",
+                        "effectiveEnd": "2024-06-19T23:59:00.000Z",
+                        "text": "AIRSPACE UAS WI AN AREA DEFINED AS 6NM RADIUS OF 320918N1033054W (17.6NM W E26) SFC-400FT AGL",
+                        "classification": "DOM",
+                        "accountId": "FTW",
+                        "lastUpdated": "2023-12-19T20:43:00.000Z",
+                        "icaoLocation": "KZFW",
+                        "coordinates": "320918N1033054W"
+                    },
+                    "notamTranslation": [
+                        {
+                            "type": "LOCAL_FORMAT",
+                            "simpleText": "!FTW 12/454 ZFW AIRSPACE UAS WI AN AREA DEFINED AS 6NM RADIUS OF 320918N1033054W (17.6NM W E26) SFC-400FT AGL 2312192043-2406192359"
+                        }
+                    ]
+                }
+            },
+            "geometry": {
+                "type": "GeometryCollection",
+                "geometries": [
+                    {
+                        "type": "Point",
+                        "coordinates": [
+                            -103.52,
+                            32.16
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "coreNOTAMData": {
+                    "notamEvent": {
+                        "scenario": "6000"
+                    },
+                    "notam": {
+                        "id": "NOTAM_1_68462923",
+                        "series": "A",
+                        "number": "A0227/23",
+                        "type": "N",
+                        "issued": "2023-05-14T12:32:00.000Z",
+                        "affectedFIR": "KZFW",
+                        "selectionCode": "QCBLS",
+                        "minimumFL": "040",
+                        "maximumFL": "080",
+                        "location": "ZFW",
+                        "effectiveStart": "2023-05-14T12:26:00.000Z",
+                        "effectiveEnd": "2023-05-22T22:00:00.000Z",
+                        "text": "ZFW AIRSPACE ADS-B, AUTO DEPENDENT SURVEILLANCE \nREBROADCAST (ADS-R), TFC INFO SERVICE BCST (TIS-B), FLT INFO \nSERVICE BCST (FIS-B) SERVICES MAY NOT BE AVBL WI AN AREA DEFINED AS \n102NM RADIUS OF 350134N1033337W. AP AIRSPACE AFFECTED MAY \nINCLUDE AMA, LNN, CVN, LSV, CAO, DHT, DUX, TDW.",
+                        "classification": "INTL",
+                        "accountId": "KZFW",
+                        "lastUpdated": "2023-05-14T12:33:00.000Z",
+                        "icaoLocation": "KZFW",
+                        "lowerLimit": "4000FT",
+                        "upperLimit": "8000FT"
+                    },
+                    "notamTranslation": [
+                        {
+                            "type": "ICAO",
+                            "formattedText": "A0227/23 NOTAMN\nQ) KZFW/QCBLS////040/080/\nA) KZFW\nB) 2305141226\nC) 2305222200 EST\nE) ZFW AIRSPACE ADS-B, AUTO DEPENDENT SURVEILLANCE\nREBROADCAST (ADS-R), TFC INFO SERVICE BCST (TIS-B), FLT INFO\nSERVICE BCST (FIS-B) SERVICES MAY NOT BE AVBL WI AN AREA DEFINED AS\n102NM RADIUS OF 350134N1033337W. AP AIRSPACE AFFECTED MAY\nINCLUDE AMA, LNN, CVN, LSV, CAO, DHT, DUX, TDW.\nF) 4000FT G) 8000FT"
                         }
                     ]
                 }
