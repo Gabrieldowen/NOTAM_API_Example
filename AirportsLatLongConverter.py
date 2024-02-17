@@ -14,7 +14,7 @@ def get_lat_and_lon(input_airport):
     lat = airports[input_airport]['lat']
     lon = airports[input_airport]['lon']
 
-    return [lat, lon]
+    return lat, lon
 
 
 
