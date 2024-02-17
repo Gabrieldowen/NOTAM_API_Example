@@ -3,6 +3,7 @@ import Models
 import ParseNOTAM
 import MinimalCirclesPath
 import AirportsLatLongConverter as alc
+import GetNOTAM
 
 app = Flask(__name__)
 
@@ -18,18 +19,16 @@ def index():
         NotamRequest.startLat, NotamRequest.startLong = alc.get_lat_and_lon(NotamRequest.startAirport)
         NotamRequest.destLat, NotamRequest.destLong = alc.get_lat_and_lon(NotamRequest.destAirport)
 
-        print(f"{NotamRequest.startLat}{NotamRequest.startLong}")
-        print(f"{NotamRequest.destLat}{NotamRequest.destLong}")
+        coordList = MinimalCirclesPath.getPath(NotamRequest.startLat, NotamRequest.startLong , NotamRequest.destLat, NotamRequest.destLong, 100, 50)
 
-
-        coordList = MinimalCirclesPath.getPath(NotamRequest.startLat, NotamRequest.startLong , NotamRequest.destLat, NotamRequest.destLong, radius, pathWidth)
-
-        # for point in coordList
+        apiOutputs = []
+        for point in coordList:
             # pass the form to getNOTAM to make API request
-            # apiOutput = GetNOTAM.getNOTAM(NotamRequest.effectiveStartDate, NotamRequest.effectiveEndDate, point[1], point[0], NotamRequest.pageNum)
+            apiOutput = GetNOTAM.getNotam(NotamRequest.effectiveStartDate, NotamRequest.effectiveEndDate, point[1], point[0], 1)
+            apiOutputs.append(apiOutput)
 
         # takes api output and parse it
-        Notams = ParseNOTAM.ParseNOTAM(apiOutput)
+        Notams = ParseNOTAM.ParseNOTAM(apiOutputs)
         return render_template('display.html', notams = Notams)
         
 

@@ -10,15 +10,14 @@ def ParseNOTAM(json_data = None):
 
         # Reading JSON data from the file
         with open(file_path, 'r') as json_file:
-            json_data = json.load(json_file)
+            json_data_test = json.load(json_file)
 
-
-    # create a class for each NOTAM
     NOTAMs = []
-    for item in json_data['items']:
-        NOTAMs.append(Models.Notam(item['properties']['coreNOTAMData']['notam']))
-        
+    for notam in json_data:
+        # create a class for each NOTAM
+        for item in notam['items']:
+            NOTAMs.append(Models.Notam(item['properties']['coreNOTAMData']['notam']))
+            
     return NOTAMs
 
-ParseNOTAM()
 
