@@ -21,7 +21,12 @@ def index():
         NotamRequest.destLat, NotamRequest.destLong = alc.get_lat_and_lon(NotamRequest.destAirport)
 
         # get the list of coordinates that need to be called to cover area
-        coordList = MinimalCirclesPath.getPath(NotamRequest.startLat, NotamRequest.startLong , NotamRequest.destLat, NotamRequest.destLong, 100, 50)
+        coordList = MinimalCirclesPath.getPath(NotamRequest.startLat, 
+                                               NotamRequest.startLong,
+                                               NotamRequest.destLat,
+                                               NotamRequest.destLong, 
+                                               100, # circle radius
+                                               50) # path width
 
         # start timer
         startTime = time.time() 
@@ -30,7 +35,12 @@ def index():
         apiOutputs = []
         print("LOADING...")
         for point in coordList:
-            apiOutput = GetNOTAM.getNotam(NotamRequest.effectiveStartDate, NotamRequest.effectiveEndDate, point[1], point[0], 1) # page num here is one temporarily
+            apiOutput = GetNOTAM.getNotam(NotamRequest.effectiveStartDate, 
+                                          NotamRequest.effectiveEndDate, 
+                                          point[1], # longitude
+                                          point[0], # latitude
+                                          1, # page num
+                                          NotamRequest.radius) # page num here is one temporarily
             apiOutputs.append(apiOutput)
 
         # Record end time

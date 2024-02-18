@@ -37,3 +37,4 @@ class NotamRequest:
         self.locationRadius =  data.get('locationRadius', None)
         self.sortBy =  data.get('sortBy', None)
         self.sortOrder =  data.get('sortOrder', None)
+        self.radius = data.get('radius', 100)
