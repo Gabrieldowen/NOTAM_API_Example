@@ -95,7 +95,7 @@ def getPath( startLat, startLong, destLat, destLong, radius, pathWidth):
        
 
 
-
+"""
 # THIS IS AN EXAMPLE
 # uncomment and run `python3 MinimalCirclesPath.py` to see example of what getPath() returns
 
@@ -103,5 +103,5 @@ pathList = getPath(startLat = 32.7767, startLong = 96.7970, destLat = 39.7392, d
 for i,item in enumerate(pathList):
     print(f"point #{i+1}) {item}\n")
 
-
+"""
 
