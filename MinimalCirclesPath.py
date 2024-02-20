@@ -67,20 +67,26 @@ def getPath( startLat, startLong, destLat, destLong, radius, pathWidth):
 
     # TODO For actual application you would need to capture N/S/E/W
 
-    # list of coordinates returned to call API with
-    coordList = [(startLat, startLong)]
+    
       
     # gets total distance from start to finish
     totalDistance = getDistance(startLat, startLong, destLat, destLong)
 
     # gets step distance (pythagorean theorum)
-    stepDistance = sqrt((radius)**2-(pathWidth/2)**2)
+    stepDistance = 2 * sqrt((radius)**2-(pathWidth/2)**2)
 
     # gets direction
     bearing = calculateBearing(startLat, startLong, destLat, destLong)
 
+
+    # gets point to call NOTAM and include all of starting area from farther down path
+    startPoint = nextPoint(startLat,startLong, bearing, radius - (pathWidth/2) )
+
+    # List to return with path of points from start to dest
+    coordList = [startPoint]
+
     # loops for each step until passed the destination
-    for _ in range(floor(totalDistance/stepDistance)):
+    for _ in range(floor((totalDistance - (radius - (pathWidth/2)))/stepDistance)):
         nextCircle = nextPoint(coordList[-1][0],coordList[-1][1], bearing, stepDistance)
         coordList.append(nextCircle)
 

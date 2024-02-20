@@ -34,11 +34,11 @@ def startNotam():
     
 #getNotam: takes the lat, long, start and end time and the page number then runs an API call to the FAA for a json of the api
 #@returns parsed_req: the json of the request
-def getNotam(effectiveStartDate, effectiveEndDate, long, lat, pageNum):
+def getNotam(effectiveStartDate, effectiveEndDate, longitude, latitude, pageNum, radius):
     url = 'https://external-api.faa.gov/notamapi/v1/notams'
     url = (f"{url}?responseFormat=geoJson&effectiveStartDate={effectiveStartDate}"
-       f"&effectiveEndDate={effectiveEndDate}&locationLongitude={long}"
-       f"&locationLatitude={lat}&locationRadius=25"
+       f"&effectiveEndDate={effectiveEndDate}&locationLongitude={longitude}"
+       f"&locationLatitude={latitude}&locationRadius={radius}"
        f"&pageNum={pageNum}&pageSize=50"
        f"&sortBy=notamType&sortOrder=Asc")
 
@@ -105,4 +105,3 @@ def runNotam():
         json.dump(combined_core_notam_data, json_file)
 
    
-runNotam()
