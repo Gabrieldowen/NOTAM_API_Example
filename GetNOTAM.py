@@ -6,6 +6,7 @@ import urllib.parse
 import os
 import ZuluConverter
 import AirportsLatLongConverter
+import MinimalCirclesPath
 
 
 #startNotam: Takes all user input from the user
@@ -83,13 +84,15 @@ def runNotam():
     print(len(combined_core_notam_data))
     wlong = float(long)
     wlat = float(lat)
+    bearing = MinimalCirclesPath.calculateBearing(lat,long,fLat, fLong)
     
-    while wlong >= fLong or wlat <= fLat:
+    while (bearing >= 0 and wlong >= fLong and wlat <= fLat) or \
+          (bearing >= 180 and wlong >= fLong and wlat >= fLat) or \
+          (bearing < 180 and bearing >= 90 and wlong <= fLong and wlat >= fLat) or \
+          (bearing < 90 and wlong <= fLong and wlat <= fLat):
+        
         combined_core_notam_data = buildNotam(effectiveStartDate, effectiveEndDate, str(wlong), str(wlat), combined_core_notam_data)
-        if wlong >= fLong:
-            wlong = wlong - 0.16667
-        if wlat <= fLat:
-            wlat = wlat + 0.16667
+        wlat, wlong = MinimalCirclesPath.nextPoint(wlat, wlong, bearing, 10)
         print(wlat)
         print(wlong)
         print(len(combined_core_notam_data))
