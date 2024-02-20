@@ -1,6 +1,10 @@
 from flask import Flask, render_template, request
 import Models
 import ParseNOTAM
+import MinimalCirclesPath
+import AirportsLatLongConverter as alc
+import GetNOTAM
+import time
 
 app = Flask(__name__)
 
@@ -9,13 +13,46 @@ def index():
 
     # If form is submitted
     if request.method == 'POST':
-        NotamRequest = models.NotamRequest(request.form)
+        NotamRequest = Models.NotamRequest(request.form)
 
-        # pass the form to getNOTAM to make API request
-        # apiOutput = GetNOTAM.getNOTAM(NotamRequest)
+
+        # get lat/long of airports
+        NotamRequest.startLat, NotamRequest.startLong = alc.get_lat_and_lon(NotamRequest.startAirport)
+        NotamRequest.destLat, NotamRequest.destLong = alc.get_lat_and_lon(NotamRequest.destAirport)
+
+        # get the list of coordinates that need to be called to cover area
+        coordList = MinimalCirclesPath.getPath(NotamRequest.startLat, 
+                                               NotamRequest.startLong,
+                                               NotamRequest.destLat,
+                                               NotamRequest.destLong, 
+                                               100, # circle radius
+                                               50) # path width
+
+        # start timer
+        startTime = time.time() 
+
+        # call the API for each point
+        print("LOADING...")
+
+        apiOutputs = [ GetNOTAM.getNotam( NotamRequest.effectiveStartDate,
+                                            NotamRequest.effectiveEndDate,
+                                            longitude, # longitude
+                                            latitude, # latitude
+                                            1, # page num
+                                            NotamRequest.radius) #page num here is one temporarily
+                                            for latitude, longitude in coordList ]
+
+        # Record end time
+        endTime = time.time()    
+        print(f"\ntime calling API {endTime - startTime} seconds")
+
 
         # takes api output and parse it
-        Notams = ParseNOTAM.ParseNOTAM()
+        startTime = time.time()  # Record start time
+        Notams = ParseNOTAM.ParseNOTAM(apiOutputs)
+        endTime = time.time()    # Record end time
+        print(f"time parsing: {endTime - startTime} seconds\n")
+
         return render_template('display.html', notams = Notams)
         
 
