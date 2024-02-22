@@ -18,10 +18,18 @@ import MinimalCirclesPath
 #         finalAirLocation[0]: long for end location
 def startNotam():
 # User inputs
+    locations = []
     effectiveStartDate = input("Enter effective start date (YYYY-MM-DD HH:MM:SS): ")
     effectiveEndDate = input("Enter effective end date (YYYY-MM-DD HH:MM:SS): ")
-    location = input("Enter airport: ")
-    finalLocation = input("Enter ending airport: ")
+    locations.add(input("Enter airport: "))
+    inputF = input("Would you like to have multiple end locations (Y/N)")
+    if inputF == "N":
+        locations.add(input("Enter ending airport: "))
+    else:      
+        location = input("Enter airport(Type N to stop): ")
+        while(location != "N"):
+            locations.add(location)
+            location = input("Enter airport(Type N to stop): ")
 
     airLocation = AirportsLatLongConverter.get_lat_and_lon(location)
     finalAirLocation = AirportsLatLongConverter.get_lat_and_lon(finalLocation)
@@ -30,7 +38,7 @@ def startNotam():
     effectiveStartDate = ZuluConverter.convert_cst_to_zulu(effectiveStartDate)
     effectiveEndDate = ZuluConverter.convert_cst_to_zulu(effectiveEndDate)
     
-    return effectiveStartDate, effectiveEndDate, airLocation[1], airLocation[0], finalAirLocation[1], finalAirLocation[0]
+    return effectiveStartDate, effectiveEndDate, locations
     
     
 #getNotam: takes the lat, long, start and end time and the page number then runs an API call to the FAA for a json of the api
@@ -76,26 +84,33 @@ def buildNotam(effectiveStartDate, effectiveEndDate, long, lat, combined_core_no
 
 #runNotam: takes user input and does multiple buildNotam calls along a path in order 
 def runNotam():
-    effectiveStartDate, effectiveEndDate, long, lat, fLong, fLat = startNotam()
+    effectiveStartDate, effectiveEndDate, locations = startNotam()
     
     combined_core_notam_data = []
-    
-    combined_core_notam_data = buildNotam(effectiveStartDate, effectiveEndDate, long, lat, combined_core_notam_data)
-    print(len(combined_core_notam_data))
-    wlong = float(long)
-    wlat = float(lat)
-    bearing = MinimalCirclesPath.calculateBearing(lat,long,fLat, fLong)
-    
-    while (bearing >= 0 and wlong >= fLong and wlat <= fLat) or \
-          (bearing >= 180 and wlong >= fLong and wlat >= fLat) or \
-          (bearing < 180 and bearing >= 90 and wlong <= fLong and wlat >= fLat) or \
-          (bearing < 90 and wlong <= fLong and wlat <= fLat):
+    for i, location in enumerate(locations[:-1]):
+        airLocation = AirportsLatLongConverter.get_lat_and_lon(location)
+        finalAirLocation = AirportsLatLongConverter.get_lat_and_lon(locations[i+1])
+        long = airLocation[0]
+        lat = airLocation[1]
+        fLong = finalAirLocation[0]
+        fLat = finalAirLocation[1]
         
-        combined_core_notam_data = buildNotam(effectiveStartDate, effectiveEndDate, str(wlong), str(wlat), combined_core_notam_data)
-        wlat, wlong = MinimalCirclesPath.nextPoint(wlat, wlong, bearing, 10)
-        print(wlat)
-        print(wlong)
+        combined_core_notam_data = buildNotam(effectiveStartDate, effectiveEndDate, long, lat, combined_core_notam_data)
         print(len(combined_core_notam_data))
+        wlong = float(long)
+        wlat = float(lat)
+        bearing = MinimalCirclesPath.calculateBearing(lat,long,fLat, fLong)
+    
+        while (bearing >= 0 and wlong >= fLong and wlat <= fLat) or \
+              (bearing >= 180 and wlong >= fLong and wlat >= fLat) or \
+              (bearing < 180 and bearing >= 90 and wlong <= fLong and wlat >= fLat) or \
+              (bearing < 90 and wlong <= fLong and wlat <= fLat):
+        
+            combined_core_notam_data = buildNotam(effectiveStartDate, effectiveEndDate, str(wlong), str(wlat), combined_core_notam_data)
+            wlat, wlong = MinimalCirclesPath.nextPoint(wlat, wlong, bearing, 10)
+            print(wlat)
+            print(wlong)
+            print(len(combined_core_notam_data))
    
     
     
