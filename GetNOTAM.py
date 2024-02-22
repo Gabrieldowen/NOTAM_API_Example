@@ -21,19 +21,16 @@ def startNotam():
     locations = []
     effectiveStartDate = input("Enter effective start date (YYYY-MM-DD HH:MM:SS): ")
     effectiveEndDate = input("Enter effective end date (YYYY-MM-DD HH:MM:SS): ")
-    locations.add(input("Enter airport: "))
+    locations.append(input("Enter airport: "))
     inputF = input("Would you like to have multiple end locations (Y/N)")
     if inputF == "N":
-        locations.add(input("Enter ending airport: "))
+        locations.append(input("Enter ending airport: "))
     else:      
         location = input("Enter airport(Type N to stop): ")
-        while(location != "N"):
-            locations.add(location)
-            location = input("Enter airport(Type N to stop): ")
-
-    airLocation = AirportsLatLongConverter.get_lat_and_lon(location)
-    finalAirLocation = AirportsLatLongConverter.get_lat_and_lon(finalLocation)
-
+        while(location.upper() != "N"):
+            print("Adding location:", location)
+            locations.append(location)
+            location = input("Enter airport (Type N to stop): ")
 
     effectiveStartDate = ZuluConverter.convert_cst_to_zulu(effectiveStartDate)
     effectiveEndDate = ZuluConverter.convert_cst_to_zulu(effectiveEndDate)
@@ -54,10 +51,8 @@ def getNotam(effectiveStartDate, effectiveEndDate, long, lat, pageNum):
     headers = {'client_id': credentials.clientID, 'client_secret': credentials.clientSecret}
 
     req = requests.get(url, headers=headers)
-    
-    parsed_req = req.json()
-    
 
+    parsed_req = req.json()
     return parsed_req
 
 #buildNotam: does multiple API call of a location given in inputs and combines all Jsons of each page into a single Json file
@@ -88,14 +83,19 @@ def runNotam():
     
     combined_core_notam_data = []
     for i, location in enumerate(locations[:-1]):
+        print(location)
         airLocation = AirportsLatLongConverter.get_lat_and_lon(location)
         finalAirLocation = AirportsLatLongConverter.get_lat_and_lon(locations[i+1])
-        long = airLocation[0]
-        lat = airLocation[1]
-        fLong = finalAirLocation[0]
-        fLat = finalAirLocation[1]
+        long = airLocation[1]
+        lat = airLocation[0]
+        print(lat)
+        print(long)
+        fLong = float(finalAirLocation[1])
+        fLat = float(finalAirLocation[0])
+        print(fLong)
+        print(fLat)
         
-        combined_core_notam_data = buildNotam(effectiveStartDate, effectiveEndDate, long, lat, combined_core_notam_data)
+        combined_core_notam_data = buildNotam(effectiveStartDate, effectiveEndDate, airLocation[1], airLocation[0], combined_core_notam_data)
         print(len(combined_core_notam_data))
         wlong = float(long)
         wlat = float(lat)
