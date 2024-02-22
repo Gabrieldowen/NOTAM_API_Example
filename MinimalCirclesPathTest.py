@@ -25,3 +25,8 @@ class TestMinimalCirclesPath(unittest.TestCase):
 
 		# DFW to DEN
 		self.assertAlmostEqual(calculateBearing(32.897, -97.038, 39.862, -104.673), 320.78, places = 2)
+
+	def testGetPath(self):
+		# tests that the amount of points returned is less than the number of circles lined edge to edge
+		# DFW to DEN
+		 self.assertGreater(len(getPath(32.897, -97.038, 39.862, -104.673, 100, 50)), 557/200)
