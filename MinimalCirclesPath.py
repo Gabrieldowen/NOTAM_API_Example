@@ -44,7 +44,7 @@ def nextPoint(startLat, startLong, bearingDegrees, distanceNm=100):
 
     return destLat, destLong
 
-# used geeksforgeeks.org
+# used geeksforgeeks.org, gets the distance between two points on earth
 def getDistance(startLat, startLong, destLat, destLong):
     earthRadiusNm = 3440.065  # Radius of the Earth in nautical miles
 
