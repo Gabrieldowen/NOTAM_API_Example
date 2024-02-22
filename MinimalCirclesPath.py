@@ -90,7 +90,6 @@ def getPath( startLat, startLong, destLat, destLong, radius, pathWidth):
         nextCircle = nextPoint(coordList[-1][0],coordList[-1][1], bearing, stepDistance)
         coordList.append(nextCircle)
 
-    coordList.append((destLat, destLong))
     return coordList
        
 
