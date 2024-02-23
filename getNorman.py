@@ -39,3 +39,5 @@ if not os.path.exists(directory):
 
 with open(os.path.join(directory, "norman.json"), 'w') as json_file:
     json.dump(parsed_req, json_file)
+
+
