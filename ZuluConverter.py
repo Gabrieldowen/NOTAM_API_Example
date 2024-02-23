@@ -1,8 +1,9 @@
 from datetime import datetime
 from pytz import timezone
 
-#   myDateTime is user's input, zone is desired time zone (ex: CST, EST, PST, MST, HST, AKST)
-def time_converter(myDateTime, zone):
+#   myDateTime: user's datetime input, date_format: desired datetime format, zone: desired time zone (ex: CST, EST, PST, MST, HST, AKST)
+#   example call: time_converter("2024-02-22 08:30:00", "%Y-%m-%d %H:%M:%S", "EST")
+def time_converter(myDateTime, date_format, zone):
     #Define time zones
     zulu_tz = timezone('UTC')                   # Coordinated Universal Time (Zulu)
     cst_tz = timezone('America/Chicago')        # Central Standard Time
@@ -13,27 +14,19 @@ def time_converter(myDateTime, zone):
     akst_tz = timezone('US/Alaska')             # Alaska Standard Time
 
     # Format date
-    date_format = "%Y-%m-%d %H:%M:%S"
     dateTimeFormatted = datetime.strptime(myDateTime, date_format)
+  
+    # Define timezones
+    timezones = { "CST": cst_tz, "EST": est_tz, "PST": pst_tz, "MST": mst_tz, "HST": hst_tz, "AKST": akst_tz}
 
-    # Match zone variable with desired timezone
-    zoneMatch = ""
-
-    # Localize input for converted datetime
-    if(zone == "CST"):
-        zoneMatch = cst_tz.localize(dateTimeFormatted)
-    elif(zone == "EST"):
-        zoneMatch = est_tz.localize(dateTimeFormatted)
-    elif(zone == "PST"):
-        zoneMatch = pst_tz.localize(dateTimeFormatted)
-    elif(zone == "MST"):
-        zoneMatch = mst_tz.localize(dateTimeFormatted)
-    elif(zone == "HST"):
-        zoneMatch = hst_tz.localize(dateTimeFormatted)
-    elif(zone == "AKST"):
-        zoneMatch = akst_tz.localize(dateTimeFormatted)
-    else:
+    tz = timezones.get(zone)
+    if tz is None:
         print("Error: no desired time zone entered")
+        return None
+    
+    # Localize input for converted datetime
+    zoneMatch = tz.localize(dateTimeFormatted)
+    
 
     # Convert the localizes datetime to Zulu time
     zulu_datetime = zoneMatch.astimezone(zulu_tz)
@@ -41,4 +34,3 @@ def time_converter(myDateTime, zone):
     zulu_datetime_formatted = zulu_datetime.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
 
     return zulu_datetime_formatted
-
