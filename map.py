@@ -1,16 +1,53 @@
 import geopandas as gpd
 import matplotlib.pyplot as plt
-# Load the GeoJSON files
+from matplotlib.patches import Patch
+from shapely.geometry import Polygon
+
 us_map = gpd.read_file('us.geojson')
-notams = gpd.read_file('transformed_notams.geojson')
 
-# Plotting
-fig, ax = plt.subplots(figsize=(10, 10))  # Adjust the figure size as needed
+#Polygon coords
 
-# Plot the US map
-us_map.plot(ax=ax, color='lightgray')
+polygon_coords = [(-100.0, 25.0), (-100.0, 50.0), (-65.0, 50.0), (-65.0, 25.0)]
+area_polygon = Polygon(polygon_coords)
 
-# Plot NOTAMs over the US map
-notams.plot(ax=ax, color='red', markersize=5)  # You can change the color and size
-plt.title('US Map with NOTAMs')
-plt.show()
+def plot_notams_on_us_map(notams_file, us_map_gdf, polygon):
+    notams_gdf = gpd.read_file(notams_file)
+
+    if notams_gdf.empty:
+        print("No NOTAMs found in the provided GeoJSON file.")
+        return
+
+    fig, ax = plt.subplots(figsize=(15, 10))
+    ax.set_aspect('equal')
+
+    us_map_gdf.plot(ax=ax, color='lightgray')
+
+    overlaps_polygon = notams_gdf[notams_gdf.geometry.intersects(polygon)]
+    outside_polygon = notams_gdf[~notams_gdf.geometry.intersects(polygon)]
+
+    if not overlaps_polygon.empty:
+        overlaps_polygon.plot(ax=ax, color='green', markersize=50, alpha=0.5, label='Overlap Area')
+    if not outside_polygon.empty:
+        outside_polygon.plot(ax=ax, color='red', markersize=50, alpha=0.5, label='Outside Area')
+
+    # Plot the defined area polygon
+    gpd.GeoSeries([polygon]).plot(ax=ax, edgecolor='blue', facecolor='none', linewidth=2)
+
+    # Create custom legend
+    legend_elements = [
+        Patch(facecolor='green', edgecolor='green', label='Overlap Area'),
+        Patch(facecolor='red', edgecolor='red', label='Outside Area'),
+        Patch(facecolor='none', edgecolor='blue', label='Defined Area')
+    ]
+    plt.legend(handles=legend_elements, loc='lower left')
+    plt.title('NOTAMs on US Map Relative to Defined Area')
+    plt.xlabel('Longitude')
+    plt.ylabel('Latitude')
+
+    # Set the x and y axis limits to the bounds of the contiguous US
+    ax.set_xlim([-125, -66])
+    ax.set_ylim([24, 50])
+
+    plt.show()
+
+plot_notams_on_us_map('transformed_notams.geojson', us_map, area_polygon)
