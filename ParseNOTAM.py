@@ -1,24 +1,58 @@
 import json
+import Models
 
-# File path where the JSON data is saved
-file_path = "static/TestData/TestNOTAM.json"
+def ParseNOTAM(apiOutput = None):
 
-# Reading JSON data from the file
-with open(file_path, 'r') as json_file:
-    loaded_data = json.load(json_file)
+    if apiOutput is None:
+        print("*********************\n USING TEST DATA \n*********************")
+        # File path where the test JSON data is saved
+        file_path = "static/TestData/TestNOTAM.json"
 
-# print key names of each NOTAM
-print(loaded_data['items'][0].keys())
+        # Reading test JSON data from the file
+        with open(file_path, 'r') as json_file:
+            apiOutput = json.load(json_file)
 
-# print components on the first NOTAM
-print(f"\n\n type: {loaded_data['items'][0]['type']}")
-print(f"\n\n properties: {loaded_data['items'][0]['properties']}")
-print(f"\n\n geometry: {loaded_data['items'][0]['geometry']}")
+    """
+    apiOutput is an array of output from the API. In each of the outputs the "items" are that API call's NOTAMs
+    each notam is json structure as follows:
+    {
+      "pageSize": 10,
+      "pageNum": 3,
+      "totalCount": 124,
+      "totalPages": 13,
+      "items": [
+        {
+          "type": "Point",
+          "geometry": {
+            "type": "Point",
+            "coordinates": [
+              0
+            ]
+          },
+          "properties": {
+            "coreNOTAMData": {
+              "notamEvent": {
+                "scenario": "6000"
+              },
+              "notam": {
+                "id": "NOTAM_1_66366992",
+                "series": "A",
+                "number": "A9833/22",
+                "type": "N",
+                "issued": "2022-12-07T02:34:00.000Z",
+                etc...
+            }
+          }
+        }
+      ]
+    }
+    """
+    NOTAMs = []
+    for notam in apiOutput:
+        # create a class for each NOTAM
+        for item in notam['items']:
+            NOTAMs.append(Models.Notam(item['properties']['coreNOTAMData']['notam']))
+            
+    return NOTAMs
 
-# things we will need
-print(f"\n\n notam: {loaded_data['items'][0]['properties']['coreNOTAMData']['notam']}")
-print(f"\n\n text: {loaded_data['items'][0]['properties']['coreNOTAMData']['notam']['text']}")
 
-# Accessing the loaded JSON data
-#for item in loaded_data['items']:
-    #print(item['type'])

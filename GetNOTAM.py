@@ -1,42 +1,107 @@
+from tkinter.tix import INTEGER
 import requests
 import credentials
 import json
 import urllib.parse
 import os
+import ZuluConverter
+import AirportsLatLongConverter
 
-# Base URL for the NOTAM API
-url = 'https://external-api.faa.gov/notamapi/v1/notams'
 
+#startNotam: Takes all user input from the user
+#@returns effectiveStartDate: User inputed start flight time
+#         effectiveEndDate: User inputed end flight time
+#         airLocation[1]: lat for start location
+#         airLocation[0]: long for start location
+#         finalAirLocation[1]: lat for end location
+#         finalAirLocation[0]: long for end location
+def startNotam():
 # User inputs
-responseFormat = input("Enter response format (e.g., geoJson): ")
-effectiveStartDate = input("Enter effective start date (YYYY-MM-DDTHH:MM:SS): ")
-effectiveEndDate = input("Enter effective end date (YYYY-MM-DDTHH:MM:SS): ")
-locationLongitude = input("Enter longitude: ")
-locationLatitude = input("Enter latitude: ")
-locationRadius = input("Enter radius (assumed unit, e.g., nautical miles): ")
-sortBy = input("Enter sort by parameter (e.g., notamType): ")
-sortOrder = input("Enter sort order (Asc or Desc): ")
+    effectiveStartDate = input("Enter effective start date (YYYY-MM-DD HH:MM:SS): ")
+    effectiveEndDate = input("Enter effective end date (YYYY-MM-DD HH:MM:SS): ")
+    location = input("Enter airport: ")
+    finalLocation = input("Enter ending airport: ")
 
-# Construct the URL with the required parameters
-url = (f"{url}?responseFormat={responseFormat}&effectiveStartDate={effectiveStartDate}"
-       f"&effectiveEndDate={effectiveEndDate}&locationLongitude={locationLongitude}"
-       f"&locationLatitude={locationLatitude}&locationRadius={locationRadius}"
-       f"&sortBy={sortBy}&sortOrder={sortOrder}")
+    airLocation = AirportsLatLongConverter.get_lat_and_lon(location)
+    finalAirLocation = AirportsLatLongConverter.get_lat_and_lon(finalLocation)
 
-headers = {'client_id': credentials.clientID, 'client_secret': credentials.clientSecret}
 
-# Sending the GET request
-req = requests.get(url, headers=headers)
-parsed_req = json.loads(req.text)
+    effectiveStartDate = ZuluConverter.convert_cst_to_zulu(effectiveStartDate)
+    effectiveEndDate = ZuluConverter.convert_cst_to_zulu(effectiveEndDate)
+    
+    return effectiveStartDate, effectiveEndDate, airLocation[1], airLocation[0], finalAirLocation[1], finalAirLocation[0]
+    
+    
+#getNotam: takes the lat, long, start and end time and the page number then runs an API call to the FAA for a json of the api
+#@returns parsed_req: the json of the request
+def getNotam(effectiveStartDate, effectiveEndDate, longitude, latitude, pageNum, radius):
+    url = 'https://external-api.faa.gov/notamapi/v1/notams'
+    url = (f"{url}?responseFormat=geoJson&effectiveStartDate={effectiveStartDate}"
+       f"&effectiveEndDate={effectiveEndDate}&locationLongitude={longitude}"
+       f"&locationLatitude={latitude}&locationRadius={radius}"
+       f"&pageNum={pageNum}&pageSize=50"
+       f"&sortBy=notamType&sortOrder=Asc")
 
-print(f"{req.status_code}\n\n")
-print(f"{req.headers}\n\n")
-print(f"{req.text}\n\n")
+    headers = {'client_id': credentials.clientID, 'client_secret': credentials.clientSecret}
 
-# File handling
-directory = "TestData"
-if not os.path.exists(directory):
-    os.makedirs(directory)
+    req = requests.get(url, headers=headers)
+    
+    parsed_req = req.json()
+    
 
-with open(os.path.join(directory, "TestNOTAM.json"), 'w') as json_file:
-    json.dump(parsed_req, json_file)
+    return parsed_req
+
+#buildNotam: does multiple API call of a location given in inputs and combines all Jsons of each page into a single Json file
+#@returns: combinded_core_notam_data, the combinded Json of all pages for one location
+#         effectiveEndDate: User inputed end flight time
+#         long: lat for a location
+#         lat: long for a location
+#         combined_core_notam_data: a Json being built by runNotam of all Jsons for a path
+def buildNotam(effectiveStartDate, effectiveEndDate, long, lat, combined_core_notam_data):
+    initial_response = getNotam(effectiveStartDate, effectiveEndDate, long, lat, pageNum=1)
+    total_pages = initial_response.get('totalPages', 1)
+
+    # Loop through all pages
+    for page_num in range(1, total_pages + 1):
+        page_response = getNotam(effectiveStartDate, effectiveEndDate, long, lat, pageNum=page_num)
+        page_items = page_response.get('items', [])
+
+        for item in page_items:
+            if 'coreNOTAMData' in item['properties']:
+                core_notam_data = item['properties']['coreNOTAMData']['notam']
+                if core_notam_data not in combined_core_notam_data:
+                    combined_core_notam_data.append(core_notam_data)
+    return combined_core_notam_data
+
+#runNotam: takes user input and does multiple buildNotam calls along a path in order 
+def runNotam():
+    effectiveStartDate, effectiveEndDate, long, lat, fLong, fLat = startNotam()
+    
+    combined_core_notam_data = []
+    
+    combined_core_notam_data = buildNotam(effectiveStartDate, effectiveEndDate, long, lat, combined_core_notam_data)
+    print(len(combined_core_notam_data))
+    wlong = float(long)
+    wlat = float(lat)
+    
+    while wlong >= fLong or wlat <= fLat:
+        combined_core_notam_data = buildNotam(effectiveStartDate, effectiveEndDate, str(wlong), str(wlat), combined_core_notam_data)
+        if wlong >= fLong:
+            wlong = wlong - 0.16667
+        if wlat <= fLat:
+            wlat = wlat + 0.16667
+        print(wlat)
+        print(wlong)
+        print(len(combined_core_notam_data))
+   
+    
+    
+    # File handling
+    directory = "TestData"
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+
+    with open(os.path.join(directory, "TestNOTAM.json"), 'w') as json_file:
+        json.dump(combined_core_notam_data, json_file)
+
+   
