@@ -1,4 +1,5 @@
 from math import sin, cos, radians, asin, atan2, sqrt, degrees, ceil, floor
+import json
 
 def calculateBearing(startLat, startLon, destLat, destLon):
     startLatRad = radians(startLat)
@@ -94,7 +95,29 @@ def getPath( startLat, startLong, destLat, destLong, radius, pathWidth):
     return coordList
        
 
-
+# method to write coords into geoJson format
+def writePathToGeoJson(pathList, filename="path.geojson"):
+    # Create the GeoJSON structure
+    geojson = {
+        "type": "FeatureCollection",
+        "features": []
+    }
+    
+    # Loop through each point in the path list and add it to the GeoJSON structure
+    for lat, lon in pathList:
+        feature = {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [lon, lat]
+            },
+            "properties": {}
+        }
+        geojson['features'].append(feature)
+    
+    # Write the GeoJSON structure to a file
+    with open(filename, 'w') as f:
+        json.dump(geojson, f, indent=4)
 
 # THIS IS AN EXAMPLE
 # uncomment and run `python3 MinimalCirclesPath.py` to see example of what getPath() returns
@@ -103,4 +126,9 @@ pathList = getPath(startLat = 32.7767, startLong = 96.7970, destLat = 39.7392, d
 for i,item in enumerate(pathList):
     print(f"point #{i+1}) {item}\n")
 
+# write the coords into a geoJson file    
+
+writePathToGeoJson(pathList, "path.geojson")
+
+print(f"GeoJSON file 'path.geojson' created with {len(pathList)} points.")
 

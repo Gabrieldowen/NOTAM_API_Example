@@ -50,4 +50,6 @@ def plot_notams_on_us_map(notams_file, us_map_gdf, polygon):
 
     plt.show()
 
-plot_notams_on_us_map('transformed_notams.geojson', us_map, area_polygon)
+# comment out the one you want to use / plot
+#plot_notams_on_us_map('transformed_notams.geojson', us_map, area_polygon)
+plot_notams_on_us_map('path.geojson', us_map, area_polygon)

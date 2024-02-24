@@ -17,4 +17,3 @@ def get_lat_and_lon(input_airport):
     return lat, lon
 
 
-
