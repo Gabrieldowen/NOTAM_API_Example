@@ -64,29 +64,25 @@ def getDistance(startLat, startLong, destLat, destLong):
 
 # pathWidth is the desired scaned distance from play diameter, radius is radius of circle passed to NOTAM
 def getPath( startLat, startLong, destLat, destLong, radius, pathWidth):
-
-    # TODO For actual application you would need to capture N/S/E/W
-
     
-      
-    # gets total distance from start to finish
-    totalDistance = getDistance(startLat, startLong, destLat, destLong)
-
     # gets step distance (pythagorean theorum)
     stepDistance = 2 * sqrt((radius)**2-(pathWidth/2)**2)
 
     # gets direction
     bearing = calculateBearing(startLat, startLong, destLat, destLong)
 
+    # updates start and dest slightly to adjust for area past airports
+    updatedStart = nextPoint(startLat,startLong, bearing, radius - (pathWidth/2) )
+    updatedDest = nextPoint(destLat, destLong, bearing, (pathWidth/2))
 
-    # gets point to call NOTAM and include all of starting area from farther down path
-    startPoint = nextPoint(startLat,startLong, bearing, radius - (pathWidth/2) )
+    # gets total distance from start to finish
+    totalDistance = getDistance(updatedStart[0], updatedStart[1], updatedDest[0], updatedDest[1])
 
     # List to return with path of points from start to dest
-    coordList = [startPoint]
+    coordList = [updatedStart]
 
-    # loops for each step until passed the destination
-    for _ in range(floor((totalDistance - (radius - (pathWidth/2)))/stepDistance)):
+    # loops for each step until passed the destination. range(split total distance minus area covered from start point)
+    for _ in range(ceil((totalDistance - (stepDistance/2))/stepDistance)):
         nextCircle = nextPoint(coordList[-1][0],coordList[-1][1], bearing, stepDistance)
         coordList.append(nextCircle)
 
