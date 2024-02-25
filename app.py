@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, session, redirect, url_for
 import Models
 import ParseNOTAM
 import MinimalCirclesPath
@@ -10,9 +10,10 @@ app = Flask(__name__)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-
+    # If form is submitted
     # If form is submitted
     if request.method == 'POST':
+        """
         NotamRequest = Models.NotamRequest(request.form)
 
 
@@ -52,11 +53,12 @@ def index():
         Notams = ParseNOTAM.ParseNOTAM(apiOutputs)
         endTime = time.time()    # Record end time
         print(f"time parsing: {endTime - startTime} seconds\n")
+        """
+        time.sleep(10)
 
-        return render_template('display.html', notams = Notams)
+        #return render_template('display.html', notams = Notams)
+        return render_template('display.html')
         
-
-
     return render_template('index.html')
 
 if __name__ == '__main__':

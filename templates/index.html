@@ -1,10 +1,11 @@
 {% extends 'base.html' %}
 
 {% block content %}
+
 <div class="container">
-    <h1>NOTAM Sorter</h1>
+    <h1i id = "Title">NOTAM Sorter</h1i>
       <div class="container mt-5">
-        <form method="POST">
+        <form id = "dataForm" onsubmit="submitForm(); return false;">
             <div class="mb-3">
                 <label for="responseFormat" class="form-label">Response Format</label>
                 <input type="text" class="form-control" id="responseFormat" name="responseFormat">
@@ -21,17 +22,17 @@
             </div>
 	    <div class="row">
                 <div class="col-md-6 mb-3">
-                    <label for="start" class="form-label">Start</label>
-                    <input type="text" class="form-control" id="startAirport" name="start" placeholder="LAX" autocomplete="off">
+                    <label for="startAirport" class="form-label">Start</label>
+                    <input type="text" class="form-control" id="responseFormat" name="startAirport" placeholder="LAX" autocomplete="off">
                 </div>
                 <div class="col-md-6 mb-3">
-                    <label for="Destination" class="form-label">Destination</label>
-                    <input type="text" class="form-control" id="destAirport" name="Destination" placeholder="LAX" autocomplete="off">
+                    <label for="destAirport" class="form-label">Destination</label>
+                    <input type="text" class="form-control" id="responseFormat" name="destAirport" placeholder="LAX" autocomplete="off">
                 </div>
             </div>
 			
 		<div id="additionalDestinations"></div>
-            	<button type="button" class="btn btn-secondary" onclick="addDestination()">Add Another Destination</button>
+            	<button type="button" id="addButton" class="btn btn-secondary" onclick="addDestination()">Add Another Destination</button>
 			
             <div class="mb-3">
                 <label for="locationRadius" class="form-label">Location Radius</label>
@@ -54,10 +55,36 @@
                     </select>
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" id="submitButton" class="btn btn-primary">Submit</button>
+            </div>
         </form>
     </div>
 </div>
+<div class="hiddenObj">
+    <div class="custom-text">
+        <h1 id="loadingText">Loading.....</h1>
+    </div>
+    <group>
+        <div class="ticks">
+            <span style="--i:0;"></span>
+            <span style="--i:1;"></span>
+            <span style="--i:2;"></span>
+            <span style="--i:3;"></span>
+            <span style="--i:4;"></span>
+            <span style="--i:5;"></span>
+            <span style="--i:6;"></span>
+            <span style="--i:7;"></span>
+            <span style="--i:8;"></span>
+            <span style="--i:9;"></span>
+            <span style="--i:10;"></span>
+            <span style="--i:11;"></span>
+        </div>
+    </group>
+    
+    
+</div>
+
+
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/js/bootstrap-datepicker.min.js"></script>
@@ -96,5 +123,74 @@
 		destinationCounter++;
 	}
 </script>
+
+
+
+<script>
+     function submitForm() {
+        // Store the form data.
+        const formData = new FormData(document.getElementById('dataForm'));
+
+        // Remvoe all the text and input boxes
+        document.getElementById('Title').remove();
+
+        document.getElementById('effectiveStartDate').remove();
+        document.querySelector('label[for="effectiveStartDate"]').remove();
+
+        document.getElementById('effectiveEndDate').remove();
+        document.querySelector('label[for="effectiveEndDate"]').remove();
+            
+        document.getElementById('locationRadius').remove();
+        document.querySelector('label[for="locationRadius"]').remove();
+            
+        document.getElementById('sortOrder').remove();
+        document.querySelector('label[for="sortOrder"]').remove();
+            
+        document.getElementById('sortBy').remove();
+        document.querySelector('label[for="sortBy"]').remove();
+            
+        document.getElementById('responseFormat').remove();
+        document.querySelector('label[for="responseFormat"]').remove();
+            
+        document.getElementById('responseFormat').remove();
+        document.querySelector('label[for="destAirport"]').remove();
+            
+        document.getElementById('responseFormat').remove();
+        document.querySelector('label[for="startAirport"]').remove();
+
+        document.getElementById('submitButton').remove();
+        document.getElementById('addButton').remove();
+
+        var hiddenElements = document.querySelectorAll('.hiddenObj');
+
+        // Display loading text for the user.
+        hiddenElements.forEach(function (element) {
+            element.style.display = 'block';
+        });
+
+        // Call the server with the data provided.
+        fetch(document.getElementById('dataForm').action, {
+            method: 'POST',
+            body: formData,
+        })
+        
+        // Update the display page after the call to the server is done.
+        .then(response => response.text())
+        .then(data => {
+            // Replace the entire body with the new content
+            document.body.innerHTML = data;
+        })
+        // Error catching just in case
+        .catch(error => console.error('Error:', error))
+        .finally(() => {
+            // Hide loading indicator
+            hiddenElements.forEach(function (element) {
+                element.style.display = 'none';
+            });
+        });
+        
+    }
+</script>
+
 
 {% endblock %}

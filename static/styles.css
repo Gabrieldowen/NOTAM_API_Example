@@ -1,0 +1,145 @@
+/* Header for base.html */
+h1i{
+  font-size: 5rem;
+  color: #000000;
+}
+
+/* Customized buttons for base.html */
+
+.btn {
+  font-size: 1.5rem;
+  font-weight: 700;
+  padding: 0.2em 0.5em;
+  color: #000000;
+  background-color: #0b4681;
+  border-radius: 10px;
+
+  transition: all 0.3s;
+}
+
+/* Customized buttons functions for base.html */
+
+.btn:hover{
+  transform: translateY(-10px);
+  background-color: #1378dd;
+  color: #ffffff;
+}
+
+/* Custom shapes */
+
+#circle {
+  width: 150px;
+  height: 200px;
+  background: #a20000;
+  border-radius: 35%;
+  margin-top: 20px;
+  margin: auto;
+
+}
+
+/* For the loading animation */
+#circleTick {
+  position: fixed;
+  width: 30px;
+  height: 125px;
+  top: calc(50vh - 200px/2);
+  left: calc(50vw - 150px/2);
+  background: #a20000;
+  border-radius: 45%;
+}
+
+/* Custom loading text in base.html */
+.custom-text {
+  position: fixed;
+  font-size: 24px; 
+  color: #24131c; 
+  top: calc(50vh - 200px);
+  left: calc(50vw - (150px/2) - (24px/2));
+  animation: changeColor 2s linear;
+}
+
+/* To make the loading symbol */
+
+group {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; 
+  transform: translate(0px, -150px);
+}
+
+group .ticks{
+  position: relative;
+  width: 5px;
+  height: 5px;
+  
+}
+
+group .ticks span {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform: rotate(calc(30deg * var(--i)));
+}
+
+.ticks span::before{
+  content: '';
+  position: absolute;
+  top: 0px;
+  left: 5px;
+  width: 20px;
+  height: 75px;
+  background: #005eff6d;
+  border-radius: 50%;
+  animation: tickTock 2s linear infinite;
+  animation-delay: calc(0.05s * (var(--i)));
+}
+
+/* The animation of the symbol */
+@keyframes tickTock{
+  0%{
+    opacity: 0;
+  }
+  50%{
+    opacity: 100;
+  }
+  100%{
+    opacity: 0;
+  }
+}
+
+
+/* Custom animation, change the hue of the color constantly */
+@keyframes changeColor {
+  0% {
+      filter: hue-rotate(0deg);
+  }
+  100%{
+      filter: hue-rotate(360deg);
+  }
+}
+
+/* Custom animation, change the opacity back from 0 to 100 and back to 0 */
+
+@keyframes fadeIn {
+  0%{
+    opacity: 0;
+  }
+  50% {
+    opacity: 100;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* Hidden text attribute for changing from input requesting, to loading, to display. */
+
+.hiddenObj {
+    display: none;
+}
+
+
+/*# sourceMappingURL=style.css.map */
