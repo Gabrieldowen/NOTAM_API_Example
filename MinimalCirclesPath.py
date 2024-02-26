@@ -47,10 +47,16 @@ def nextPoint(startLat, startLong, bearingDegrees, distanceNm=100):
 
 # used geeksforgeeks.org
 def getDistance(startLat, startLong, destLat, destLong):
-    earthRadiusNm = 3440.065  # Radius of the Earth in nautical miles
+    if None in [startLat, startLong, destLat, destLong]:
+        # Handle the error: log it, raise an exception, or use a default value
+        print("One or more of the latitude or longitude values are None.")
+        return None
 
+    earthRadiusNm = 3440.065  # Radius of the Earth in nautical miles
+    
     # Convert latitude and longitude from degrees to radians
     startLat, startLong, destLat, destLong = map(radians, [startLat, startLong, destLat, destLong])
+    
 
     # Calculate differences
     latDifference = destLat - startLat
