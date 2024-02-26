@@ -21,12 +21,12 @@
             </div>
 	    <div class="row">
                 <div class="col-md-6 mb-3">
-                    <label for="start" class="form-label">Start</label>
-                    <input type="text" class="form-control" id="startAirport" name="start" placeholder="LAX" autocomplete="off">
+                    <label for="startAirport" class="form-label">Start Airport</label>
+                    <input type="text" class="form-control" id="startAirport" name="startAirport" placeholder="LAX" autocomplete="off">
                 </div>
                 <div class="col-md-6 mb-3">
-                    <label for="Destination" class="form-label">Destination</label>
-                    <input type="text" class="form-control" id="destAirport" name="Destination" placeholder="LAX" autocomplete="off">
+                    <label for="destAirport" class="form-label">Destination Airport</label>
+                    <input type="text" class="form-control" id="destAirport" name="destAirport" placeholder="JFK" autocomplete="off">
                 </div>
             </div>
 			
@@ -76,23 +76,16 @@
 	function addDestination() {
 		var additionalDestinationsDiv = document.getElementById('additionalDestinations');
 
-		// Create a new destination row if there are no rows or the last row is full
-		if (!additionalDestinationsDiv.lastChild || additionalDestinationsDiv.lastChild.childElementCount === 2) {
-			var destinationRow = document.createElement('div');
-			destinationRow.classList.add('row');
-        		additionalDestinationsDiv.appendChild(destinationRow);
-		}
+		// Create a new destination row
+		var destinationRow = document.createElement('div');
+		destinationRow.classList.add('row');
+		var destinationInput = document.createElement('div');
+		destinationInput.classList.add('col-md-6', 'mb-3');
+		destinationInput.innerHTML = '<label for="destAirport' + destinationCounter + '" class="form-label">Additional Destination ' + destinationCounter + '</label>' +
+			'<input type="text" class="form-control" name="destAirport' + destinationCounter + '" placeholder="Airport Code" autocomplete="off">';
+		destinationRow.appendChild(destinationInput);
+		additionalDestinationsDiv.appendChild(destinationRow);
 
-		// Create Destination Location input
-		var destinationLocationInput = document.createElement('div');
-		destinationLocationInput.classList.add('col-md-6', 'mb-3');
-		destinationLocationInput.innerHTML = '<label for="destinationLocation' + destinationCounter + '" class="form-label">Destination Location ' + destinationCounter + '</label>' +
-			'<input type="text" class="form-control" name="destinationLocation' + destinationCounter + '">';
-
-		// Append the destination input to the last destination row
-		additionalDestinationsDiv.lastChild.appendChild(destinationLocationInput);
-
-		// Increment the destination counter for the next input
 		destinationCounter++;
 	}
 </script>
