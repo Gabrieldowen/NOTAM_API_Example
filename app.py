@@ -1,11 +1,13 @@
 import json
 from flask import Flask, render_template, request
+from RemoveNotamDupes import removeDupes
 import Models
 import ParseNOTAM
 import MinimalCirclesPath
 import AirportsLatLongConverter as alc
 import GetNOTAM
 import time
+
 
 app = Flask(__name__)
 
@@ -56,13 +58,14 @@ def index():
                 # Save the raw API outputs to a JSON file
         with open('raw_notams.json', 'w') as file:
             json.dump(apiOutputs, file)
-            
+
+        GetNOTAM.removeDupes()
+        
         # takes api output and parse it
         startTime = time.time()  # Record start time
         Notams = ParseNOTAM.ParseNOTAM(apiOutputs)
         endTime = time.time()    # Record end time
         print(f"time parsing: {endTime - startTime} seconds\n")
-
         return render_template('display.html', notams = Notams)
         
 
