@@ -1,3 +1,4 @@
+import json
 from flask import Flask, render_template, request
 import Models
 import ParseNOTAM
@@ -15,7 +16,7 @@ def index():
     if request.method == 'POST':
         NotamRequest = Models.NotamRequest(request.form)
 
-
+        apiOutputs = []
         # get lat/long of airports
         NotamRequest.startLat, NotamRequest.startLong = alc.get_lat_and_lon(NotamRequest.startAirport)
         NotamRequest.destLat, NotamRequest.destLong = alc.get_lat_and_lon(NotamRequest.destAirport)
@@ -34,19 +35,28 @@ def index():
         # call the API for each point
         print("LOADING...")
 
-        apiOutputs = [ GetNOTAM.getNotam( NotamRequest.effectiveStartDate,
-                                            NotamRequest.effectiveEndDate,
-                                            longitude, # longitude
-                                            latitude, # latitude
-                                            1, # page num
-                                            NotamRequest.radius) #page num here is one temporarily
-                                            for latitude, longitude in coordList ]
+        # apiOutputs = [ GetNOTAM.getNotam( NotamRequest.effectiveStartDate,
+        #                                     NotamRequest.effectiveEndDate,
+        #                                     longitude, # longitude
+        #                                     latitude, # latitude
+        #                                     1, # page num
+        #                                     NotamRequest.radius) #page num here is one temporarily
+        #                                     for latitude, longitude in coordList ]
+        for latitude, longitude in coordList:
+            radius = 50  # Example radius value, adjust as necessary
+            new_data = GetNOTAM.buildNotam(NotamRequest.effectiveStartDate, NotamRequest.effectiveEndDate, longitude, latitude, radius)
+            apiOutputs.extend(new_data)  # Assuming apiOutputs is a list
+
 
         # Record end time
+
         endTime = time.time()    
         print(f"\ntime calling API {endTime - startTime} seconds")
 
-
+                # Save the raw API outputs to a JSON file
+        with open('raw_notams.json', 'w') as file:
+            json.dump(apiOutputs, file)
+            
         # takes api output and parse it
         startTime = time.time()  # Record start time
         Notams = ParseNOTAM.ParseNOTAM(apiOutputs)
@@ -60,4 +70,7 @@ def index():
     return render_template('index.html')
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=8080)
+    app.run(debug=True)
+
+
+

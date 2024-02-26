@@ -56,21 +56,20 @@ def getNotam(effectiveStartDate, effectiveEndDate, longitude, latitude, pageNum,
 #         long: lat for a location
 #         lat: long for a location
 #         combined_core_notam_data: a Json being built by runNotam of all Jsons for a path
-def buildNotam(effectiveStartDate, effectiveEndDate, long, lat, combined_core_notam_data):
-    initial_response = getNotam(effectiveStartDate, effectiveEndDate, long, lat, pageNum=1)
+def buildNotam(effectiveStartDate, effectiveEndDate, long, lat, radius):
+    combined_responses = []  # To store the full responses from all pages
+    initial_response = getNotam(effectiveStartDate, effectiveEndDate, long, lat, 1, radius)  # pageNum=1 for the initial call
     total_pages = initial_response.get('totalPages', 1)
+    combined_responses.append(initial_response)  # Add the initial response to the combined list
 
-    # Loop through all pages
-    for page_num in range(1, total_pages + 1):
-        page_response = getNotam(effectiveStartDate, effectiveEndDate, long, lat, pageNum=page_num)
-        page_items = page_response.get('items', [])
+    # If there are more pages, loop through them and add their responses to the combined list
+    if total_pages > 1:
+        for page_num in range(2, total_pages + 1):  # Start from 2 since we already have page 1
+            page_response = getNotam(effectiveStartDate, effectiveEndDate, long, lat, page_num, radius)
+            combined_responses.append(page_response)  # Add the current page's response
 
-        for item in page_items:
-            if 'coreNOTAMData' in item['properties']:
-                core_notam_data = item['properties']['coreNOTAMData']['notam']
-                if core_notam_data not in combined_core_notam_data:
-                    combined_core_notam_data.append(core_notam_data)
-    return combined_core_notam_data
+    return combined_responses
+
 
 #runNotam: takes user input and does multiple buildNotam calls along a path in order 
 def runNotam():
