@@ -47,16 +47,27 @@ def create_circle(lat, lon, radius_nm):
 def process_geometry(geometry, properties):
     features = []
 
-    if geometry.get('type') == 'GeometryCollection' and (not geometry.get('geometries') or geometry['geometries'] == []):
+    if not geometry or 'type' not in geometry:
+        logging.error("Geometry data is missing or invalid.")
+        return features
+
+    if geometry['type'] == 'GeometryCollection' and ('geometries' not in geometry or not geometry['geometries']):
         features += extract_geometry_from_text(properties)
     else:
         if geometry['type'] == 'GeometryCollection':
             for geom in geometry['geometries']:
-                features += process_individual_geometry(geom, properties)
+                try:
+                    features += process_individual_geometry(geom, properties)
+                except Exception as e:
+                    logging.error(f"Error processing NOTAM item with ID {properties.get('coreNOTAMData', {}).get('notam', {}).get('id', 'Unknown')}: {e}")
         elif geometry['type'] in ['Point', 'Polygon']:
-            features += process_individual_geometry(geometry, properties)
+            try:
+                features += process_individual_geometry(geometry, properties)
+            except Exception as e:
+                logging.error(f"Error processing NOTAM item with ID {properties.get('coreNOTAMData', {}).get('notam', {}).get('id', 'Unknown')}: {e}")
 
     return features
+
 
 def extract_geometry_from_text(properties):
     features = []
@@ -120,13 +131,13 @@ def load_notams_data(file_path):
         return {'items': []}  # Fallback to empty data
 
 def main():
-    notams_data = load_notams_data('TestData/norman.json')
+    notams_data = load_notams_data('deduplicated_file.json')
     features = []
 
-    for item in notams_data['items']:
+    for item in notams_data:
         try:
             geometry = item.get('geometry', {})
-            properties = item['properties']
+            properties = item.get('properties', {})
             
             features += process_geometry(geometry, properties)
         except Exception as e:
@@ -143,6 +154,7 @@ def main():
         logging.info('GeoJSON file created: transformed_notams.geojson')
     except Exception as e:
         logging.error(f"Error writing GeoJSON file: {e}")
+
 
 if __name__ == "__main__":
     main()
