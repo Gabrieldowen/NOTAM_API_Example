@@ -47,16 +47,10 @@ def nextPoint(startLat, startLong, bearingDegrees, distanceNm=100):
 
 # used geeksforgeeks.org
 def getDistance(startLat, startLong, destLat, destLong):
-    if None in [startLat, startLong, destLat, destLong]:
-        # Handle the error: log it, raise an exception, or use a default value
-        print("One or more of the latitude or longitude values are None.")
-        return None
-
     earthRadiusNm = 3440.065  # Radius of the Earth in nautical miles
-    
+
     # Convert latitude and longitude from degrees to radians
     startLat, startLong, destLat, destLong = map(radians, [startLat, startLong, destLat, destLong])
-    
 
     # Calculate differences
     latDifference = destLat - startLat
@@ -70,7 +64,7 @@ def getDistance(startLat, startLong, destLat, destLong):
     return distanceNm
 
 # pathWidth is the desired scaned distance from play diameter, radius is radius of circle passed to NOTAM
-def getPath( startLat, startLong, destLat, destLong, radius, pathWidth):
+def getPath(startLat, startLong, destLat, destLong, radius, pathWidth):
 
     # TODO For actual application you would need to capture N/S/E/W
 
@@ -125,16 +119,40 @@ def writePathToGeoJson(pathList, filename="path.geojson"):
     with open(filename, 'w') as f:
         json.dump(geojson, f, indent=4)
 
+# gets the corners of the area you want searched
+def getSearchArea(startLat=32.7767, startLong=-96.7970, destLat=39.7392, destLong=-104.9903, pathWidth=50):
+    # gets direction
+    bearing = calculateBearing(startLat, startLong, destLat, destLong)
+    
+    # get direction of search path corners
+    left_bearing = (bearing - 90 + 360) % 360
+    right_bearing = (bearing + 90) % 360
+
+    # gets search path corners in the correct order to form a rectangle
+    corners = []
+    # Top-left
+    corners.append(nextPoint(startLat, startLong, left_bearing, distanceNm=(pathWidth / 2)))
+    # Top-right
+    corners.append(nextPoint(startLat, startLong, right_bearing, distanceNm=(pathWidth / 2)))
+    # Bottom-right
+    corners.append(nextPoint(destLat, destLong, right_bearing, distanceNm=(pathWidth / 2)))
+    # Bottom-left
+    corners.append(nextPoint(destLat, destLong, left_bearing, distanceNm=(pathWidth / 2)))
+
+    return corners
+
+
 # THIS IS AN EXAMPLE
 # uncomment and run `python3 MinimalCirclesPath.py` to see example of what getPath() returns
+if __name__ == '__main__':
+    corners = getSearchArea()
+    pathList = getPath(startLat = 32.7767, startLong = -96.7970, destLat = 39.7392, destLong = -104.9903, radius = 100,  pathWidth = 50)
+    for i,item in enumerate(pathList):
+        print(f"point #{i+1}) {item}\n")
 
-pathList = getPath(startLat = 32.7767, startLong = 96.7970, destLat = 39.7392, destLong = 104.9903, radius = 100,  pathWidth = 50)
-for i,item in enumerate(pathList):
-    print(f"point #{i+1}) {item}\n")
+    # write the coords into a geoJson file    
 
-# write the coords into a geoJson file    
+    # writePathToGeoJson(pathList, "path.geojson")
+    writePathToGeoJson(corners, "path.geojson")
 
-writePathToGeoJson(pathList, "path.geojson")
-
-print(f"GeoJSON file 'path.geojson' created with {len(pathList)} points.")
-
+    print(f"GeoJSON file 'path.geojson' created with {len(corners)} points.")

@@ -2,12 +2,21 @@ import geopandas as gpd
 import matplotlib.pyplot as plt
 from matplotlib.patches import Patch
 from shapely.geometry import Polygon
+from MinimalCirclesPath import getSearchArea
 
 us_map = gpd.read_file('us.geojson')
 
-#Polygon coords
+# Define start and destination coordinates, and other parameters if different from defaults
+startLat, startLong = 32.7767, -96.7970
+destLat, destLong = 39.7392, -104.9903
+pathWidth = 50  # Path width in nautical miles
 
-polygon_coords = [(-100.0, 25.0), (-100.0, 50.0), (-65.0, 50.0), (-65.0, 25.0)]
+# Get the corners of the search area
+corners = getSearchArea(startLat, startLong, destLat, destLong, pathWidth=pathWidth)
+
+
+
+polygon_coords = [(lon, lat) for lat, lon in corners]
 area_polygon = Polygon(polygon_coords)
 
 def plot_notams_on_us_map(notams_file, us_map_gdf, polygon):
@@ -51,5 +60,5 @@ def plot_notams_on_us_map(notams_file, us_map_gdf, polygon):
     plt.show()
 
 # comment out the one you want to use / plot
-#plot_notams_on_us_map('transformed_notams.geojson', us_map, area_polygon)
-plot_notams_on_us_map('path.geojson', us_map, area_polygon)
+plot_notams_on_us_map('transformed_notams.geojson', us_map, area_polygon)
+# plot_notams_on_us_map('path.geojson', us_map, area_polygon)
