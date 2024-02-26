@@ -2,41 +2,45 @@
 
 {% block content %}
 
-<div class="container">
+<div class="container" style="transform: translateY(10px);">
     <h1i id = "Title">NOTAM Sorter</h1i>
-      <div class="container mt-5">
-        <form id = "dataForm" onsubmit="submitForm(); return false;">
+      <div class="container mt-5" style="transform: translateY(-40px);">
+        <form id = "dataForm" onSubmit="checkInputs(); return false;">
             <div class="mb-3">
                 <label for="responseFormat" class="form-label">Response Format</label>
                 <input type="text" class="form-control" id="responseFormat" name="responseFormat">
+                <span id="error-message"> </span>
             </div>
 	    <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="effectiveStartDate" class="form-label">Effective Start Date</label>
                     <input type="text" class="form-control datepicker" id="effectiveStartDate" name="effectiveStartDate" placeholder="mm-dd-yyyy" autocomplete="off">
+                    <span id="error-message1""> </span>
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="effectiveEndDate" class="form-label">Effective End Date</label>
                     <input type="text" class="form-control datepicker" id="effectiveEndDate" name="effectiveEndDate" placeholder="mm-dd-yyyy" autocomplete="off">
+                    <span id="error-message2"> </span>
                 </div>
             </div>
-	    <div class="row">
+	    <div class="row" >
                 <div class="col-md-6 mb-3">
                     <label for="startAirport" class="form-label">Start</label>
-                    <input type="text" class="form-control" id="responseFormat" name="startAirport" placeholder="LAX" autocomplete="off">
+                    <input type="text" class="form-control" id="startAirport" name="startAirport" placeholder="LAX" autocomplete="off">
+                    <span id="error-message3"> </span>
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="destAirport" class="form-label">Destination</label>
-                    <input type="text" class="form-control" id="responseFormat" name="destAirport" placeholder="LAX" autocomplete="off">
+                    <input type="text" class="form-control" id="destAirport" name="destAirport" placeholder="LAX" autocomplete="off">
+                    <span id="error-message4"> </span>
                 </div>
             </div>
-			
 		<div id="additionalDestinations"></div>
             	<button type="button" id="addButton" class="btn btn-secondary" onclick="addDestination()">Add Another Destination</button>
-			
-            <div class="mb-3">
+            <div class="mb-3" style="transform: translateY(10px);">
                 <label for="locationRadius" class="form-label">Location Radius</label>
                 <input type="text" class="form-control" id="locationRadius" name="locationRadius">
+                <span id="error-messageR"> </span>
             </div>
             <div class="row">
                 <div class="col-md-6 mb-3">
@@ -60,6 +64,7 @@
         </form>
     </div>
 </div>
+
 <div class="hiddenObj">
     <div class="custom-text">
         <h1 id="loadingText">Loading.....</h1>
@@ -101,6 +106,7 @@
 	var destinationCounter = 2;
 
 	function addDestination() {
+
 		var additionalDestinationsDiv = document.getElementById('additionalDestinations');
 
 		// Create a new destination row if there are no rows or the last row is full
@@ -110,14 +116,27 @@
         		additionalDestinationsDiv.appendChild(destinationRow);
 		}
 
+
 		// Create Destination Location input
 		var destinationLocationInput = document.createElement('div');
 		destinationLocationInput.classList.add('col-md-6', 'mb-3');
+        // Added an id to each child to get its value for checking purposes.
 		destinationLocationInput.innerHTML = '<label for="destinationLocation' + destinationCounter + '" class="form-label">Destination Location ' + destinationCounter + '</label>' +
-			'<input type="text" class="form-control" name="destinationLocation' + destinationCounter + '">';
+			'<input type="text" class="form-control" id= "destinationLocation' + destinationCounter + '" name="destinationLocation' + destinationCounter + '" >';
+
 
 		// Append the destination input to the last destination row
 		additionalDestinationsDiv.lastChild.appendChild(destinationLocationInput);
+
+        // Create an error message child for the new destination.
+        var destinationErrorMsg = document.createElement('span');
+        destinationErrorMsg.id = 'error-message' + (destinationCounter + 3);
+
+        // Get the last destination location input in the row
+        var lastDestinationLocationInput = additionalDestinationsDiv.lastChild.lastElementChild;
+
+        // Insert the error message span right after the last destination location input
+        lastDestinationLocationInput.insertAdjacentElement('beforeend', destinationErrorMsg);
 
 		// Increment the destination counter for the next input
 		destinationCounter++;
@@ -127,7 +146,8 @@
 
 
 <script>
-     function submitForm() {
+    // Function to reset the body of the page and change it to loading.
+    function submitForm() {
         // Store the form data.
         const formData = new FormData(document.getElementById('dataForm'));
 
@@ -152,14 +172,17 @@
         document.getElementById('responseFormat').remove();
         document.querySelector('label[for="responseFormat"]').remove();
             
-        document.getElementById('responseFormat').remove();
+        document.getElementById('startAirport').remove();
         document.querySelector('label[for="destAirport"]').remove();
             
-        document.getElementById('responseFormat').remove();
+        document.getElementById('destAirport').remove();
         document.querySelector('label[for="startAirport"]').remove();
 
         document.getElementById('submitButton').remove();
         document.getElementById('addButton').remove();
+
+        // Remove all the additional destinations
+        document.getElementById('additionalDestinations').remove();
 
         var hiddenElements = document.querySelectorAll('.hiddenObj');
 
@@ -183,14 +206,124 @@
         // Error catching just in case
         .catch(error => console.error('Error:', error))
         .finally(() => {
-            // Hide loading indicator
+            // Hide loading elements
             hiddenElements.forEach(function (element) {
                 element.style.display = 'none';
             });
         });
         
     }
+
+    // Function to check for a leap year month.
+    function getLastDayOfMonth(year, month){
+        if (month === 1 && ((year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0))) {
+            // February in a leap year
+            return 29;
+        } else {
+            // The rest of the months
+            return new Date(year, month + 1, 0).getDate();
+        }
+    }
+
+    // Function called to check if the dates are of the correct form.
+    function checkInputDate(input, errorMsg) {
+        const dateInput = document.getElementById(input).value;
+        const errorMessage = document.getElementById(errorMsg);
+        const dateArray = dateInput.split('-');
+        
+        const month = parseInt(dateArray[0], 10);
+        const day = parseInt(dateArray[1], 10);
+        const year = parseInt(dateArray[2], 10);
+
+        // Check if the entered date is valid
+        if (
+            month >= 1 && month <= 12 &&
+            day >= 1 && day <= getLastDayOfMonth(year, month) &&
+            year >= 2020 && year <= 2030
+        ) {
+            errorMessage.textContent = ''; // Clear any previous error message
+            return true;
+        } else {
+            errorMessage.textContent = 'Invalid date. Please enter a valid date (MM-DD-YYYY).';
+            return false;
+        }
+    }
+    
+    // Function called to check if the airports are of the correct form.
+    function checkInputAirport(inputId, errorMsg) {
+        const inputElement = document.getElementById(inputId);
+        const errorMessage = document.getElementById(errorMsg);
+
+        // Use the regular expression pattern ^[A-Z]{3}$ to match three uppercase letters
+        const pattern = /^[A-Z]{3}$/;
+
+        // Check if the entered string matches the pattern
+        if (!pattern.test(inputElement.value)) {
+            errorMessage.textContent = 'Invalid airport. Please enter a valid airport.';
+            return false;
+        } else if (inputElement.value !== ''){
+            errorMessage.textContent = '';
+            return true;
+        }
+
+    }
+
+    // Function to check the input format requested, not sure what we are planning for this.
+    function checkInputFormat(inputId, errorMsg){
+        return true;
+    }
+
+    // Function to check the inputted radius for the NOTAMs, right now it is 0 to 100, accepting only integers.
+    function checkInputRadius(inputId, errorMsg){
+        const inputElement = document.getElementById(inputId);
+        const errorMessage = document.getElementById(errorMsg);
+
+        // Get the entered value and convert it to an integer
+        const inputValue = parseInt(inputElement.value, 10);
+
+        // Check if the entered value is a valid integer within the specified range
+        if (Number.isInteger(inputValue) && inputValue >= 0 && inputValue <= 100) {
+            // Valid input
+            errorMessage.textContent = ''; // Clear any previous error message
+            return true;
+        } else {
+            errorMessage.textContent = 'Invalid radius. Please enter a valid radius between 0 and 100.';
+            return false;
+        }
+    }
+
+    // Function called when user submits information. Checks each inputted value.
+    function checkInputs(){
+        
+        //const isValidFormat = checkInputFormat('responseFormat', 'error-message');
+        //const isValidDate1 = checkInputDate('effectiveStartDate', 'error-message1');
+        //const isValidDate2 = checkInputDate('effectiveEndDate', 'error-message2');
+        const isValidStart = checkInputAirport('startAirport', 'error-message3');
+        const isValidDest = checkInputAirport('destAirport', 'error-message4');
+
+        let isValidDests = true;
+        let isValidDestI = false;
+        for (let i = 3; i <= destinationCounter; i++){
+            isValidDestI = checkInputAirport('destinationLocation' + (i-1), 'error-message' + (i+2));
+            if (!isValidDestI){
+                isValidDests = false;
+            }
+        }
+        
+        //const isValidLocationRadius = checkInputRadius('locationRadius', 'error-messageR')
+
+        if (isValidStart && isValidDest && isValidDests){
+           submitForm();
+        }
+
+        //if (isValidFormat && isValidDate1 && isValidDate2 && isValidStart && isValidDest && isValidLocationRadius && isValidDests){
+        //   submitForm();
+        //}
+        
+        //submitForm();
+    }
+    
 </script>
 
-
 {% endblock %}
+
