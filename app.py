@@ -6,7 +6,8 @@ import MinimalCirclesPath
 import AirportsLatLongConverter as alc
 import GetNOTAM
 import time
-
+# import geoJsonTransformer
+# import map
 
 app = Flask(__name__)
 
@@ -59,7 +60,8 @@ def index():
             json.dump(apiOutputs, file)
 
         GetNOTAM.removeDupes()
-        
+        # geoJsonTransformer.main()
+        # map.plot_notams_on_us_map('transformed_notams.geojson', map.us_map, map.area_polygon)
         # takes api output and parse it
         startTime = time.time()  # Record start time
         Notams = ParseNOTAM.ParseNOTAM(apiOutputs)

@@ -13,7 +13,7 @@ clean:
 	echo "Removing output JSON files..."
 	rm -f TestData/TestNOTAM.json
 	rm -f TestData/norman.json
-	rm -f transformed_notams.geojson transformed_notams.log path.geoJson
+	rm -f transformed_notams.geojson transformed_notams.log path.geoJson raw_notams.json deduplicated_file.geojson
 	echo "Output JSON files removed."
 	
 
