@@ -64,7 +64,7 @@ def getDistance(startLat, startLong, destLat, destLong):
     return distanceNm
 
 # pathWidth is the desired scaned distance from play diameter, radius is radius of circle passed to NOTAM
-def getPath( startLat, startLong, destLat, destLong, radius, pathWidth):
+def getPath(startLat, startLong, destLat, destLong, radius, pathWidth):
 
     # TODO For actual application you would need to capture N/S/E/W
 
@@ -119,16 +119,36 @@ def writePathToGeoJson(pathList, filename="path.geojson"):
     with open(filename, 'w') as f:
         json.dump(geojson, f, indent=4)
 
+# gets the corners of the area you want searched
+def getSearchArea(startLat = 32.7767, startLong = -96.7970, destLat = 39.7392, destLong = -104.9903, radius = 100,  pathWidth = 50):
+    # gets direction
+    bearing = calculateBearing(startLat, startLong, destLat, destLong)
+    
+    # get direction of search path corners
+    left = (bearing-90+360)%360
+    right = (bearing+90)%360
+
+    # gets search path corners
+    corners = []
+    corners.append(nextPoint(startLat, startLong, left, distanceNm=(pathWidth/2)))
+    corners.append(nextPoint(startLat, startLong, right, distanceNm=(pathWidth/2)))
+    corners.append(nextPoint(destLat, destLong, left, distanceNm=(pathWidth/2)))
+    corners.append(nextPoint(destLat, destLong, right, distanceNm=(pathWidth/2)))
+
+    return corners
+
 # THIS IS AN EXAMPLE
 # uncomment and run `python3 MinimalCirclesPath.py` to see example of what getPath() returns
+if __name__ == '__main__':
+    corners = getSearchArea()
+    """pathList = getPath(startLat = 32.7767, startLong = -96.7970, destLat = 39.7392, destLong = -104.9903, radius = 100,  pathWidth = 50)
+    for i,item in enumerate(pathList):
+        print(f"point #{i+1}) {item}\n")"""
 
-pathList = getPath(startLat = 32.7767, startLong = 96.7970, destLat = 39.7392, destLong = 104.9903, radius = 100,  pathWidth = 50)
-for i,item in enumerate(pathList):
-    print(f"point #{i+1}) {item}\n")
+    # write the coords into a geoJson file    
 
-# write the coords into a geoJson file    
+    # writePathToGeoJson(pathList, "path.geojson")
+    writePathToGeoJson(corners, "path.geojson")
 
-writePathToGeoJson(pathList, "path.geojson")
-
-print(f"GeoJSON file 'path.geojson' created with {len(pathList)} points.")
+    print(f"GeoJSON file 'path.geojson' created with {len(corners)} points.")
 
