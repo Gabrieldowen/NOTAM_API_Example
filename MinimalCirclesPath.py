@@ -71,8 +71,10 @@ def getPath( startLat, startLong, destLat, destLong, radius, pathWidth):
     # gets direction
     bearing = calculateBearing(startLat, startLong, destLat, destLong)
 
-    # updates start and dest slightly to adjust for area past airports
+    # updates the start so the area in the opposite direction of the path is right on the edge of the first circle
     updatedStart = nextPoint(startLat,startLong, bearing, radius - (pathWidth/2) )
+
+    # updates the dest so that it is the furthest point on the path. This means going the pathWidth/2 past the dest
     updatedDest = nextPoint(destLat, destLong, bearing, (pathWidth/2))
 
     # gets total distance from start to finish

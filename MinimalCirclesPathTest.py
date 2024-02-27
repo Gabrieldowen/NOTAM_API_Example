@@ -31,7 +31,7 @@ class TestMinimalCirclesPath(unittest.TestCase):
 		self.assertAlmostEqual(calculateBearing(32.897, -97.038, 39.862, -104.673), 320.78, places = 2)
 
 
-	# tests that the final NOTAM covers the furthers point we want covered
+	# tests that the final NOTAM covers the furthest point we want covered
 	def testGetPathFinalPoint(self):
 
 		# DFW to DEN
