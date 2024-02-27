@@ -8,6 +8,8 @@ import time
 
 app = Flask(__name__)
 
+airportIATA = alc.airportsdata.load('IATA')
+
 @app.route('/', methods=['GET', 'POST'])
 def index():
 
@@ -57,7 +59,7 @@ def index():
         
 
 
-    return render_template('index.html')
+    return render_template('index.html', airportIATA = airportIATA)
 
 if __name__ == '__main__':
     app.run(debug=True)
