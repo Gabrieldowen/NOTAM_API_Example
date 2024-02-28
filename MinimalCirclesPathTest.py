@@ -5,7 +5,8 @@ import unittest
 # magic numbers for testGetPathFinalPoint
 RADIUS = 100
 PATHWIDTH=50
-DFW_DENVER_BEARING = 320.7808955450159
+DFW_DEN_BEARING = 320.7808955450159
+LAX_TUL_BEARING = 76.58706577831117
 
 # airport coordinates for testing
 DFW_COORDINATES = (32.897, -97.038)
@@ -40,6 +41,8 @@ class TestMinimalCirclesPath(unittest.TestCase):
 		# japan to germany (CTS to ZVM)
 		self.assertAlmostEqual(getDistance(CTS_COORDINATES[0], CTS_COORDINATES[1], ZVM_COORDINATES[0], ZVM_COORDINATES[1]), 4470, places = -1)
 
+		# LAX to TUL
+		self.assertAlmostEqual(getDistance(LAX_COORDINATES[0], LAX_COORDINATES[1], TUL_COORDINATES[0], TUL_COORDINATES[1]), 1112.300, places = 1)
 
 	# tests method that gets bearing given two points
 	# test data from https://www.movable-type.co.uk/scripts/latlong.html
@@ -48,18 +51,32 @@ class TestMinimalCirclesPath(unittest.TestCase):
 		# DFW to DEN
 		self.assertAlmostEqual(calculateBearing(DFW_COORDINATES[0], DFW_COORDINATES[1], DEN_COORDINATES[0], DEN_COORDINATES[1]), 320.78, places = 2)
 
+		# LAX to TUL
+		self.assertAlmostEqual(calculateBearing(LAX_COORDINATES[0], LAX_COORDINATES[1], TUL_COORDINATES[0], TUL_COORDINATES[1]), 76.59, places = 2)
+
+
 
 	# tests that the final NOTAM covers the furthest point we want covered
 	def testGetPathFinalPoint(self):
 
 		# gets the final point we want covered
-		updateDest = nextPoint(DEN_COORDINATES[0], DEN_COORDINATES[1], DFW_DENVER_BEARING, (PATHWIDTH/2))
+		updateDest = nextPoint(DEN_COORDINATES[0], DEN_COORDINATES[1], DFW_DEN_BEARING, (PATHWIDTH/2))
 
 		# gets all the points for NOTAMs we would cover from DFW to DEN
-		DFW_DEN = getPath(startLat=32.897, startLong=-97.038, destLat=DEN_COORDINATES[0], destLong=DEN_COORDINATES[1], radius=RADIUS, pathWidth=PATHWIDTH)
+		DFW_DEN = getPath(startLat=DFW_COORDINATES[0], startLong=DFW_COORDINATES[1], destLat=DEN_COORDINATES[0], destLong=DEN_COORDINATES[1], radius=RADIUS, pathWidth=PATHWIDTH)
 
-		# checks if the final NOTAM includes the last point we want covered
+		# checks if the final point would include the last point we want covered within RADIUS
 		self.assertGreater(RADIUS, getDistance(DFW_DEN[-1][0], DFW_DEN[-1][1], updateDest[0], updateDest[1]))
+
+
+		# gets the final point we want covered
+		updateDestTUL = nextPoint(TUL_COORDINATES[0], TUL_COORDINATES[1], LAX_TUL_BEARING, (PATHWIDTH/2))
+
+		# gets all the points for NOTAMs we would cover from DFW to DEN
+		LAX_TUL = getPath(startLat=LAX_COORDINATES[0], startLong=LAX_COORDINATES[1], destLat=TUL_COORDINATES[0], destLong=TUL_COORDINATES[1], radius=RADIUS, pathWidth=PATHWIDTH)
+		
+		# checks if the final point would include the last point we want covered within RADIUS
+		self.assertGreater(RADIUS, getDistance(LAX_TUL[-1][0], LAX_TUL[-1][1], updateDestTUL[0], updateDestTUL[1]))
 
 
 	# tests that the amount of points returned is less than the number of circles lined edge to edge

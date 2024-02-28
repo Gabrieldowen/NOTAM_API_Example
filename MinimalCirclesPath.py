@@ -88,6 +88,9 @@ def getPath( startLat, startLong, destLat, destLong, radius, pathWidth):
         nextCircle = nextPoint(coordList[-1][0],coordList[-1][1], bearing, stepDistance)
         coordList.append(nextCircle)
 
+        # update bearing for next point 
+        bearing = calculateBearing(coordList[-1][0], coordList[-1][1], destLat, destLong)
+ 
     return coordList
        
 
