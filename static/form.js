@@ -1,4 +1,3 @@
-
 $(document).ready(function () {
   $('.datepicker').datepicker({
       format: 'mm-dd-yyyy',
@@ -10,33 +9,98 @@ $(document).ready(function () {
 var destinationCounter = 2;
 
 function addDestination() {
+	var additionalDestinationsDiv = document.getElementById('additionalDestinations');
 
-  var additionalDestinationsDiv = document.getElementById('additionalDestinations');
-
-    // Create a new destination row
+	// Create a new destination row if there are no rows or the last row is full
+	if (!additionalDestinationsDiv.lastChild || additionalDestinationsDiv.lastChild.childElementCount === 2) {
 		var destinationRow = document.createElement('div');
 		destinationRow.classList.add('row');
-		
-    var destinationInput = document.createElement('div');
-		destinationInput.classList.add('col-md-6', 'mb-3');
-		destinationInput.innerHTML = '<label for="destAirport' + destinationCounter + '" class="form-label">Additional Destination ' + destinationCounter + '</label>' +
-			'<input type="text" class="form-control"  id= "destinationLocation' + destinationCounter + '" name="destAirport' + destinationCounter + '" placeholder="Airport Code" autocomplete="off">';
-		destinationRow.appendChild(destinationInput);
-		additionalDestinationsDiv.appendChild(destinationRow);
- 
-    // Create an error message child for the new destination.
-    var destinationErrorMsg = document.createElement('span');
-    destinationErrorMsg.id = 'error-message' + (destinationCounter + 3);
+        additionalDestinationsDiv.appendChild(destinationRow);
+	}
 
-    // Get the last destination location input in the row
-    var lastDestinationLocationInput = additionalDestinationsDiv.lastChild.lastElementChild;
+	// Create Destination Location input
+	var destinationLocationInput = document.createElement('div');
+	destinationLocationInput.classList.add('col-md-6', 'mb-3');
+	destinationLocationInput.innerHTML = '<label for="destinationLocation' + destinationCounter + '" class="form-label">Destination Location ' + destinationCounter + '</label>' +
+	'<input type="text" class="form-control" id="destinationLocation' + destinationCounter + '" name="destinationLocation' + destinationCounter + '" oninput="updateAirportOptions(\'destinationLocation' + destinationCounter + '\', \'destinationLocationSelect' + destinationCounter + '\')" onclick="updateAirportOptions(\'destinationLocation' + destinationCounter + '\', \'destinationLocationSelect' + destinationCounter + '\')">' +
+	'<select class="form-select mt-2" id="destinationLocationSelect' + destinationCounter + '" name="destinationLocation' + destinationCounter + '" style="display: none;" onclick="selectAirport(\'destinationLocation' + destinationCounter + '\', \'destinationLocationSelect' + destinationCounter + '\')"></select>';
 
-    // Insert the error message span right after the last destination location input
-    lastDestinationLocationInput.insertAdjacentElement('beforeend', destinationErrorMsg);
+	// Append the destination input to the last destination row
+	additionalDestinationsDiv.lastChild.appendChild(destinationLocationInput);
 
-  // Increment the destination counter for the next input
-  destinationCounter++;
+	// Increment the destination counter for the next input
+	destinationCounter++;
 }
+
+function updateAirportOptions(inputId, selectId) {
+	var inputElement = document.getElementById(inputId);
+	var selectElement = document.getElementById(selectId);
+	// Convert input to uppercase for case-insensitive matching
+	var userInput = inputElement.value.toUpperCase();
+
+	// Clear existing options and add blank option
+	selectElement.innerHTML = '';
+	var blankOption = document.createElement('option');
+	blankOption.value = '';
+	blankOption.text = '';
+	selectElement.add(blankOption);
+		
+	// Recursive function to traverse the nested structure
+	function traverse(obj) {
+		for (var key in obj) {
+			if (obj.hasOwnProperty(key) && key !== 'name' && key !== 'country') {
+				var node = obj[key];
+
+				if (node.hasOwnProperty('airports')) {
+					// If the node has 'airports', recursively traverse it
+					traverse(node.airports);
+				} else {
+					// Check if the node matches user input
+					if (node.iata.includes(userInput) || node.name.toUpperCase().includes(userInput)) {
+						var option = document.createElement('option');
+						option.value = node.iata;
+						option.text = `${node.iata} - ${node.name}`;
+						selectElement.add(option);
+					}
+				}
+			}
+		}
+	}
+
+	// Start the recursive traversal from the root
+	traverse(airportIATA);
+
+	// Show the dropdown only if the input field is clicked
+	selectElement.style.display = inputElement === document.activeElement ? 'block' : 'none';
+}
+
+function selectAirport(inputId, selectId) {
+	var inputElement = document.getElementById(inputId);
+	var selectElement = document.getElementById(selectId);
+
+	// Check if the selected index is 0 (blank option)
+	if (selectElement.selectedIndex === 0) {
+		// Prevent event propagation
+		event.stopPropagation();
+		return;
+	}
+		
+	// Update input field with the selected option
+	inputElement.value = selectElement.value;
+
+	// Hide the dropdown
+	selectElement.style.display = 'none';
+}
+	
+// Initially hide all dropdown menus
+document.addEventListener('DOMContentLoaded', function () {
+    var allSelects = document.querySelectorAll('.form-select');
+    allSelects.forEach(function (select) {
+        if (select) { // Check if the element exists before accessing its style property
+            select.style.display = 'none';
+        }
+    });
+});
 
 // Function to reset the body of the page and change it to loading.
 function submitForm() {
@@ -140,4 +204,3 @@ function checkInputs(){
      submitForm();
   }
 }
-
