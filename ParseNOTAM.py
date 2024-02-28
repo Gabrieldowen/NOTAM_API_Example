@@ -1,8 +1,7 @@
 import json
 import Models
 
-def ParseNOTAM(apiOutput = None):
-
+def ParseNOTAM(apiOutput=None):
     if apiOutput is None:
         print("*********************\n USING TEST DATA \n*********************")
         # File path where the test JSON data is saved
@@ -12,47 +11,16 @@ def ParseNOTAM(apiOutput = None):
         with open(file_path, 'r') as json_file:
             apiOutput = json.load(json_file)
 
-    """
-    apiOutput is an array of output from the API. In each of the outputs the "items" are that API call's NOTAMs
-    each notam is json structure as follows:
-    {
-      "pageSize": 10,
-      "pageNum": 3,
-      "totalCount": 124,
-      "totalPages": 13,
-      "items": [
-        {
-          "type": "Point",
-          "geometry": {
-            "type": "Point",
-            "coordinates": [
-              0
-            ]
-          },
-          "properties": {
-            "coreNOTAMData": {
-              "notamEvent": {
-                "scenario": "6000"
-              },
-              "notam": {
-                "id": "NOTAM_1_66366992",
-                "series": "A",
-                "number": "A9833/22",
-                "type": "N",
-                "issued": "2022-12-07T02:34:00.000Z",
-                etc...
-            }
-          }
-        }
-      ]
-    }
-    """
     NOTAMs = []
     for notam in apiOutput:
-        # create a class for each NOTAM
-        for item in notam['items']:
-            NOTAMs.append(Models.Notam(item['properties']['coreNOTAMData']['notam']))
-            
+        # Check if 'items' key exists in the notam
+        if 'items' in notam:
+            for item in notam['items']:
+                # Further checks can be added here to ensure the structure of 'item' is as expected
+                if 'properties' in item and 'coreNOTAMData' in item['properties'] and 'notam' in item['properties']['coreNOTAMData']:
+                    NOTAMs.append(Models.Notam(item['properties']['coreNOTAMData']['notam']))
+        else:
+            # Handle the case where 'items' key is missing
+            print(f"Warning: 'items' key missing in notam: {notam}")
+
     return NOTAMs
-
-

@@ -12,11 +12,9 @@ airportIATA = alc.airportsdata.load('IATA')
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-
     # If form is submitted
     if request.method == 'POST':
         NotamRequest = Models.NotamRequest(request.form)
-
 
         # get lat/long of airports
         NotamRequest.startLat, NotamRequest.startLong = alc.get_lat_and_lon(NotamRequest.startAirport)
@@ -57,8 +55,6 @@ def index():
 
         return render_template('display.html', notams = Notams)
         
-
-
     return render_template('form.html', airportIATA = airportIATA)
 
 if __name__ == '__main__':

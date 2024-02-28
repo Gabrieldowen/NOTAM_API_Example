@@ -1,41 +1,43 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container">
-    <h1>NOTAM Sorter</h1>
-      <div class="container mt-5">
-        <form method="POST">
-            <div class="mb-3">
-                <label for="responseFormat" class="form-label">Response Format</label>
-                <input type="text" class="form-control" id="responseFormat" name="responseFormat">
-            </div>
-	    <div class="row">
+
+<div class="container" style="transform: translateY(10px);">
+    <h1i id = "Title">NOTAM Sorter</h1i>
+      <div class="container mt-5" style="transform: translateY(-40px);">
+        <form id = "dataForm" onSubmit="checkInputs(); return false;">
+	        <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="effectiveStartDate" class="form-label">Effective Start Date</label>
                     <input type="text" class="form-control datepicker" id="effectiveStartDate" name="effectiveStartDate" placeholder="mm-dd-yyyy" autocomplete="off">
+                    <span id="error-message1""> </span>
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="effectiveEndDate" class="form-label">Effective End Date</label>
                     <input type="text" class="form-control datepicker" id="effectiveEndDate" name="effectiveEndDate" placeholder="mm-dd-yyyy" autocomplete="off">
+                    <span id="error-message2"> </span>
                 </div>
             </div>
 	    <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="startAirport" class="form-label">Start Airport</label>
                     <input type="text" class="form-control" id="startAirport" name="startAirport" placeholder="LAX" autocomplete="off" oninput="updateAirportOptions('startAirport', 'startAirportSelect')" onclick="updateAirportOptions('startAirport', 'startAirportSelect')">
-		    <select class="form-select mt-2" id="startAirportSelect" name="startAirport" onclick="selectAirport('startAirport', 'startAirportSelect', event)"></select>
+		                <select class="form-select mt-2" id="startAirportSelect" name="startAirport" onclick="selectAirport('startAirport', 'startAirportSelect', event)"></select>
+                    <span id="error-message3"> </span>
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="destAirport" class="form-label">Destination Airport</label>
                     <input type="text" class="form-control" id="destAirport" name="destAirport" placeholder="JFK" autocomplete="off" oninput="updateAirportOptions('destAirport', 'destAirportSelect')" onclick="updateAirportOptions('destAirport', 'destAirportSelect')">
-		    <select class="form-select mt-2" id="destAirportSelect" name="destAirport" onclick="selectAirport('destAirport', 'destAirportSelect', event)"></select>
+		                <select class="form-select mt-2" id="destAirportSelect" name="destAirport" onclick="selectAirport('destAirport', 'destAirportSelect', event)"></select>
+                    <span id="error-message4"> </span>
                 </div>
              </div>	
 		<div id="additionalDestinations"></div>
-            	<button type="button" class="btn btn-secondary" onclick="addDestination()">Add Another Destination</button>	
-            <div class="mb-3">
+            	<button type="button" id="addButton" class="btn btn-secondary" onclick="addDestination()">Add Another Destination</button>	
+            <div class="mb-3" style="transform: translateY(10px);">
                 <label for="locationRadius" class="form-label">Location Radius</label>
                 <input type="text" class="form-control" id="locationRadius" name="locationRadius">
+                <span id="error-messageR"> </span>
             </div>
             <div class="row">
                 <div class="col-md-6 mb-3">
@@ -54,118 +56,38 @@
                     </select>
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" id="submitButton" class="btn btn-primary">Submit</button>
+            </div>
         </form>
     </div>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/js/bootstrap-datepicker.min.js"></script>
+<div class="hiddenObj">
+    <group>
+        <div class="ticks">
+            <span style="--i:0;"></span>
+            <span style="--i:1;"></span>
+            <span style="--i:2;"></span>
+            <span style="--i:3;"></span>
+            <span style="--i:4;"></span>
+            <span style="--i:5;"></span>
+            <span style="--i:6;"></span>
+            <span style="--i:7;"></span>
+            <span style="--i:8;"></span>
+            <span style="--i:9;"></span>
+            <span style="--i:10;"></span>
+            <span style="--i:11;"></span>
+        </div>
+    </group>
+    
+    
+</div>
 
 <script>
-	$(document).ready(function () {
-        $('.datepicker').datepicker({
-            format: 'mm-dd-yyyy',
-            autoclose: true,
-            todayHighlight: true,
-        });
-    });
-	
-	var airportIATA = {{ airportIATA | safe }};
-	var destinationCounter = 2;
-
-	function addDestination() {
-		var additionalDestinationsDiv = document.getElementById('additionalDestinations');
-
-		// Create a new destination row if there are no rows or the last row is full
-		if (!additionalDestinationsDiv.lastChild || additionalDestinationsDiv.lastChild.childElementCount === 2) {
-			var destinationRow = document.createElement('div');
-			destinationRow.classList.add('row');
-        	additionalDestinationsDiv.appendChild(destinationRow);
-		}
-
-		// Create Destination Location input
-		var destinationLocationInput = document.createElement('div');
-		destinationLocationInput.classList.add('col-md-6', 'mb-3');
-		destinationLocationInput.innerHTML = '<label for="destinationLocation' + destinationCounter + '" class="form-label">Destination Location ' + destinationCounter + '</label>' +
-		'<input type="text" class="form-control" id="destinationLocation' + destinationCounter + '" name="destinationLocation' + destinationCounter + '" oninput="updateAirportOptions(\'destinationLocation' + destinationCounter + '\', \'destinationLocationSelect' + destinationCounter + '\')" onclick="updateAirportOptions(\'destinationLocation' + destinationCounter + '\', \'destinationLocationSelect' + destinationCounter + '\')">' +
-		'<select class="form-select mt-2" id="destinationLocationSelect' + destinationCounter + '" name="destinationLocation' + destinationCounter + '" style="display: none;" onclick="selectAirport(\'destinationLocation' + destinationCounter + '\', \'destinationLocationSelect' + destinationCounter + '\')"></select>';
-
-		// Append the destination input to the last destination row
-		additionalDestinationsDiv.lastChild.appendChild(destinationLocationInput);
-
-		// Increment the destination counter for the next input
-		destinationCounter++;
-	}
-	
-	function updateAirportOptions(inputId, selectId) {
-		var inputElement = document.getElementById(inputId);
-		var selectElement = document.getElementById(selectId);
-		// Convert input to uppercase for case-insensitive matching
-		var userInput = inputElement.value.toUpperCase();
-
-		// Clear existing options and add blank option
-		selectElement.innerHTML = '';
-		var blankOption = document.createElement('option');
-		blankOption.value = '';
-		blankOption.text = '';
-		selectElement.add(blankOption);
-		
-		// Recursive function to traverse the nested structure
-		function traverse(obj) {
-			for (var key in obj) {
-				if (obj.hasOwnProperty(key) && key !== 'name' && key !== 'country') {
-					var node = obj[key];
-
-					if (node.hasOwnProperty('airports')) {
-						// If the node has 'airports', recursively traverse it
-						traverse(node.airports);
-					} else {
-						// Check if the node matches user input
-						if (node.iata.includes(userInput) || node.name.toUpperCase().includes(userInput)) {
-							var option = document.createElement('option');
-							option.value = node.iata;
-							option.text = `${node.iata} - ${node.name}`;
-							selectElement.add(option);
-						}
-					}
-				}
-			}
-		}
-
-		// Start the recursive traversal from the root
-		traverse(airportIATA);
-
-		// Show the dropdown only if the input field is clicked
-		selectElement.style.display = inputElement === document.activeElement ? 'block' : 'none';
-	}
-
-	function selectAirport(inputId, selectId) {
-		var inputElement = document.getElementById(inputId);
-		var selectElement = document.getElementById(selectId);
-
-		// Check if the selected index is 0 (blank option)
-		if (selectElement.selectedIndex === 0) {
-			// Prevent event propagation
-			event.stopPropagation();
-			return;
-		}
-		
-		// Update input field with the selected option
-		inputElement.value = selectElement.value;
-
-		// Hide the dropdown
-		selectElement.style.display = 'none';
-	}
-	
-	// Initially hide the dropdown menus
-	document.addEventListener('DOMContentLoaded', function () {
-		var startSelect = document.getElementById('startAirportSelect');
-		var destSelect = document.getElementById('destAirportSelect');
-		startSelect.style.display = 'none';
-		destSelect.style.display = 'none';
-	});
-	
+    var airportIATA = {{ airportIATA | safe }};
 </script>
+
+<!-- Form script file reference. -->
+<script src="static/form.js" ></script>
 
 {% endblock %}
