@@ -10,11 +10,9 @@ app = Flask(__name__)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-
     # If form is submitted
     if request.method == 'POST':
         NotamRequest = Models.NotamRequest(request.form)
-
 
         # get lat/long of airports
         NotamRequest.startLat, NotamRequest.startLong = alc.get_lat_and_lon(NotamRequest.startAirport)
@@ -55,9 +53,7 @@ def index():
 
         return render_template('display.html', notams = Notams)
         
-
-
-    return render_template('index.html')
+    return render_template('form.html')
 
 if __name__ == '__main__':
     app.run(debug=True)

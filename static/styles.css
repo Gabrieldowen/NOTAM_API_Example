@@ -1,0 +1,117 @@
+/* Header for base.html */
+h1i{
+  font-size: 2.5rem;
+  color: #000000;
+}
+
+/* Customized buttons for base.html */
+.btn {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #000000;
+  padding: 0.2em 0.5em;
+  background-color: #ffffff;
+  border-radius: 10px;
+  border-color: #0400ff;
+
+  transition: all 0.3s;
+}
+
+/* Customized buttons functions for base.html */
+
+.btn:hover{
+  transform: translateY(-10px);
+  background-color: #000000;
+  color: #ffffff;
+}
+
+/* Custom loading text in base.html */
+.custom-text {
+  position: fixed;
+  font-size: 24px; 
+  color: #b01b6b; 
+  top: calc(50vh - 200px);
+  left: calc(50vw - (150px/2) - (24px/2));
+  animation: changeColor 2s linear;
+}
+
+/* To make the loading symbol */
+group {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 65vh; 
+}
+
+group .ticks{
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  
+}
+
+group .ticks span {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform: rotate(calc(30deg * var(--i)));
+}
+
+.ticks span::before{
+  content: '';
+  position: absolute;
+  top: 0px;
+  left: 5px;
+  width: 20px;
+  height: 75px;
+  background: #005eff6d;
+  border-radius: 50%;
+  animation: tickTock 2s linear infinite;
+  animation-delay: calc(0.05s * (var(--i)));
+}
+
+/* The animation of the symbol */
+@keyframes tickTock{
+  0%{
+    opacity: 0;
+  }
+  50%{
+    opacity: 100;
+  }
+  100%{
+    opacity: 0;
+  }
+}
+
+
+/* Custom animation, change the hue of the color constantly */
+@keyframes changeColor {
+  0% {
+      filter: hue-rotate(0deg);
+  }
+  100%{
+      filter: hue-rotate(360deg);
+  }
+}
+
+/* Custom animation, change the opacity back from 0 to 100 and back to 0 */
+@keyframes fadeIn {
+  0%{
+    opacity: 0;
+  }
+  50% {
+    opacity: 100;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* Hidden text attribute for changing from input requesting, to loading, to display. */
+
+.hiddenObj {
+    display: none;
+}
+/*# sourceMappingURL=style.css.map */
