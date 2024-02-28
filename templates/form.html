@@ -1,41 +1,41 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container">
-    <h1>NOTAM Sorter</h1>
-      <div class="container mt-5">
-        <form method="POST">
-            <div class="mb-3">
-                <label for="responseFormat" class="form-label">Response Format</label>
-                <input type="text" class="form-control" id="responseFormat" name="responseFormat">
-            </div>
+
+<div class="container" style="transform: translateY(10px);">
+    <h1i id = "Title">NOTAM Sorter</h1i>
+      <div class="container mt-5" style="transform: translateY(-40px);">
+        <form id = "dataForm" onSubmit="checkInputs(); return false;">
 	    <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="effectiveStartDate" class="form-label">Effective Start Date</label>
                     <input type="text" class="form-control datepicker" id="effectiveStartDate" name="effectiveStartDate" placeholder="mm-dd-yyyy" autocomplete="off">
+                    <span id="error-message1""> </span>
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="effectiveEndDate" class="form-label">Effective End Date</label>
                     <input type="text" class="form-control datepicker" id="effectiveEndDate" name="effectiveEndDate" placeholder="mm-dd-yyyy" autocomplete="off">
+                    <span id="error-message2"> </span>
                 </div>
             </div>
-	    <div class="row">
+	    <div class="row" >
                 <div class="col-md-6 mb-3">
                     <label for="startAirport" class="form-label">Start Airport</label>
                     <input type="text" class="form-control" id="startAirport" name="startAirport" placeholder="LAX" autocomplete="off">
+                    <span id="error-message3"> </span>
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="destAirport" class="form-label">Destination Airport</label>
                     <input type="text" class="form-control" id="destAirport" name="destAirport" placeholder="JFK" autocomplete="off">
+                    <span id="error-message4"> </span>
                 </div>
             </div>
-			
 		<div id="additionalDestinations"></div>
-            	<button type="button" class="btn btn-secondary" onclick="addDestination()">Add Another Destination</button>
-			
-            <div class="mb-3">
+            	<button type="button" id="addButton" class="btn btn-secondary" onclick="addDestination()">Add Another Destination</button>
+            <div class="mb-3" style="transform: translateY(10px);">
                 <label for="locationRadius" class="form-label">Location Radius</label>
                 <input type="text" class="form-control" id="locationRadius" name="locationRadius">
+                <span id="error-messageR"> </span>
             </div>
             <div class="row">
                 <div class="col-md-6 mb-3">
@@ -54,40 +54,34 @@
                     </select>
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" id="submitButton" class="btn btn-primary">Submit</button>
+            </div>
         </form>
     </div>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/js/bootstrap-datepicker.min.js"></script>
+<div class="hiddenObj">
+    <group>
+        <div class="ticks">
+            <span style="--i:0;"></span>
+            <span style="--i:1;"></span>
+            <span style="--i:2;"></span>
+            <span style="--i:3;"></span>
+            <span style="--i:4;"></span>
+            <span style="--i:5;"></span>
+            <span style="--i:6;"></span>
+            <span style="--i:7;"></span>
+            <span style="--i:8;"></span>
+            <span style="--i:9;"></span>
+            <span style="--i:10;"></span>
+            <span style="--i:11;"></span>
+        </div>
+    </group>
+    
+    
+</div>
 
-<script>
-    $(document).ready(function () {
-        $('.datepicker').datepicker({
-            format: 'mm-dd-yyyy',
-            autoclose: true,
-            todayHighlight: true,
-        });
-    });
-	
-	var destinationCounter = 2;
-
-	function addDestination() {
-		var additionalDestinationsDiv = document.getElementById('additionalDestinations');
-
-		// Create a new destination row
-		var destinationRow = document.createElement('div');
-		destinationRow.classList.add('row');
-		var destinationInput = document.createElement('div');
-		destinationInput.classList.add('col-md-6', 'mb-3');
-		destinationInput.innerHTML = '<label for="destAirport' + destinationCounter + '" class="form-label">Additional Destination ' + destinationCounter + '</label>' +
-			'<input type="text" class="form-control" name="destAirport' + destinationCounter + '" placeholder="Airport Code" autocomplete="off">';
-		destinationRow.appendChild(destinationInput);
-		additionalDestinationsDiv.appendChild(destinationRow);
-
-		destinationCounter++;
-	}
-</script>
+<!-- Form script file reference. -->
+<script src="static/form.js" ></script>
 
 {% endblock %}
