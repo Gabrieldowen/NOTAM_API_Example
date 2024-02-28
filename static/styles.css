@@ -5,7 +5,7 @@ h1i{
 }
 
 /* Customized buttons for base.html */
-.btn {
+.submit {
   font-size: 1.5rem;
   font-weight: 700;
   color: #000000;
@@ -13,13 +13,44 @@ h1i{
   background-color: #ffffff;
   border-radius: 10px;
   border-color: #0400ff;
-
+  
   transition: all 0.3s;
+}
+
+.destination{
+  display: flex;  
+  gap: 10px; 
+  white-space: nowrap; 
+  position: relative;  
+  align-items: center; 
+  justify-content: center;
+}
+
+.delete{
+  
+  color: #000000;
+  
+  border: 3.5px solid #ffffff;
+  box-shadow: 0 0 0 2px #ff0000;
+  background-image: url('images/minus.png');  
+  
+  background-position: center;   
+  
+  background-size: cover; 
+  background-repeat: no-repeat; 
+
+  width: 10px; 
+  height: 10px;  
+
+  border-radius: 50%; 
+  position: absolute; 
+  top: -5px; 
+  right: 0;
 }
 
 /* Customized buttons functions for base.html */
 
-.btn:hover{
+.submit:hover{
   transform: translateY(-10px);
   background-color: #000000;
   color: #ffffff;
