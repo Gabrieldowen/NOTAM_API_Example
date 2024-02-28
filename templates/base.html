@@ -8,10 +8,15 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/css/bootstrap-datepicker.min.css">   
     <!-- Custom styles for our project. -->
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
+    <script src="{{ url_for('static', filename='bootstrap/js/bootstrap.js') }}"></script>
+    <!-- JQuery and datepicker js references used in index. (may need them in future html files.)  -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/js/bootstrap-datepicker.min.js"></script>
+
 </head>
 <body>
     {% block content %}{% endblock %}
-    <script src="{{ url_for('static', filename='bootstrap/js/bootstrap.js') }}"></script>
-
+    
 </body>
 </html>
