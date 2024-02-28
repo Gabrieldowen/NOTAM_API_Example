@@ -16,6 +16,7 @@ function addDestination() {
   // Create a new destination row
   let destinationRow = document.createElement('div');
   destinationRow.classList.add('row');
+  // Added an ID for the row, for easy deletion afterwards.
   destinationRow.id = 'row' + destinationCounter;
 
   let destinationInput = document.createElement('div');
@@ -31,6 +32,7 @@ function addDestination() {
     lastDestButtonId.onclick = null;
   }
   
+  // Create the button to delete the current row.
   let destinationDelete = document.createElement('button');
   destinationDelete.id = 'deleteButton' + destinationCounter;
   destinationDelete.className = 'delete';
@@ -39,6 +41,7 @@ function addDestination() {
     deleteDestination(destinationRow.id);
   };
 
+  // Add the button.
   destinationInput.insertAdjacentElement('beforeend', destinationDelete);
   
   destinationRow.appendChild(destinationInput);
@@ -57,11 +60,10 @@ function addDestination() {
   // Increment the destination counter for the next input
   destinationCounter++;
 
-
-
 }
 
-// Function to delete additional destinations not needed anymore.
+// Function to delete additional destinations not needed anymore. Basically getting the previous row id and last 
+// element of the previous row id, and adding a button to that one.
 function deleteDestination(inputId){
   
   destinationCounter--;
@@ -71,7 +73,6 @@ function deleteDestination(inputId){
   if (destinationCounter != 2){
     
     let destinationRow = document.getElementById('row' + (destinationCounter - 1));
-
 
     let lastDest = document.getElementById('destAirport' + (destinationCounter - 1));
 
@@ -233,6 +234,8 @@ function checkInputs(){
   //const isValidDate1 = checkInputDate('effectiveStartDate', 'error-message1');
   //const isValidDate2 = checkInputDate('effectiveEndDate', 'error-message2');
 
+  /*
+
   const isValidStart = checkInputAirport('startAirport', 'error-message3');
   const isValidDest = checkInputAirport('destAirport', 'error-message4');
 
@@ -250,7 +253,12 @@ function checkInputs(){
   if (isValidStart && isValidDest && isValidDests){
      submitForm();
   }
+  */
+  submitForm();
 }
 
-
+// Function to return to the form page.
+function returnToForm() {
+  window.location.href = "/";
+}
 

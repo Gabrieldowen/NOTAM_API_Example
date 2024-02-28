@@ -1,23 +1,34 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<div style="display: flex; ">
+    <input type="image" id ="arrow" src="static/images/plane2.png" onclick="returnToForm()" alt="Submit">
+    <span class = "custom-text">
+        Go Back
+    </span>
+</div>
+
  <div class="container mt-5">
-        <h1i>NOTAM Information</h1i>
-        <div class="row row-cols-1 row-cols-md-2 g-4">
+        <h1>NOTAM Information</h1>
+
+        
+        <div class="accordion">
             {% for notam in notams %}
-            <div class="col">
-                <div class="card h-100">
-                    <div class="card-body">
-                        <h5 class="card-title">NOTAM ID: {{ notam.id }}</h5>
-                        <p class="card-text"><strong>Series:</strong> {{ notam.series }}</p>
-                        <p class="card-text"><strong>Number:</strong> {{ notam.number }}</p>
-                        <p class="card-text"><strong>Type:</strong> {{ notam.type }}</p>
-                        <p class="card-text"><strong>Issued:</strong> {{ notam.issued }}</p>
-                        <!-- Add other attributes here -->
-                    </div>
+            <div class="accordion-item">
+                <input type="checkbox" id="item{{ loop.index }}">
+                <label for="item{{ loop.index }}" class="accordion-header">NOTAM ID: {{ notam.id }}</label>
+                <div class="accordion-content">
+                    <p><strong>Series: </strong>{{ notam.series }}</p>
+                    <p><strong>Number: </strong>{{ notam.number }}</p>
+                    <p><strong>Type: </strong>{{ notam.type }}</p>
+                    <p><strong>Issued: </strong>{{ notam.issued }}</p>
                 </div>
             </div>
-            {% endfor %}
+        {% endfor %}
         </div>
     </div>
+
+
+    
+    
 {% endblock %}
