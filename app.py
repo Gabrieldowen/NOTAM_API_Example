@@ -59,7 +59,7 @@ def index():
         
 
 
-    return render_template('index.html', airportIATA = airportIATA)
+    return render_template('form.html', airportIATA = airportIATA)
 
 if __name__ == '__main__':
     app.run(debug=True)
