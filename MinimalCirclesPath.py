@@ -85,23 +85,22 @@ def getPath( startLat, startLong, destLat, destLong, radius, pathWidth):
 
     # loops for each step until passed the destination. range(split total distance minus area covered from start point)
     for _ in range(ceil((totalDistance - (stepDistance/2))/stepDistance)):
-        nextCircle = nextPoint(coordList[-1][0],coordList[-1][1], bearing, stepDistance)
-        coordList.append(nextCircle)
+        nextLat, nextLong = nextPoint(coordList[-1][0],coordList[-1][1], bearing, stepDistance)
+        coordList.append((nextLat, nextLong))
 
         # update bearing for next point 
-        bearing = calculateBearing(coordList[-1][0], coordList[-1][1], destLat, destLong)
+        bearing = calculateBearing(nextLat, nextLong, destLat, destLong)
  
     return coordList
        
 
 
-"""
+
 # THIS IS AN EXAMPLE
 # uncomment and run `python3 MinimalCirclesPath.py` to see example of what getPath() returns
-
-pathList = getPath(startLat = 32.7767, startLong = 96.7970, destLat = 39.7392, destLong = 104.9903, radius = 100,  pathWidth = 50)
-for i,item in enumerate(pathList):
-    print(f"point #{i+1}) {item}\n")
-
 """
-
+if __name__ == '__main__':
+    pathList = getPath(startLat = 32.7767, startLong = 96.7970, destLat = 39.7392, destLong = 104.9903, radius = 100,  pathWidth = 50)
+    for i,item in enumerate(pathList):
+        print(f"point #{i+1}) {item}\n")
+"""
