@@ -5,6 +5,7 @@ import MinimalCirclesPath
 import AirportsLatLongConverter as alc
 import GetNOTAM
 import time
+from NOTAMType import printClassification
 
 app = Flask(__name__)
 
@@ -50,6 +51,9 @@ def index():
         Notams = ParseNOTAM.ParseNOTAM(apiOutputs)
         endTime = time.time()    # Record end time
         print(f"time parsing: {endTime - startTime} seconds\n")
+
+        # TESTING RETURNING SPECIFIC CLASSIFICATION TYPES
+        printClassification(Notams, "INTL")
 
         return render_template('display.html', notams = Notams)
         

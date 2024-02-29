@@ -12,15 +12,27 @@ def ParseNOTAM(apiOutput=None):
             apiOutput = json.load(json_file)
 
     NOTAMs = []
-    for notam in apiOutput:
-        # Check if 'items' key exists in the notam
-        if 'items' in notam:
-            for item in notam['items']:
-                # Further checks can be added here to ensure the structure of 'item' is as expected
-                if 'properties' in item and 'coreNOTAMData' in item['properties'] and 'notam' in item['properties']['coreNOTAMData']:
-                    NOTAMs.append(Models.Notam(item['properties']['coreNOTAMData']['notam']))
-        else:
-            # Handle the case where 'items' key is missing
-            print(f"Warning: 'items' key missing in notam: {notam}")
+    try:
+        for notam in apiOutput:
+            # Check if 'items' key exists in the notam
+            if 'items' in notam:
+                for item in notam['items']:
+                    try:
+                        core_notam_data = item.get('properties', {}).get('coreNOTAMData', {}).get('notam')
+                        if core_notam_data:
+                            NOTAMs.append(Models.Notam(core_notam_data))
+                        else:
+                            print("Warning: notam missing coreNOTAMData")
+                    except Exception as e:
+                        print("Error processing item: {e}")
+            #
+                    # Further checks can be added here to ensure the structure of 'item' is as expected
+            #        if 'properties' in item and 'coreNOTAMData' in item['properties'] and 'notam' in item['properties']['coreNOTAMData']:
+            #            NOTAMs.append(Models.Notam(item['properties']['coreNOTAMData']['notam']))
+            else:
+                # Handle the case where 'items' key is missing
+                print(f"Warning: 'items' key missing in notam: {notam}")
+    except Exception as e:
+        print(f"Error occured: {e}")
 
     return NOTAMs
