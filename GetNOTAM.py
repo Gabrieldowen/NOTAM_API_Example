@@ -43,13 +43,13 @@ def buildNotam(effectiveStartDate, effectiveEndDate, long, lat, combined_core_no
     for page_num in range(1, total_pages + 1):
         page_response = getNotam(effectiveStartDate, effectiveEndDate, long, lat, pageNum=page_num)
         page_items = page_response.get('items', [])
-
+        #Removes duplicates from the parsed Json 
         for item in page_items:
             if 'coreNOTAMData' in item['properties']:
                 core_notam_data = item['properties']['coreNOTAMData']['notam']
+                #Adds to parsed if the Notam doesn't already exist
                 if core_notam_data not in combined_core_notam_data:
                     combined_core_notam_data.append(core_notam_data)
     return combined_core_notam_data
-
 
    
