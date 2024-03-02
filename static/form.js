@@ -1,103 +1,95 @@
 $(document).ready(function () {
-  $('.datepicker').datepicker({
-      format: 'mm-dd-yyyy',
-      autoclose: true,
-      todayHighlight: true,
-  });
+    $('.datepicker').datepicker({
+        format: 'mm-dd-yyyy',
+        autoclose: true,
+        todayHighlight: true,
+    });
 });
 
 var destinationCounter = 2;
 
 function addDestination() {
-	var additionalDestinationsDiv = document.getElementById('additionalDestinations');
+    var additionalDestinationsDiv = document.getElementById('additionalDestinations');
 
-	// Create a new destination row if there are no rows or the last row is full
-	if (!additionalDestinationsDiv.lastChild || additionalDestinationsDiv.lastChild.childElementCount === 2) {
-		var destinationRow = document.createElement('div');
-		destinationRow.classList.add('row');
-        additionalDestinationsDiv.appendChild(destinationRow);
-	}
+    // Create a new destination row
+    var destinationRow = document.createElement('div');
+    destinationRow.classList.add('row');
 
-	// Create Destination Location input
-	var destinationLocationInput = document.createElement('div');
-	destinationLocationInput.classList.add('col-md-6', 'mb-3');
-	destinationLocationInput.innerHTML = '<label for="destinationLocation' + destinationCounter + '" class="form-label">Destination Location ' + destinationCounter + '</label>' +
-	'<input type="text" class="form-control" id="destinationLocation' + destinationCounter + '" name="destinationLocation' + destinationCounter + '" oninput="updateAirportOptions(\'destinationLocation' + destinationCounter + '\', \'destinationLocationSelect' + destinationCounter + '\')" onclick="updateAirportOptions(\'destinationLocation' + destinationCounter + '\', \'destinationLocationSelect' + destinationCounter + '\')">' +
-	'<select class="form-select mt-2" id="destinationLocationSelect' + destinationCounter + '" name="destinationLocation' + destinationCounter + '" style="display: none;" onclick="selectAirport(\'destinationLocation' + destinationCounter + '\', \'destinationLocationSelect' + destinationCounter + '\')"></select>';
+    // Create Destination Location input
+    var destinationInput = document.createElement('div');
+    destinationInput.classList.add('col-md-6', 'mb-3');
+    destinationInput.innerHTML = '<label for="destinationLocation' + destinationCounter + '" class="form-label">Destination Location ' + destinationCounter + '</label>' +
+    '<input type="text" class="form-control" id="destinationLocation' + destinationCounter + '" name="destinationLocation' + destinationCounter + '" oninput="updateAirportOptions(\'destinationLocation' + destinationCounter + '\', \'destinationLocationDropdown' + destinationCounter + '\')" onclick="updateAirportOptions(\'destinationLocation' + destinationCounter + '\', \'destinationLocationDropdown' + destinationCounter + '\')">' +
+    '<div class="dropdown" id="destinationLocationDropdown' + destinationCounter + '"></div>';
 
-	// Append the destination input to the last destination row
-	additionalDestinationsDiv.lastChild.appendChild(destinationLocationInput);
-
-	// Increment the destination counter for the next input
-	destinationCounter++;
-}
-
-function updateAirportOptions(inputId, selectId) {
-	var inputElement = document.getElementById(inputId);
-	var selectElement = document.getElementById(selectId);
-	// Convert input to uppercase for case-insensitive matching
-	var userInput = inputElement.value.toUpperCase();
-
-	// Clear existing options and add blank option
-	selectElement.innerHTML = '';
-	var blankOption = document.createElement('option');
-	blankOption.value = '';
-	blankOption.text = '';
-	selectElement.add(blankOption);
-		
-	// Recursive function to traverse the nested structure
-	function traverse(obj) {
-		for (var key in obj) {
-			if (obj.hasOwnProperty(key) && key !== 'name' && key !== 'country') {
-				var node = obj[key];
-
-				if (node.hasOwnProperty('airports')) {
-					// If the node has 'airports', recursively traverse it
-					traverse(node.airports);
-				} else {
-					// Check if the node matches user input
-					if (node.iata.includes(userInput) || node.name.toUpperCase().includes(userInput)) {
-						var option = document.createElement('option');
-						option.value = node.iata;
-						option.text = `${node.iata} - ${node.name}`;
-						selectElement.add(option);
-					}
-				}
-			}
-		}
-	}
-
-	// Start the recursive traversal from the root
-	traverse(airportIATA);
-
-	// Show the dropdown only if the input field is clicked
-	selectElement.style.display = inputElement === document.activeElement ? 'block' : 'none';
-}
-
-function selectAirport(inputId, selectId) {
-	var inputElement = document.getElementById(inputId);
-	var selectElement = document.getElementById(selectId);
-
-	// Check if the selected index is 0 (blank option)
-	if (selectElement.selectedIndex === 0) {
-		// Prevent event propagation
-		event.stopPropagation();
-		return;
-	}
-		
-	// Update input field with the selected option
-	inputElement.value = selectElement.value;
-
-	// Hide the dropdown
-	selectElement.style.display = 'none';
-}
+    destinationRow.appendChild(destinationInput);
+    additionalDestinationsDiv.appendChild(destinationRow);
 	
-// Initially hide all dropdown menus
-document.addEventListener('DOMContentLoaded', function () {
-    var allSelects = document.querySelectorAll('.form-select');
-    allSelects.forEach(function (select) {
-        if (select) { // Check if the element exists before accessing its style property
-            select.style.display = 'none';
+    // Create an error message child for the new destination.
+    var destinationErrorMsg = document.createElement('span');
+    destinationErrorMsg.id = 'error-message' + (destinationCounter + 3);
+
+    // Get the last destination location input in the row
+    var lastDestinationLocationInput = additionalDestinationsDiv.lastChild.lastElementChild;
+
+    // Insert the error message span right after the last destination location input
+    lastDestinationLocationInput.insertAdjacentElement('beforeend', destinationErrorMsg);
+	
+    // Increment the destination counter for the next input
+    destinationCounter++;
+}
+
+function updateAirportOptions(inputId, dropdownId) {
+    var inputElement = document.getElementById(inputId);
+    var dropdownElement = document.getElementById(dropdownId);
+
+    // Convert input to uppercase for case-insensitive matching
+    var userInput = inputElement.value.toUpperCase();
+
+    // Clear existing options
+    dropdownElement.innerHTML = '';
+
+    // Recursive function to traverse the nested structure
+    function traverse(obj) {
+        for (var key in obj) {
+            if (obj.hasOwnProperty(key) && key !== 'name' && key !== 'country') {
+                var node = obj[key];
+
+                if (node.hasOwnProperty('airports')) {
+                    // If the node has 'airports', recursively traverse it
+                    traverse(node.airports);
+                } else {
+                    // Check if the node matches user input
+                    if (node.iata.includes(userInput) || node.name.toUpperCase().includes(userInput)) {
+                        var option = document.createElement('div');
+                        option.className = 'dropdown-option';
+                        option.textContent = `${node.iata} - ${node.name}`;
+                        option.addEventListener('click', function() {
+                            inputElement.value = this.dataset.airportCode;
+                            dropdownElement.style.display = 'none';
+                        });
+                        option.dataset.airportCode = node.iata;
+			dropdownElement.appendChild(option);
+                    }
+                }
+            }
+        }
+    }
+
+    // Start the recursive traversal from the root
+    traverse(airportIATA);
+
+    // Show the dropdown
+    dropdownElement.style.display = 'block';
+}
+
+// Closes the dropdown when clicking outside
+document.addEventListener('click', function (event) {
+    var dropdowns = document.querySelectorAll('.dropdown');
+
+    dropdowns.forEach(function (dropdownElement) {
+        if (!event.target.closest('.custom-dropdown')) {
+            dropdownElement.style.display = 'none';
         }
     });
 });
