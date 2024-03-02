@@ -51,29 +51,43 @@ function updateAirportOptions(inputId, dropdownId) {
 
     // Recursive function to traverse the nested structure
     function traverse(obj) {
-        for (var key in obj) {
-            if (obj.hasOwnProperty(key) && key !== 'name' && key !== 'country') {
-                var node = obj[key];
+	var options = [];
 
-                if (node.hasOwnProperty('airports')) {
-                    // If the node has 'airports', recursively traverse it
-                    traverse(node.airports);
-                } else {
-                    // Check if the node matches user input
-                    if (node.iata.includes(userInput) || node.name.toUpperCase().includes(userInput)) {
-                        var option = document.createElement('div');
-                        option.className = 'dropdown-option';
-                        option.textContent = `${node.iata} - ${node.name}`;
-                        option.addEventListener('click', function() {
-                            inputElement.value = this.dataset.airportCode;
-                            dropdownElement.style.display = 'none';
-                        });
-                        option.dataset.airportCode = node.iata;
-			dropdownElement.appendChild(option);
-                    }
-                }
-            }
-        }
+	function addOption(node) {
+		var option = document.createElement('div');
+		option.className = 'dropdown-option';
+		option.textContent = `${node.iata} - ${node.name}`;
+		option.addEventListener('click', function() {
+			inputElement.value = this.dataset.airportCode;
+			dropdownElement.style.display = 'none';
+		});
+		option.dataset.airportCode = node.iata;
+		options.push(option);
+	}
+
+	for (var key in obj) {
+		if (obj.hasOwnProperty(key) && key !== 'name' && key !== 'country') {
+			var node = obj[key];
+
+			if (node.hasOwnProperty('airports')) {
+				traverse(node.airports);
+			} else {
+				if (node.iata.includes(userInput) || node.name.toUpperCase().includes(userInput)) {
+					addOption(node);
+				}
+			}
+		}
+	}
+
+	// Sort the options alphabetically by airport name
+	options.sort(function(a, b) {
+		return a.textContent.localeCompare(b.textContent);
+	});
+
+	// Append sorted options to the dropdown
+	options.forEach(function(option) {
+		dropdownElement.appendChild(option);
+	});
     }
 
     // Start the recursive traversal from the root
