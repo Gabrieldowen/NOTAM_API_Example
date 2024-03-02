@@ -21,14 +21,14 @@
 	    <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="startAirport" class="form-label">Start Airport</label>
-                    <input type="text" class="form-control" id="startAirport" name="startAirport" placeholder="LAX" autocomplete="off" oninput="updateAirportOptions('startAirport', 'startAirportSelect')" onclick="updateAirportOptions('startAirport', 'startAirportSelect')">
-		                <select class="form-select mt-2" id="startAirportSelect" name="startAirport" onclick="selectAirport('startAirport', 'startAirportSelect', event)"></select>
+                    <input type="text" class="form-control" id="startAirport" name="startAirport" placeholder="LAX" autocomplete="off" oninput="updateAirportOptions('startAirport', 'startAirportDropdown')">
+                    <div class="dropdown" id="startAirportDropdown"></div>
                     <span id="error-message3"> </span>
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="destAirport" class="form-label">Destination Airport</label>
-                    <input type="text" class="form-control" id="destAirport" name="destAirport" placeholder="JFK" autocomplete="off" oninput="updateAirportOptions('destAirport', 'destAirportSelect')" onclick="updateAirportOptions('destAirport', 'destAirportSelect')">
-		                <select class="form-select mt-2" id="destAirportSelect" name="destAirport" onclick="selectAirport('destAirport', 'destAirportSelect', event)"></select>
+                    <input type="text" class="form-control" id="destAirport" name="destAirport" placeholder="JFK" autocomplete="off" oninput="updateAirportOptions('destAirport', 'destAirportDropdown')">
+                    <div class="dropdown" id="destAirportDropdown"></div>
                     <span id="error-message4"> </span>
                 </div>
              </div>	
@@ -78,9 +78,7 @@
             <span style="--i:10;"></span>
             <span style="--i:11;"></span>
         </div>
-    </group>
-    
-    
+    </group> 
 </div>
 
 <script>
