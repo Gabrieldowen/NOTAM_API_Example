@@ -1,8 +1,10 @@
 $(document).ready(function () {
     $('.datepicker').datepicker({
-        format: 'mm-dd-yyyy',
+        format: 'yyyy-mm-dd hh:ii:ss',
         autoclose: true,
         todayHighlight: true,
+	keyboardNavigation: false,
+	forceParse: false,
     });
 });
 
