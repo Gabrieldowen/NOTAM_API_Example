@@ -6,32 +6,34 @@
     <h1i id = "Title">NOTAM Sorter</h1i>
       <div class="container mt-5" style="transform: translateY(-40px);">
         <form id = "dataForm" onSubmit="checkInputs(); return false;">
-	    <div class="row">
+	        <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="effectiveStartDate" class="form-label">Effective Start Date</label>
-                    <input type="text" class="form-control datepicker" id="effectiveStartDate" name="effectiveStartDate" placeholder="mm-dd-yyyy" autocomplete="off">
+                    <input type="text" class="form-control datepicker" id="effectiveStartDate" name="effectiveStartDate" placeholder="YYYY-MM-DD HH:MM:SS" autocomplete="off">
                     <span id="error-message1""> </span>
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="effectiveEndDate" class="form-label">Effective End Date</label>
-                    <input type="text" class="form-control datepicker" id="effectiveEndDate" name="effectiveEndDate" placeholder="mm-dd-yyyy" autocomplete="off">
+                    <input type="text" class="form-control datepicker" id="effectiveEndDate" name="effectiveEndDate" placeholder="YYYY-MM-DD HH:MM:SS" autocomplete="off">
                     <span id="error-message2"> </span>
                 </div>
             </div>
-	    <div class="row" >
+	    <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="startAirport" class="form-label">Start Airport</label>
-                    <input type="text" class="form-control" id="startAirport" name="startAirport" placeholder="LAX" autocomplete="off">
+                    <input type="text" class="form-control" id="startAirport" name="startAirport" placeholder="LAX" autocomplete="off" oninput="updateAirportOptions('startAirport', 'startAirportDropdown')">
+                    <div class="dropdown" id="startAirportDropdown"></div>
                     <span id="error-message3"> </span>
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="destAirport" class="form-label">Destination Airport</label>
-                    <input type="text" class="form-control" id="destAirport" name="destAirport" placeholder="JFK" autocomplete="off">
+                    <input type="text" class="form-control" id="destAirport" name="destAirport" placeholder="JFK" autocomplete="off" oninput="updateAirportOptions('destAirport', 'destAirportDropdown')">
+                    <div class="dropdown" id="destAirportDropdown"></div>
                     <span id="error-message4"> </span>
                 </div>
-            </div>
+             </div>	
 		<div id="additionalDestinations"></div>
-            	<button type="button" id="addButton" class="btn btn-secondary" onclick="addDestination()">Add Another Destination</button>
+            	<button type="button" id="addButton" class="btn btn-secondary" onclick="addDestination()">Add Another Destination</button>	
             <div class="mb-3" style="transform: translateY(10px);">
                 <label for="locationRadius" class="form-label">Location Radius</label>
                 <input type="text" class="form-control" id="locationRadius" name="locationRadius">
@@ -76,10 +78,12 @@
             <span style="--i:10;"></span>
             <span style="--i:11;"></span>
         </div>
-    </group>
-    
-    
+    </group> 
 </div>
+
+<script>
+    var airportIATA = {{ airportIATA | safe }};
+</script>
 
 <!-- Form script file reference. -->
 <script src="static/form.js" ></script>

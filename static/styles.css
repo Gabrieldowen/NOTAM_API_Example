@@ -114,4 +114,22 @@ group .ticks span {
 .hiddenObj {
     display: none;
 }
+
+/* Styling for the dropdown menu */
+.dropdown {
+    display: none;
+    border: 1px solid #ccc;
+	max-height: 200px;
+    overflow-y: auto;
+	z-index: 1;
+	background-color: #fff;
+}
+
+.dropdown-option {
+    padding: 3px;
+    cursor: pointer;
+}
+
+.dropdown-option:hover {
+    background-color: #f0f0f0;
 /*# sourceMappingURL=style.css.map */
