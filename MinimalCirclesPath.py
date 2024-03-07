@@ -44,7 +44,7 @@ def nextPoint(startLat, startLong, bearingDegrees, distanceNm=100):
 
     return destLat, destLong
 
-# used geeksforgeeks.org
+# used geeksforgeeks.org, gets the distance between two points on earth
 def getDistance(startLat, startLong, destLat, destLong):
     earthRadiusNm = 3440.065  # Radius of the Earth in nautical miles
 
@@ -64,44 +64,43 @@ def getDistance(startLat, startLong, destLat, destLong):
 
 # pathWidth is the desired scaned distance from play diameter, radius is radius of circle passed to NOTAM
 def getPath( startLat, startLong, destLat, destLong, radius, pathWidth):
-
-    # TODO For actual application you would need to capture N/S/E/W
-
     
-      
-    # gets total distance from start to finish
-    totalDistance = getDistance(startLat, startLong, destLat, destLong)
-
     # gets step distance (pythagorean theorum)
     stepDistance = 2 * sqrt((radius)**2-(pathWidth/2)**2)
 
     # gets direction
     bearing = calculateBearing(startLat, startLong, destLat, destLong)
 
+    # updates the start so the area in the opposite direction of the path is right on the edge of the first circle
+    updatedStart = nextPoint(startLat,startLong, bearing, radius - (pathWidth/2) )
 
-    # gets point to call NOTAM and include all of starting area from farther down path
-    startPoint = nextPoint(startLat,startLong, bearing, radius - (pathWidth/2) )
+    # updates the dest so that it is the furthest point on the path. This means going the pathWidth/2 past the dest
+    updatedDest = nextPoint(destLat, destLong, bearing, (pathWidth/2))
+
+    # gets total distance from start to finish
+    totalDistance = getDistance(updatedStart[0], updatedStart[1], updatedDest[0], updatedDest[1])
 
     # List to return with path of points from start to dest
-    coordList = [startPoint]
+    coordList = [updatedStart]
 
-    # loops for each step until passed the destination
-    for _ in range(floor((totalDistance - (radius - (pathWidth/2)))/stepDistance)):
-        nextCircle = nextPoint(coordList[-1][0],coordList[-1][1], bearing, stepDistance)
-        coordList.append(nextCircle)
+    # loops for each step until passed the destination. range(split total distance minus area covered from start point)
+    for _ in range(ceil((totalDistance - (stepDistance/2))/stepDistance)):
+        nextLat, nextLong = nextPoint(coordList[-1][0],coordList[-1][1], bearing, stepDistance)
+        coordList.append((nextLat, nextLong))
 
-    coordList.append((destLat, destLong))
+        # update bearing for next point 
+        bearing = calculateBearing(nextLat, nextLong, destLat, destLong)
+ 
     return coordList
        
 
 
-"""
+
 # THIS IS AN EXAMPLE
 # uncomment and run `python3 MinimalCirclesPath.py` to see example of what getPath() returns
-
-pathList = getPath(startLat = 32.7767, startLong = 96.7970, destLat = 39.7392, destLong = 104.9903, radius = 100,  pathWidth = 50)
-for i,item in enumerate(pathList):
-    print(f"point #{i+1}) {item}\n")
-
 """
-
+if __name__ == '__main__':
+    pathList = getPath(startLat = 32.7767, startLong = 96.7970, destLat = 39.7392, destLong = 104.9903, radius = 100,  pathWidth = 50)
+    for i,item in enumerate(pathList):
+        print(f"point #{i+1}) {item}\n")
+"""

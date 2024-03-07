@@ -1,29 +1,32 @@
-
 $(document).ready(function () {
-  $('.datepicker').datepicker({
-      format: 'mm-dd-yyyy',
-      autoclose: true,
-      todayHighlight: true,
-  });
+    $('.datepicker').datepicker({
+        format: 'yyyy-mm-dd hh:ii:ss',
+        autoclose: true,
+        todayHighlight: true,
+	keyboardNavigation: false,
+	forceParse: false,
+    });
 });
 
 var destinationCounter = 2;
 
 function addDestination() {
-
-  var additionalDestinationsDiv = document.getElementById('additionalDestinations');
+    var additionalDestinationsDiv = document.getElementById('additionalDestinations');
 
     // Create a new destination row
-		var destinationRow = document.createElement('div');
-		destinationRow.classList.add('row');
-		
+    var destinationRow = document.createElement('div');
+    destinationRow.classList.add('row');
+
+    // Create Destination Location input
     var destinationInput = document.createElement('div');
-		destinationInput.classList.add('col-md-6', 'mb-3');
-		destinationInput.innerHTML = '<label for="destAirport' + destinationCounter + '" class="form-label">Additional Destination ' + destinationCounter + '</label>' +
-			'<input type="text" class="form-control"  id= "destinationLocation' + destinationCounter + '" name="destAirport' + destinationCounter + '" placeholder="Airport Code" autocomplete="off">';
-		destinationRow.appendChild(destinationInput);
-		additionalDestinationsDiv.appendChild(destinationRow);
- 
+    destinationInput.classList.add('col-md-6', 'mb-3');
+    destinationInput.innerHTML = '<label for="destinationLocation' + destinationCounter + '" class="form-label">Destination Location ' + destinationCounter + '</label>' +
+    '<input type="text" class="form-control" id="destinationLocation' + destinationCounter + '" name="destinationLocation' + destinationCounter + '" oninput="updateAirportOptions(\'destinationLocation' + destinationCounter + '\', \'destinationLocationDropdown' + destinationCounter + '\')" onclick="updateAirportOptions(\'destinationLocation' + destinationCounter + '\', \'destinationLocationDropdown' + destinationCounter + '\')">' +
+    '<div class="dropdown" id="destinationLocationDropdown' + destinationCounter + '"></div>';
+
+    destinationRow.appendChild(destinationInput);
+    additionalDestinationsDiv.appendChild(destinationRow);
+	
     // Create an error message child for the new destination.
     var destinationErrorMsg = document.createElement('span');
     destinationErrorMsg.id = 'error-message' + (destinationCounter + 3);
@@ -33,10 +36,79 @@ function addDestination() {
 
     // Insert the error message span right after the last destination location input
     lastDestinationLocationInput.insertAdjacentElement('beforeend', destinationErrorMsg);
-
-  // Increment the destination counter for the next input
-  destinationCounter++;
+	
+    // Increment the destination counter for the next input
+    destinationCounter++;
 }
+
+function updateAirportOptions(inputId, dropdownId) {
+    var inputElement = document.getElementById(inputId);
+    var dropdownElement = document.getElementById(dropdownId);
+
+    // Convert input to uppercase for case-insensitive matching
+    var userInput = inputElement.value.toUpperCase();
+
+    // Clear existing options
+    dropdownElement.innerHTML = '';
+
+    // Recursive function to traverse the nested structure
+    function traverse(obj) {
+	var options = [];
+
+	function addOption(node) {
+		var option = document.createElement('div');
+		option.className = 'dropdown-option';
+		option.textContent = `${node.iata} - ${node.name}`;
+		option.addEventListener('click', function() {
+			inputElement.value = this.dataset.airportCode;
+			dropdownElement.style.display = 'none';
+		});
+		option.dataset.airportCode = node.iata;
+		options.push(option);
+	}
+
+	for (var key in obj) {
+		if (obj.hasOwnProperty(key) && key !== 'name' && key !== 'country') {
+			var node = obj[key];
+
+			if (node.hasOwnProperty('airports')) {
+				traverse(node.airports);
+			} else {
+				if (node.iata.includes(userInput) || node.name.toUpperCase().includes(userInput)) {
+					addOption(node);
+				}
+			}
+		}
+	}
+
+	// Sort the options alphabetically by airport name
+	options.sort(function(a, b) {
+		return a.textContent.localeCompare(b.textContent);
+	});
+
+	// Append sorted options to the dropdown
+	options.forEach(function(option) {
+		dropdownElement.appendChild(option);
+	});
+    }
+
+    // Start the recursive traversal from the root
+    traverse(airportIATA);
+
+    // Show the dropdown
+    dropdownElement.style.display = 'block';
+}
+
+// Closes the dropdown when clicking outside
+document.addEventListener('click', function (event) {
+    var dropdowns = document.querySelectorAll('.dropdown');
+
+    dropdowns.forEach(function (dropdownElement) {
+        if (!event.target.closest('.custom-dropdown')) {
+            dropdownElement.style.display = 'none';
+        }
+    });
+});
 
 // Function to reset the body of the page and change it to loading.
 function submitForm() {
@@ -140,4 +212,3 @@ function checkInputs(){
      submitForm();
   }
 }
-
