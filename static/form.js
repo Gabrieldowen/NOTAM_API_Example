@@ -264,25 +264,39 @@ function getLastDayOfMonth(year, month){
 function checkInputDate(input, errorMsg) {
   // Get the current day and time. Unused because not sure of date range our algorithm will accept.
   const currentDate = new Date();
-
-  const dateInput = document.getElementById(input).value;
-  const errorMessage = document.getElementById(errorMsg);
-  const dateArray = dateInput.split('-');
   
-  const month = parseInt(dateArray[0], 10);
-  const day = parseInt(dateArray[1], 10);
-  const year = parseInt(dateArray[2], 10);
+  const dateTimeInput  = document.getElementById(input).value;
+  const errorMessage = document.getElementById(errorMsg);
+  
+  const [datePart, timePart] = dateTimeInput.split(' ');
+  if (datePart === '' || datePart === undefined || timePart === '' || timePart === undefined){
+    errorMessage.textContent = 'Invalid date or time. Please enter a valid date and time (YYYY-MM-DD hh:mm:ss).';
+    return false;
+  }
+  const dateArray = datePart.split('-');
+  const timeArray = timePart.split(':');
 
-  // Check if the entered date is valid
+  const year = parseInt(dateArray[0], 10);
+  const month = parseInt(dateArray[1], 10);
+  const day = parseInt(dateArray[2], 10);
+
+  const hours = parseInt(timeArray[0], 10);
+  const minutes = parseInt(timeArray[1], 10);
+  const seconds = parseInt(timeArray[2], 10);
+
+  // Check if the entered date and time are valid
   if (
-      month >= 1 && month <= 12 &&
-      day >= 1 && day <= getLastDayOfMonth(year, month) &&
-      year >= 2020 && year <= 2030
+    month >= 1 && month <= 12 &&
+    day >= 1 && day <= getLastDayOfMonth(year, month) &&
+    year >= 2020 && year <= 2030 &&
+    hours >= 0 && hours <= 23 &&
+    minutes >= 0 && minutes <= 59 &&
+    seconds >= 0 && seconds <= 59
   ) {
       errorMessage.textContent = ''; // Clear any previous error message
       return true;
   } else {
-      errorMessage.textContent = 'Invalid date. Please enter a valid date (MM-DD-YYYY).';
+      errorMessage.textContent = 'Invalid date or time. Please enter a valid date and time (YYYY-MM-DD hh:mm:ss).';
       return false;
   }
 }
@@ -325,7 +339,7 @@ function checkInputPathWidth(inputId, errorMsg){
   }
 }
 
-function checkInputIsEmpty(inputId){
+function checkInputIsNotEmpty(inputId){
   if (document.getElementById(inputId).value.trim() !== ''){
     return true;
   } else {
@@ -341,7 +355,7 @@ function checkInputs(){
 
   // Check if input start date and end date is empty, if not then check if they are in the correct format.
   // If at least one of them is not empty it will check both.
-  if (checkInputIsEmpty('effectiveStartDate') || checkInputIsEmpty('effectiveEndDate')){
+  if (checkInputIsNotEmpty('effectiveStartDate') || checkInputIsNotEmpty('effectiveEndDate')){
     isValidDate1 = checkInputDate('effectiveStartDate', 'error-message1');
     isValidDate2 = checkInputDate('effectiveEndDate', 'error-message2');
   } else {
@@ -361,23 +375,14 @@ function checkInputs(){
       }
   }
 
-  let isValidCircleRadius = true;
+  // Circle radius and path width cant be empty untit we figure out how to set default values for it.
+  const isValidradius = checkInputRadius('radius', 'error-messageR');
+  const isValidPathWidth = checkInputPathWidth('pathWidth', 'error-messageW');
 
-  if (checkInputIsEmpty('radius')){
-    isValidradius = checkInputRadius('radius', 'error-messageR');
-  } else {
-    document.getElementById('error-messageR').textContent = '';
-  }
+ 
 
-  let isValidPathWidth = true;
-
-  if (checkInputIsEmpty('pathWidth')){
-    isValidPathWidth = checkInputPathWidth('pathWidth', 'error-messageW');
-  } else {
-    document.getElementById('error-messageW').textContent = '';
-  }
   
-  if (isValidDate1 && isValidStart && isValidDest && isValidDests && isValidCircleRadius && isValidPathWidth){
+  if (isValidDate1 && isValidDate2 && isValidStart && isValidDest && isValidDests && isValidradius && isValidPathWidth){
      submitForm();
   }
   
