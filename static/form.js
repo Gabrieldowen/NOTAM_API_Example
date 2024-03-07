@@ -24,7 +24,7 @@ function addDestination() {
   destinationInput.classList.add('col-md-6', 'mb-3', 'destination');
   destinationInput.innerHTML = '<label for="destinationLocation' + destinationCounter + '" class="form-label">Destination ' + destinationCounter + '</label>' +
     '<input type="text" class="form-control" id="destinationLocation' + destinationCounter + '" name="destinationLocation' + destinationCounter + '" oninput="updateAirportOptions(\'destinationLocation' + destinationCounter + '\', \'destinationLocationDropdown' + destinationCounter + '\')" onclick="updateAirportOptions(\'destinationLocation' + destinationCounter + '\', \'destinationLocationDropdown' + destinationCounter + '\')">' +
-    '<div class="dropdown" id="destinationLocationDropdown' + destinationCounter + '"></div>';
+    '<div class="dropdown dropdown-exDest" id="destinationLocationDropdown' + destinationCounter + '" ></div>';
   destinationInput.id = 'destinationLocationR' + destinationCounter;
   
   // Checking to see if there is a button needed for deleting.
@@ -91,6 +91,7 @@ function deleteDestination(inputId){
     
     lastDest.insertAdjacentElement('beforeend', destinationDelete);
   }
+}
 
 function updateAirportOptions(inputId, dropdownId) {
     var inputElement = document.getElementById(inputId);
@@ -175,8 +176,8 @@ function submitForm() {
   document.getElementById('effectiveEndDate').remove();
   document.querySelector('label[for="effectiveEndDate"]').remove();
       
-  document.getElementById('circleRadius').remove();
-  document.querySelector('label[for="circleRadius"]').remove();
+  document.getElementById('radius').remove();
+  document.querySelector('label[for="radius"]').remove();
 
   document.getElementById('pathWidth').remove();
   document.querySelector('label[for="pathWidth"]').remove();
@@ -362,8 +363,8 @@ function checkInputs(){
 
   let isValidCircleRadius = true;
 
-  if (checkInputIsEmpty('circleRadius')){
-    isValidCircleRadius = checkInputRadius('circleRadius', 'error-messageR');
+  if (checkInputIsEmpty('radius')){
+    isValidradius = checkInputRadius('radius', 'error-messageR');
   } else {
     document.getElementById('error-messageR').textContent = '';
   }

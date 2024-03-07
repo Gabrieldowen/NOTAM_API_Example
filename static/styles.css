@@ -199,6 +199,7 @@ group .ticks span {
   display: none;
   padding-left: 20px;
   padding-top: 5px;
+  font-weight: 700;
 }
 
 /* Hide the checkbox visually */
@@ -241,12 +242,22 @@ group .ticks span {
 
 /* Styling for the dropdown menu */
 .dropdown {
-    display: none;
-    border: 1px solid #ccc;
-	max-height: 200px;
-    overflow-y: auto;
+  display: none;
+  border: 1px solid #ccc;
+  max-height: 200px;
+  overflow-y: auto;
 	z-index: 1;
 	background-color: #fff;
+
+}
+
+.dropdown-exDest{
+  position: absolute;
+  overflow-y: auto;
+    
+  width: 505px;
+  top: 37px;
+  left: 112px;
 }
 
 .dropdown-option {
