@@ -49,7 +49,6 @@ def index():
         endTime = time.time()    
         print(f"\ntime calling API {endTime - startTime} seconds")
         
-
         # takes api output and parse it
         startTime = time.time()  # Record start time
         Notams = ParseNOTAM.ParseNOTAM(apiOutputs)

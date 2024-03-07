@@ -21,10 +21,10 @@ function addDestination() {
   destinationRow.id = 'row' + destinationCounter;
 
   var destinationInput = document.createElement('div');
-  destinationInput.classList.add('col-md-6', 'mb-3', 'destination');
-  destinationInput.innerHTML = '<label for="destinationLocation' + destinationCounter + '" class="form-label">Destination ' + destinationCounter + '</label>' +
+  destinationInput.classList.add('col-md-6', 'mb-3');
+  destinationInput.innerHTML = '<label for="destinationLocation' + destinationCounter + '" class="form-label" id="destinationLocationText' + destinationCounter + '"><strong>Destination ' + destinationCounter + '</strong></label>' +
     '<input type="text" class="form-control" id="destinationLocation' + destinationCounter + '" name="destinationLocation' + destinationCounter + '" oninput="updateAirportOptions(\'destinationLocation' + destinationCounter + '\', \'destinationLocationDropdown' + destinationCounter + '\')" onclick="updateAirportOptions(\'destinationLocation' + destinationCounter + '\', \'destinationLocationDropdown' + destinationCounter + '\')">' +
-    '<div class="dropdown dropdown-exDest" id="destinationLocationDropdown' + destinationCounter + '" ></div>';
+    '<div class="dropdown" id="destinationLocationDropdown' + destinationCounter + '" ></div>';
   destinationInput.id = 'destinationLocationR' + destinationCounter;
   
   // Checking to see if there is a button needed for deleting.
@@ -43,15 +43,12 @@ function addDestination() {
     deleteDestination(destinationRow.id);
   };
 
-  // Add the button.
-  destinationInput.insertAdjacentElement('beforeend', destinationDelete);
-  
   destinationRow.appendChild(destinationInput);
   additionalDestinationsDiv.appendChild(destinationRow);
 
   // Create an error message child for the new destination.
-  var destinationErrorMsg = document.createElement('p');
-  destinationErrorMsg.style.cssText =  'margin: 0; transform: translate(105px, -17px); '
+  var destinationErrorMsg = document.createElement('span');
+  destinationErrorMsg.style.cssText =  'position: relative; bottom: 20px;'
   destinationErrorMsg.id = 'error-message' + (destinationCounter + 3);
 
   // Get the last destination location input in the row
@@ -60,6 +57,10 @@ function addDestination() {
   // Insert the error message span right after the last destination location input
   lastDestinationLocationInput.insertAdjacentElement('afterend', destinationErrorMsg);
 
+  // Add the button.
+  var destText = additionalDestinationsDiv.querySelector('#' + 'destinationLocationText' + destinationCounter);
+  destText.insertAdjacentElement('beforeend', destinationDelete);
+  
   // Increment the destination counter for the next input
   destinationCounter++;
 
@@ -77,7 +78,7 @@ function deleteDestination(inputId){
     
     let destinationRow = document.getElementById('row' + (destinationCounter - 1));
 
-    let lastDest = document.getElementById('destinationLocationR' + (destinationCounter - 1));
+    let destText = document.getElementById('additionalDestinations').querySelector('#' + 'destinationLocationText' + (destinationCounter - 1));
 
     // Create a button to delete this destination if needed so.
     let destinationDelete = document.createElement('button');
@@ -88,8 +89,7 @@ function deleteDestination(inputId){
       deleteDestination(destinationRow.id);
     };
 
-    
-    lastDest.insertAdjacentElement('beforeend', destinationDelete);
+    destText.insertAdjacentElement('beforeend', destinationDelete);
   }
 }
 
@@ -374,14 +374,23 @@ function checkInputs(){
           isValidDests = false;
       }
   }
-
-  // Circle radius and path width cant be empty untit we figure out how to set default values for it.
-  const isValidradius = checkInputRadius('radius', 'error-messageR');
-  const isValidPathWidth = checkInputPathWidth('pathWidth', 'error-messageW');
-
- 
-
   
+  let isValidradius = true;
+  let isValidPathWidth = true;
+
+  // Check circle radius and path width
+  if (checkInputIsNotEmpty('radius')){
+    isValidradius = checkInputRadius('radius', 'error-messageR');
+  } else {
+    document.getElementById('error-messageR').textContent = '';
+  }
+
+  if (checkInputIsNotEmpty('pathWidth')){
+    isValidradius = checkInputPathWidth('pathWidth', 'error-messageW');
+  } else {
+    document.getElementById('error-messageW').textContent = '';
+  }
+
   if (isValidDate1 && isValidDate2 && isValidStart && isValidDest && isValidDests && isValidradius && isValidPathWidth){
      submitForm();
   }

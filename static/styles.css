@@ -18,43 +18,34 @@
   color: #ffffff;
 }
 
-/* For each added destinations */
-.destination{
-  display: flex;  
-  gap: 10px; 
-  white-space: nowrap; 
-  position: relative;  
-  align-items: center; 
-  justify-content: center;
-}
-
 /* The button to delete destinations */
 .delete{
   color: #000000;
 
+  margin-left: 4px;
   background-image: url('images/minus.png');  
-  border: 4px double #ffffff;
-  box-shadow: 0 0 0 1px #ff0000;
-  
-  background-position: center;   
-  background-size: contain; 
-  background-repeat: no-repeat; 
+  background-size: 50%;
+  border-width: 1px;
+  box-shadow: 0 0 0px 1px rgb(255, 0, 0);
+  background-position: center ;   
+  background-repeat: no-repeat;
+  border-color: rgb(255, 0, 0); 
 
-  width: 12px; 
-  height: 12px;  
+  width: 15px; 
+  height: 15px;  
 
   border-radius: 50%; 
-  position: absolute; 
+  position: relative; 
   top: -5px; 
-  right: 0;
+  right: 0px;
 
   transition: all 0.2s;
 }
 
 .delete:hover{
-  background-color: #000000;
+  background-color: #ff0000;
   color: #ffffff;
-  border: 4px double #000000;
+  border: 1px double #000000;
   background-image: url('images/minusWhite.png'); 
 }
 
@@ -199,7 +190,6 @@ group .ticks span {
   display: none;
   padding-left: 20px;
   padding-top: 5px;
-  font-weight: 700;
 }
 
 /* Hide the checkbox visually */
@@ -249,15 +239,6 @@ group .ticks span {
 	z-index: 1;
 	background-color: #fff;
 
-}
-
-.dropdown-exDest{
-  position: absolute;
-  overflow-y: auto;
-    
-  width: 505px;
-  top: 37px;
-  left: 112px;
 }
 
 .dropdown-option {
