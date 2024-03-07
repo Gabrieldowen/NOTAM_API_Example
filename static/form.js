@@ -91,6 +91,7 @@ function deleteDestination(inputId){
     
     lastDest.insertAdjacentElement('beforeend', destinationDelete);
   }
+}
 
 function updateAirportOptions(inputId, dropdownId) {
     var inputElement = document.getElementById(inputId);
