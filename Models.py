@@ -38,3 +38,4 @@ class NotamRequest:
         self.sortBy =  data.get('sortBy', None)
         self.sortOrder =  data.get('sortOrder', None)
         self.radius = data.get('radius', 100)
+        self.pathWidth = data.get('pathWidth', None)

@@ -2,26 +2,26 @@
 
 {% block content %}
 <div style="display: flex; ">
-    <input type="image" id ="arrow" src="static/images/plane2.png" onclick="returnToForm()" alt="Submit">
+    <input type="image" id ="plane" src="static/images/plane.png" onclick="returnToForm()" alt="Submit">
     <span class = "custom-text">
         Go Back
     </span>
 </div>
 
  <div class="container mt-5">
-        <h1>NOTAM Information</h1>
-
+        <h1 style="margin-left: -2px;">NOTAM Information</h1>
+            <p> Total number of Notams fetched: {{ notams|length }} </p>
         
         <div class="accordion">
             {% for notam in notams %}
             <div class="accordion-item">
-                <input type="checkbox" id="item{{ loop.index }}">
-                <label for="item{{ loop.index }}" class="accordion-header">NOTAM ID: {{ notam.id }}</label>
+                <input type="checkbox" class="custom-checkbox" id="item{{ loop.index }}">
+                <label for="item{{ loop.index }}" class="accordion-header custom-checkbox-label">Notam ID: {{ notam.id }}</label>
                 <div class="accordion-content">
                     <p><strong>Series: </strong>{{ notam.series }}</p>
                     <p><strong>Number: </strong>{{ notam.number }}</p>
                     <p><strong>Type: </strong>{{ notam.type }}</p>
-                    <p><strong>Issued: </strong>{{ notam.issued }}</p>
+                    <p style="margin-bottom: 5px;"><strong>Issued: </strong>{{ notam.issued }}</p>
                 </div>
             </div>
         {% endfor %}

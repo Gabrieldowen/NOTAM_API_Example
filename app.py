@@ -12,7 +12,7 @@ app = Flask(__name__)
 def index():
     # If form is submitted
     if request.method == 'POST':
-        
+        #'''
         NotamRequest = Models.NotamRequest(request.form)
 
         # get lat/long of airports
@@ -51,11 +51,14 @@ def index():
         Notams = ParseNOTAM.ParseNOTAM(apiOutputs)
         endTime = time.time()    # Record end time
         print(f"time parsing: {endTime - startTime} seconds\n")
-        
+        # '''
 
         #time.sleep(2)
 
+        #Notams = [2,2,2,2,2,2];
+
         return render_template('display.html', notams = Notams)
+        
         #return render_template('display.html')
         
     return render_template('form.html')

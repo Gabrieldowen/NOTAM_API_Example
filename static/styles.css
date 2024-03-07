@@ -11,7 +11,14 @@
   transition: all 0.3s;
 }
 
-/* The listed destinations */
+/* Hover animation for submit buttons */
+.submit:hover{
+  transform: translateY(-10px);
+  background-color: #000000;
+  color: #ffffff;
+}
+
+/* For each added destinations */
 .destination{
   display: flex;  
   gap: 10px; 
@@ -24,14 +31,13 @@
 /* The button to delete destinations */
 .delete{
   color: #000000;
-  
-  border: 5px double #ffffff;
-  box-shadow: 0 0 0 1px #ff0000;
+
   background-image: url('images/minus.png');  
+  border: 4px double #ffffff;
+  box-shadow: 0 0 0 1px #ff0000;
   
   background-position: center;   
-  
-  background-size: cover; 
+  background-size: contain; 
   background-repeat: no-repeat; 
 
   width: 12px; 
@@ -40,18 +46,21 @@
   border-radius: 50%; 
   position: absolute; 
   top: -5px; 
-  right: -2px;
+  right: 0;
+
+  transition: all 0.2s;
 }
 
-/* Hover animation for submit buttons */
-.submit:hover{
-  transform: translateY(-10px);
+.delete:hover{
   background-color: #000000;
   color: #ffffff;
+  border: 4px double #000000;
+  background-image: url('images/minusWhite.png'); 
 }
 
+
 /* Arrow to go back */
-#arrow{
+#plane{
   background-size: contain; 
   background-repeat: no-repeat;
   background-position: center;   
@@ -65,7 +74,8 @@
 .custom-text {
   position: fixed;
   font-size: 24px; 
-  color: #6052ac; 
+  color: #000e78; 
+  font-weight: 500;
 
   position: relative; 
   top: 25px; 
@@ -152,39 +162,79 @@ group .ticks span {
     display: none;
 }
 
-
-
-
-/* styles.css */
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-}
+/* Classes for NOTAMs to be displayed in an accordion-style list */
 
 .accordion {
   max-width: vw;
-  margin: 20px auto;
 }
 
 .accordion-item {
-  border: 1px solid #ddd;
+  border-left: 3px solid #000000;
+  border-right: 3px solid #000000;
+  
   margin-bottom: 2px;
 }
 
 .accordion-header {
   display: block;
-  padding: 10px;
-  background-color: #f1f1f1;
+  background-color: #aeb2eb;
+  border-bottom: 3px solid #000000;
+  border-top: 3px solid #000000;
+  padding: 5px;
   cursor: pointer;
+  font-weight: bold;
+
+  transition: all 0.1s;
+}
+
+.accordion-header:hover{
+  border-top: 4px solid #000000;
+  border-bottom: 4px solid #000000;
+  
+  border-left: 2px solid #000000;
+  border-right: 2px solid #000000;
 }
 
 .accordion-content {
   display: none;
-  padding: 10px;
+  padding-left: 20px;
+  padding-top: 5px;
+}
+
+/* Hide the checkbox visually */
+.accordion-item input {
+  position: absolute;
 }
 
 /* Use :checked pseudo-class to toggle content visibility */
 .accordion-item input:checked + .accordion-header + .accordion-content {
   display: block;
+  border-bottom: 3px solid #000000;
+}
+
+/* Style for the custom checkbox */
+.custom-checkbox {
+  opacity: 0;
+  height: 0;
+}
+
+/* Style for the custom checkbox's visual representation */
+.custom-checkbox-label {
+  position: relative;
+  padding-left: 15px;
+  cursor: pointer;
+}
+
+.custom-checkbox-label:before {
+  content: '';
+  position: absolute;
+  left: 2px;
+  top: 1px;
+  height: 10px;
+  border: 2px solid #333;
+}
+
+/* Style for the custom checkbox when checked */
+.custom-checkbox:checked + .custom-checkbox-label:before {
+  border: 2px solid #687df5; 
 }

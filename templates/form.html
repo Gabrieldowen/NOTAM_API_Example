@@ -32,10 +32,17 @@
             </div>
 		<div id="additionalDestinations"></div>
             	<button type="button" id="addButton" class="btn btn-secondary submit" onclick="addDestination()">Add Another Destination</button>
-            <div class="mb-3" style="transform: translateY(10px);">
-                <label for="locationRadius" class="form-label">Location Radius</label>
-                <input type="text" class="form-control" id="locationRadius" name="locationRadius">
-                <span id="error-messageR"> </span>
+            <div class="row" style="transform: translateY(10px);">
+                <div class="col-md-6 mb-3">
+                    <label for="circleRadius" class="form-label">Circle Radius</label>
+                    <input type="text" class="form-control" id="circleRadius" name="locationRadius">
+                    <span id="error-messageR"> </span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="pathWidth" class="form-label">Path Width</label>
+                    <input type="text" class="form-control" id="pathWidth" name="pathWidth">
+                    <span id="error-messageW"> </span>
+                </div>
             </div>
             <div class="row">
                 <div class="col-md-6 mb-3">
