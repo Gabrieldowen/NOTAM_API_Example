@@ -50,4 +50,5 @@ def buildNotam(effectiveStartDate, effectiveEndDate, long, lat, combined_core_no
                 #Adds to parsed if the Notam doesn't already exist
                 if core_notam_data not in combined_core_notam_data:
                     combined_core_notam_data.append(core_notam_data)
+
     return combined_core_notam_data

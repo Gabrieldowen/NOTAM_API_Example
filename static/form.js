@@ -1,39 +1,41 @@
-
 $(document).ready(function () {
-  $('.datepicker').datepicker({
-      format: 'mm-dd-yyyy',
-      autoclose: true,
-      todayHighlight: true,
-  });
+    $('.datepicker').datepicker({
+        format: 'yyyy-mm-dd hh:ii:ss',
+        autoclose: true,
+        todayHighlight: true,
+	keyboardNavigation: false,
+	forceParse: false,
+    });
 });
 
 var destinationCounter = 2;
 
 function addDestination() {
-
-  let additionalDestinationsDiv = document.getElementById('additionalDestinations');
+  
+  var additionalDestinationsDiv = document.getElementById('additionalDestinations');
 
   // Create a new destination row
-  let destinationRow = document.createElement('div');
+  var destinationRow = document.createElement('div');
   destinationRow.classList.add('row');
   // Added an ID for the row, for easy deletion afterwards.
   destinationRow.id = 'row' + destinationCounter;
 
-  let destinationInput = document.createElement('div');
+  var destinationInput = document.createElement('div');
   destinationInput.classList.add('col-md-6', 'mb-3', 'destination');
-  destinationInput.innerHTML = '<label for="destinationLocation' + destinationCounter + '" class="form-label">Next Destination' + '</label>' +
-    '<input type="text" class="form-control" id= "destinationLocation' + destinationCounter + '" name="destinationLocation' + destinationCounter + '" placeholder="Airport Code" autocomplete="off">';
+  destinationInput.innerHTML = '<label for="destinationLocation' + destinationCounter + '" class="form-label">Destination ' + destinationCounter + '</label>' +
+    '<input type="text" class="form-control" id="destinationLocation' + destinationCounter + '" name="destinationLocation' + destinationCounter + '" oninput="updateAirportOptions(\'destinationLocation' + destinationCounter + '\', \'destinationLocationDropdown' + destinationCounter + '\')" onclick="updateAirportOptions(\'destinationLocation' + destinationCounter + '\', \'destinationLocationDropdown' + destinationCounter + '\')">' +
+    '<div class="dropdown" id="destinationLocationDropdown' + destinationCounter + '"></div>';
   destinationInput.id = 'destinationLocationR' + destinationCounter;
   
   // Checking to see if there is a button needed for deleting.
   if (destinationCounter >= 3){
-    let lastDestButtonId = 'deleteButton' + (destinationCounter - 1);
+    var lastDestButtonId = 'deleteButton' + (destinationCounter - 1);
     document.getElementById(lastDestButtonId).remove();
     lastDestButtonId.onclick = null;
   }
   
   // Create the button to delete the current row.
-  let destinationDelete = document.createElement('button');
+  var destinationDelete = document.createElement('button');
   destinationDelete.id = 'deleteButton' + destinationCounter;
   destinationDelete.className = 'delete';
   destinationDelete.type = 'button';
@@ -48,12 +50,12 @@ function addDestination() {
   additionalDestinationsDiv.appendChild(destinationRow);
 
   // Create an error message child for the new destination.
-  let destinationErrorMsg = document.createElement('p');
-  destinationErrorMsg.style.cssText =  'margin: 0; transform: translate(130px, -17px); '
+  var destinationErrorMsg = document.createElement('p');
+  destinationErrorMsg.style.cssText =  'margin: 0; transform: translate(105px, -17px); '
   destinationErrorMsg.id = 'error-message' + (destinationCounter + 3);
 
   // Get the last destination location input in the row
-  let lastDestinationLocationInput = additionalDestinationsDiv.lastChild.lastElementChild;
+  var lastDestinationLocationInput = additionalDestinationsDiv.lastChild.lastElementChild;
 
   // Insert the error message span right after the last destination location input
   lastDestinationLocationInput.insertAdjacentElement('afterend', destinationErrorMsg);
@@ -89,8 +91,75 @@ function deleteDestination(inputId){
     
     lastDest.insertAdjacentElement('beforeend', destinationDelete);
   }
-  
+
+function updateAirportOptions(inputId, dropdownId) {
+    var inputElement = document.getElementById(inputId);
+    var dropdownElement = document.getElementById(dropdownId);
+
+    // Convert input to uppercase for case-insensitive matching
+    var userInput = inputElement.value.toUpperCase();
+
+    // Clear existing options
+    dropdownElement.innerHTML = '';
+
+    // Recursive function to traverse the nested structure
+    function traverse(obj) {
+	var options = [];
+
+	function addOption(node) {
+		var option = document.createElement('div');
+		option.className = 'dropdown-option';
+		option.textContent = `${node.iata} - ${node.name}`;
+		option.addEventListener('click', function() {
+			inputElement.value = this.dataset.airportCode;
+			dropdownElement.style.display = 'none';
+		});
+		option.dataset.airportCode = node.iata;
+		options.push(option);
+	}
+
+	for (var key in obj) {
+		if (obj.hasOwnProperty(key) && key !== 'name' && key !== 'country') {
+			var node = obj[key];
+
+			if (node.hasOwnProperty('airports')) {
+				traverse(node.airports);
+			} else {
+				if (node.iata.includes(userInput) || node.name.toUpperCase().includes(userInput)) {
+					addOption(node);
+				}
+			}
+		}
+	}
+
+	// Sort the options alphabetically by airport name
+	options.sort(function(a, b) {
+		return a.textContent.localeCompare(b.textContent);
+	});
+
+	// Append sorted options to the dropdown
+	options.forEach(function(option) {
+		dropdownElement.appendChild(option);
+	});
+    }
+
+    // Start the recursive traversal from the root
+    traverse(airportIATA);
+
+    // Show the dropdown
+    dropdownElement.style.display = 'block';
 }
+
+// Closes the dropdown when clicking outside
+document.addEventListener('click', function (event) {
+    var dropdowns = document.querySelectorAll('.dropdown');
+
+    dropdowns.forEach(function (dropdownElement) {
+        if (!event.target.closest('.custom-dropdown')) {
+            dropdownElement.style.display = 'none';
+        }
+    });
+});
 
 // Function to reset the body of the page and change it to loading.
 function submitForm() {
@@ -317,4 +386,3 @@ function checkInputs(){
 function returnToForm() {
   window.location.href = "/";
 }
-

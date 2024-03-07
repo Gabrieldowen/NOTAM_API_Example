@@ -8,6 +8,8 @@ import time
 
 app = Flask(__name__)
 
+airportIATA = alc.airportsdata.load('IATA')
+
 @app.route('/', methods=['GET', 'POST'])
 def index():
     # If form is submitted
@@ -52,8 +54,8 @@ def index():
         print(f"time parsing: {endTime - startTime} seconds\n")
 
         return render_template('display.html', notams = Notams)
-                
-    return render_template('form.html')
+        
+    return render_template('form.html', airportIATA = airportIATA)
 
 if __name__ == '__main__':
     app.run(debug=True)
