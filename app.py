@@ -19,14 +19,17 @@ def index():
         # get lat/long of airports
         NotamRequest.startLat, NotamRequest.startLong = alc.get_lat_and_lon(NotamRequest.startAirport)
         NotamRequest.destLat, NotamRequest.destLong = alc.get_lat_and_lon(NotamRequest.destAirport)
+        
+        NotamRequest.radius = int(NotamRequest.radius)
+        NotamRequest.pathWidth = int(NotamRequest.pathWidth)
 
         # get the list of coordinates that need to be called to cover area
         coordList = MinimalCirclesPath.getPath(NotamRequest.startLat, 
                                                NotamRequest.startLong,
                                                NotamRequest.destLat,
                                                NotamRequest.destLong, 
-                                               100, # circle radius
-                                               50) # path width
+                                               NotamRequest.radius, # circle radius
+                                               NotamRequest.pathWidth) # path width
 
         # start timer
         startTime = time.time() 
@@ -45,13 +48,13 @@ def index():
         # Record end time
         endTime = time.time()    
         print(f"\ntime calling API {endTime - startTime} seconds")
-
-
+        
         # takes api output and parse it
         startTime = time.time()  # Record start time
         Notams = ParseNOTAM.ParseNOTAM(apiOutputs)
         endTime = time.time()    # Record end time
         print(f"time parsing: {endTime - startTime} seconds\n")
+
 
         return render_template('display.html', notams = Notams)
         
