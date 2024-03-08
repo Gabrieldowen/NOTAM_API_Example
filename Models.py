@@ -34,7 +34,7 @@ class NotamRequest:
         self.startLat =  data.get('startLat', None)
         self.destLong =  data.get('destLong', None)
         self.destLat =  data.get('destLat', None)
-        self.locationRadius =  data.get('locationRadius', None)
         self.sortBy =  data.get('sortBy', None)
         self.sortOrder =  data.get('sortOrder', None)
-        self.radius = data.get('radius', 100)
+        self.radius = int(data.get('radius', 100)) if data.get('radius', None) is not None and data.get('radius', '') != '' else 100
+        self.pathWidth = int(data.get('pathWidth', 50)) if data.get('pathWidth', None) is not None and data.get('pathWidth', '') != '' else 50
