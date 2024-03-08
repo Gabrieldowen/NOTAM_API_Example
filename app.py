@@ -37,13 +37,19 @@ def index():
         # call the API for each point
         print("LOADING...")
 
-        apiOutputs = [ GetNOTAM.getNotam( NotamRequest.effectiveStartDate,
-                                            NotamRequest.effectiveEndDate,
-                                            longitude, # longitude
-                                            latitude, # latitude
-                                            1, # page num
-                                            NotamRequest.radius) #page num here is one temporarily
-                                            for latitude, longitude in coordList ]
+        # apiOutputs = [ GetNOTAM.getNotam( NotamRequest.effectiveStartDate,
+        #                                     NotamRequest.effectiveEndDate,
+        #                                     longitude, # longitude
+        #                                     latitude, # latitude
+        #                                     1, # page num
+        #                                     NotamRequest.radius) #page num here is one temporarily
+        #                                     for latitude, longitude in coordList ]
+        apiOutputs = []
+
+        for latitude, longitude in coordList:
+            radius = 50  # Example radius value, adjust as necessary
+            new_data = GetNOTAM.buildNotam(NotamRequest.effectiveStartDate, NotamRequest.effectiveEndDate, longitude, latitude, radius)
+            apiOutputs.extend(new_data)
 
         # Record end time
         endTime = time.time()    
