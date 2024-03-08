@@ -47,8 +47,7 @@ def index():
         apiOutputs = []
 
         for latitude, longitude in coordList:
-            radius = 50  # Example radius value, adjust as necessary
-            new_data = GetNOTAM.buildNotam(NotamRequest.effectiveStartDate, NotamRequest.effectiveEndDate, longitude, latitude, radius)
+            new_data = GetNOTAM.buildNotam(NotamRequest.effectiveStartDate, NotamRequest.effectiveEndDate, longitude, latitude, NotamRequest.radius)
             apiOutputs.extend(new_data)
 
         # Record end time
