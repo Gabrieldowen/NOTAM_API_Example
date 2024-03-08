@@ -1,6 +1,6 @@
 $(document).ready(function () {
-    $('.datepicker').datepicker({
-        format: 'yyyy-mm-dd hh:ii:ss',
+    $('.datetimepicker').datetimepicker({
+        format: 'Y-m-d H:i:s',
         autoclose: true,
         todayHighlight: true,
 	keyboardNavigation: false,
