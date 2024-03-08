@@ -306,8 +306,24 @@ function checkInputRadius(inputId, errorMsg){
   const inputElement = document.getElementById(inputId);
   const errorMessage = document.getElementById(errorMsg);
 
+  // Check if the input are all digits.
+  const regex = /^\d+$/;
+  let areDigits = regex.test(inputElement.value);
+
+  if(!areDigits){
+    errorMessage.textContent = 'Please enter a valid radius between 0 and 100 (Integers).';
+    return false;
+  }
+
   // Get the entered value and convert it to an integer
-  const inputValue = parseInt(inputElement.value, 10);
+  let inputValue = parseFloat(inputElement.value, 10);
+  // Check the pathWidthVal before checking if the radius is within the range.
+  let pathWidthVal = parseFloat(document.getElementById('pathWidth').value, 10);
+
+  if (Number.isInteger(inputValue) && Number.isInteger(pathWidthVal) && inputValue <= (pathWidthVal/2)){
+    errorMessage.textContent = 'Radius needs to be greater than half the path width.';
+    return false;
+  }
 
   // Check if the entered value is a valid integer within the specified range
   if (Number.isInteger(inputValue) && inputValue >= 0 && inputValue <= 100) {
@@ -324,6 +340,15 @@ function checkInputRadius(inputId, errorMsg){
 function checkInputPathWidth(inputId, errorMsg){
   const inputElement = document.getElementById(inputId);
   const errorMessage = document.getElementById(errorMsg);
+
+  // Check if the input are all digits.
+  const regex = /^\d+$/;
+  let areDigits = regex.test(inputElement.value);
+
+  if(!areDigits){
+    errorMessage.textContent = 'Please enter a valid path width between 0 and 50 (Integers).';
+    return false;
+  }
 
   // Get the entered value and convert it to an integer
   const inputValue = parseInt(inputElement.value, 10);
@@ -375,23 +400,19 @@ function checkInputs(){
       }
   }
   
-  let isValidradius = true;
+  let isValidRadius = true;
   let isValidPathWidth = true;
 
   // Check circle radius and path width
-  if (checkInputIsNotEmpty('radius')){
-    isValidradius = checkInputRadius('radius', 'error-messageR');
+  if (checkInputIsNotEmpty('radius') || checkInputIsNotEmpty('pathWidth')){
+    isValidRadius = checkInputRadius('radius', 'error-messageR');
+    isValidPathWidth = checkInputPathWidth('pathWidth', 'error-messageW');
   } else {
     document.getElementById('error-messageR').textContent = '';
-  }
-
-  if (checkInputIsNotEmpty('pathWidth')){
-    isValidradius = checkInputPathWidth('pathWidth', 'error-messageW');
-  } else {
     document.getElementById('error-messageW').textContent = '';
   }
 
-  if (isValidDate1 && isValidDate2 && isValidStart && isValidDest && isValidDests && isValidradius && isValidPathWidth){
+  if (isValidDate1 && isValidDate2 && isValidStart && isValidDest && isValidDests && isValidRadius && isValidPathWidth){
      submitForm();
   }
   
