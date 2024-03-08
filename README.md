@@ -1,13 +1,13 @@
-Before compiling make sure to create a credentials file named "credentials.py" with variables "clientID" and "clientSecret" and making sure to not commit these confidential keys to the public repository
 
+This project is still in development. Its goal is to fetch and filter relevent NOTAMs for your flight. The data is gathered from the FAA's NOTAM API. This app is built using two frameworks, Flask and Bootstrap.
 
-Need run 'pip install airportsdata' to install the sirportsdata to be able to pull lat and long given airport data. 
+To run app locally:
 
+1) make sure you have python3 installed
+2) refer to setup.py for project dependencies and run 'python3 setup.py install' to install all of them
+3) create a credentials file named "credentials.py" with variables "clientID" and "clientSecret"
+4) run 'python3 app.py'
+5) if "Port 5000 is in use by another program" either find and kill whatever is running on that port or specify host
+	and port explicitly. example: 'python3 app.py --host=0.0.0.0 --port=8080'
 
-To run app:
-
-1) make sure you have flask downloaded on your system
-2) run 'python3 app.py'
-3) if "Port 5000 is in use by another program" either find and kill whatever is running on that port or specify host
-	and port explicitly 'python3 app.py --host=0.0.0.0 --port=8080'
-'
+	
