@@ -5,7 +5,6 @@ import MinimalCirclesPath
 import AirportsLatLongConverter as alc
 import GetNOTAM
 import time
-from NOTAMType import printClassification
 
 app = Flask(__name__)
 
