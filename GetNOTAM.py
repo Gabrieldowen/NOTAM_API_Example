@@ -24,7 +24,7 @@ def getNotam(effectiveStartDate, effectiveEndDate, longitude, latitude, pageNum,
   url = (f"{url}?responseFormat=geoJson&effectiveStartDate={effectiveStartDate}"
        f"&effectiveEndDate={effectiveEndDate}&locationLongitude={longitude}"
        f"&locationLatitude={latitude}&locationRadius={radius}"
-       f"&pageNum={pageNum}&pageSize=50"
+       f"&pageNum={pageNum}&pageSize=1000"
        f"&sortBy=notamType&sortOrder=Asc")
 
   headers = {'client_id': credentials.clientID, 'client_secret': credentials.clientSecret}
