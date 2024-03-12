@@ -5,7 +5,7 @@ import MinimalCirclesPath
 import AirportsLatLongConverter as alc
 import GetNOTAM
 import time
-import ZuluConverter
+
 
 app = Flask(__name__)
 
@@ -46,8 +46,7 @@ def index():
         #                                     NotamRequest.radius) #page num here is one temporarily
         #                                     for latitude, longitude in coordList ]
         apiOutputs = []
-        #Necessary for converting the time and date to the proper form for working with the API
-
+       
         for latitude, longitude in coordList:
             new_data = GetNOTAM.buildNotam(NotamRequest.effectiveStartDate, NotamRequest.effectiveEndDate, longitude, latitude, NotamRequest.radius)
             apiOutputs.extend(new_data)
