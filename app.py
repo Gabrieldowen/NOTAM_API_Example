@@ -45,6 +45,10 @@ def index():
                                             NotamRequest.radius) #page num here is one temporarily
                                             for latitude, longitude in coordList ]
 
+        for latitude, longitude in coordList:
+            new_data = GetNOTAM.buildNotam(NotamRequest.effectiveStartDate, NotamRequest.effectiveEndDate, longitude, latitude, NotamRequest.radius)
+            apiOutputs.extend(new_data)
+        
         # Record end time
         endTime = time.time()    
         print(f"\ntime calling API {endTime - startTime} seconds")
