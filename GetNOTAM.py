@@ -6,26 +6,31 @@ import urllib.parse
 import os
 import ZuluConverter
 import AirportsLatLongConverter
+from datetime import datetime
 
   
     
 #getNotam: takes the lat, long, start and end time and the page number then runs an API call to the FAA for a json of the api
 #@returns parsed_req: the json of the request
 def getNotam(effectiveStartDate, effectiveEndDate, longitude, latitude, pageNum, radius):
-    url = 'https://external-api.faa.gov/notamapi/v1/notams'
-    url = (f"{url}?responseFormat=geoJson&effectiveStartDate={effectiveStartDate}"
+  # Convert datetime strings to the desired format
+  effectiveStartDate = datetime.strptime(effectiveStartDate, "%Y-%m-%d %H:%M:%S").strftime("%Y-%m-%dT%H:%M:%SZ")
+  effectiveEndDate = datetime.strptime(effectiveEndDate, "%Y-%m-%d %H:%M:%S").strftime("%Y-%m-%dT%H:%M:%SZ")  
+  
+  url = 'https://external-api.faa.gov/notamapi/v1/notams'
+  url = (f"{url}?responseFormat=geoJson&effectiveStartDate={effectiveStartDate}"
        f"&effectiveEndDate={effectiveEndDate}&locationLongitude={longitude}"
        f"&locationLatitude={latitude}&locationRadius={radius}"
        f"&pageNum={pageNum}&pageSize=50"
        f"&sortBy=notamType&sortOrder=Asc")
 
-    headers = {'client_id': credentials.clientID, 'client_secret': credentials.clientSecret}
+  headers = {'client_id': credentials.clientID, 'client_secret': credentials.clientSecret}
 
-    req = requests.get(url, headers=headers)
+  req = requests.get(url, headers=headers)
     
-    parsed_req = req.json()
+  parsed_req = req.json()
     
-    return parsed_req
+  return parsed_req
 
 #buildNotam: does multiple API calls of a location given in inputs and combines all Jsons of each page into a single Json file
 #@returns: combinded_core_notam_data, the combinded Json of all pages for one location
