@@ -13,9 +13,12 @@ from datetime import datetime
 #getNotam: takes the lat, long, start and end time and the page number then runs an API call to the FAA for a json of the api
 #@returns parsed_req: the json of the request
 def getNotam(effectiveStartDate, effectiveEndDate, longitude, latitude, pageNum, radius):
-  # Convert datetime strings to the desired format
-  effectiveStartDate = datetime.strptime(effectiveStartDate, "%Y-%m-%d %H:%M:%S").strftime("%Y-%m-%dT%H:%M:%SZ")
-  effectiveEndDate = datetime.strptime(effectiveEndDate, "%Y-%m-%d %H:%M:%S").strftime("%Y-%m-%dT%H:%M:%SZ")  
+  # Convert start and end dates to the desired format if provided
+  if effectiveStartDate:
+    effectiveStartDate = datetime.strptime(effectiveStartDate, "%Y-%m-%d %H:%M:%S").strftime("%Y-%m-%dT%H:%M:%SZ")
+        
+  if effectiveEndDate:
+    effectiveEndDate = datetime.strptime(effectiveEndDate, "%Y-%m-%d %H:%M:%S").strftime("%Y-%m-%dT%H:%M:%SZ") 
   
   url = 'https://external-api.faa.gov/notamapi/v1/notams'
   url = (f"{url}?responseFormat=geoJson&effectiveStartDate={effectiveStartDate}"
