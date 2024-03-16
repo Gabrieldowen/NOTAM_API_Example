@@ -15,11 +15,12 @@ def index():
     # If form is submitted
     if request.method == 'POST':
         NotamRequest = Models.NotamRequest(request.form)
-        airports = [NotamRequest.startAirport, NotamRequest.destAirport, NotamRequest.additionalAirport1, NotamRequest.additionalAirport2, NotamRequest.additionalAirport3, NotamRequest.additionalAirport4]
+        airports = [NotamRequest.startAirport, NotamRequest.destAirport, NotamRequest.additionalAirport1, NotamRequest.additionalAirport2, NotamRequest.additionalAirport3 ]
         apiOutputs = []
         i= 0
-        while airports[i+1] is not None:
-
+        print(NotamRequest.additionalAirport1)
+        while i != 4 and airports[i+1] is not None:
+            print(i)
             # get lat/long of airports
             NotamRequest.startLat, NotamRequest.startLong = alc.get_lat_and_lon(airports[i])
             NotamRequest.destLat, NotamRequest.destLong = alc.get_lat_and_lon(airports[i+1])
@@ -53,11 +54,7 @@ def index():
             for latitude, longitude in coordList:
                 new_data = GetNOTAM.buildNotam(NotamRequest.effectiveStartDate, NotamRequest.effectiveEndDate, longitude, latitude, NotamRequest.radius)
                 apiOutputs.extend(new_data)
-
-            for latitude, longitude in coordList:
-                new_data = GetNOTAM.buildNotam(NotamRequest.effectiveStartDate, NotamRequest.effectiveEndDate, longitude, latitude, NotamRequest.radius)
-                apiOutputs.extend(new_data)
-        
+            i = i+ 1    
         # Record end time
         endTime = time.time()    
         print(f"\ntime calling API {endTime - startTime} seconds")

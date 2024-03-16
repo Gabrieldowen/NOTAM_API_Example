@@ -27,10 +27,9 @@ class NotamRequest:
     def __init__(self, data):
         self.startAirport = data.get('startAirport', None)
         self.destAirport = data.get('destAirport', None)
-        self.additionalAirport1 = data.get('additionalAirport1', None)
-        self.additionalAirport2 = data.get('additionalAirport2', None)
-        self.additionalAirport3 = data.get('additionalAirport3', None)
-        self.additionalAirport4 = data.get('additionalAirport4', None)
+        self.additionalAirport1 = data.get('destinationLocation2', None)
+        self.additionalAirport2 = data.get('destinationLocation3', None)
+        self.additionalAirport3 = data.get('destinationLocation4', None)
         self.responseFormat = data.get('responseFormat', None)
         self.effectiveStartDate =  data.get('effectiveStartDate', None)
         self.effectiveEndDate =  data.get('effectiveEndDate', None)
