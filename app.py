@@ -15,44 +15,48 @@ def index():
     # If form is submitted
     if request.method == 'POST':
         NotamRequest = Models.NotamRequest(request.form)
-
-        # get lat/long of airports
-        NotamRequest.startLat, NotamRequest.startLong = alc.get_lat_and_lon(NotamRequest.startAirport)
-        NotamRequest.destLat, NotamRequest.destLong = alc.get_lat_and_lon(NotamRequest.destAirport)
-        
-        NotamRequest.radius = int(NotamRequest.radius)
-        NotamRequest.pathWidth = int(NotamRequest.pathWidth)
-
-        # get the list of coordinates that need to be called to cover area
-        coordList = MinimalCirclesPath.getPath(NotamRequest.startLat, 
-                                               NotamRequest.startLong,
-                                               NotamRequest.destLat,
-                                               NotamRequest.destLong, 
-                                               NotamRequest.radius, # circle radius
-                                               NotamRequest.pathWidth) # path width
-
-        # start timer
-        startTime = time.time() 
-
-        # call the API for each point
-        print("LOADING...")
-
-        # apiOutputs = [ GetNOTAM.getNotam( NotamRequest.effectiveStartDate,
-        #                                     NotamRequest.effectiveEndDate,
-        #                                     longitude, # longitude
-        #                                     latitude, # latitude
-        #                                     1, # page num
-        #                                     NotamRequest.radius) #page num here is one temporarily
-        #                                     for latitude, longitude in coordList ]
+        airports = [NotamRequest.startAirport, NotamRequest.destAirport, NotamRequest.additionalAirport1, NotamRequest.additionalAirport2, NotamRequest.additionalAirport3, NotamRequest.additionalAirport4]
         apiOutputs = []
+        i= 0
+        while airports[i+1] is not None:
 
-        for latitude, longitude in coordList:
-            new_data = GetNOTAM.buildNotam(NotamRequest.effectiveStartDate, NotamRequest.effectiveEndDate, longitude, latitude, NotamRequest.radius)
-            apiOutputs.extend(new_data)
+            # get lat/long of airports
+            NotamRequest.startLat, NotamRequest.startLong = alc.get_lat_and_lon(airports[i])
+            NotamRequest.destLat, NotamRequest.destLong = alc.get_lat_and_lon(airports[i+1])
+        
+            NotamRequest.radius = int(NotamRequest.radius)
+            NotamRequest.pathWidth = int(NotamRequest.pathWidth)
 
-        for latitude, longitude in coordList:
-            new_data = GetNOTAM.buildNotam(NotamRequest.effectiveStartDate, NotamRequest.effectiveEndDate, longitude, latitude, NotamRequest.radius)
-            apiOutputs.extend(new_data)
+            # get the list of coordinates that need to be called to cover area
+            coordList = MinimalCirclesPath.getPath(NotamRequest.startLat, 
+                                                   NotamRequest.startLong,
+                                                   NotamRequest.destLat,
+                                                   NotamRequest.destLong, 
+                                                   NotamRequest.radius, # circle radius
+                                                   NotamRequest.pathWidth) # path width
+
+            # start timer
+            startTime = time.time() 
+
+            # call the API for each point
+            print("LOADING...")
+
+            # apiOutputs = [ GetNOTAM.getNotam( NotamRequest.effectiveStartDate,
+            #                                     NotamRequest.effectiveEndDate,
+            #                                     longitude, # longitude
+            #                                     latitude, # latitude
+            #                                     1, # page num
+            #                                     NotamRequest.radius) #page num here is one temporarily
+            #                                     for latitude, longitude in coordList ]
+            
+
+            for latitude, longitude in coordList:
+                new_data = GetNOTAM.buildNotam(NotamRequest.effectiveStartDate, NotamRequest.effectiveEndDate, longitude, latitude, NotamRequest.radius)
+                apiOutputs.extend(new_data)
+
+            for latitude, longitude in coordList:
+                new_data = GetNOTAM.buildNotam(NotamRequest.effectiveStartDate, NotamRequest.effectiveEndDate, longitude, latitude, NotamRequest.radius)
+                apiOutputs.extend(new_data)
         
         # Record end time
         endTime = time.time()    

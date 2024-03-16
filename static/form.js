@@ -199,7 +199,9 @@ function submitForm() {
 
   // Remove all the additional destinations
   document.getElementById('additionalDestinations').remove();
-
+  for (let i = 1; i <= 4; i++) {
+      document.getElementById('additionalAirport' + i).remove();
+  }
   var hiddenElements = document.querySelectorAll('.hiddenObj');
 
   // Display loading text for the user.
