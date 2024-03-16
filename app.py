@@ -18,9 +18,9 @@ def index():
         airports = [NotamRequest.startAirport, NotamRequest.destAirport, NotamRequest.additionalAirport1, NotamRequest.additionalAirport2, NotamRequest.additionalAirport3 ]
         apiOutputs = []
         i= 0
-        print(NotamRequest.additionalAirport1)
+        
         while i != 4 and airports[i+1] is not None:
-            print(i)
+            
             # get lat/long of airports
             NotamRequest.startLat, NotamRequest.startLong = alc.get_lat_and_lon(airports[i])
             NotamRequest.destLat, NotamRequest.destLong = alc.get_lat_and_lon(airports[i+1])
