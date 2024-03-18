@@ -7,8 +7,11 @@ import os
 import ZuluConverter
 import AirportsLatLongConverter
 from datetime import datetime
+import concurrent.futures
+import threading
 
-  
+# Create a lock for the critical section
+lock = threading.Lock()
     
 #getNotam: takes the lat, long, start and end time and the page number then runs an API call to the FAA for a json of the api
 #@returns parsed_req: the json of the request
@@ -42,15 +45,19 @@ def getNotam(effectiveStartDate, effectiveEndDate, longitude, latitude, pageNum,
 #         lat: long for a location
 #         combined_core_notam_data: a Json being built by runNotam of all Jsons for a path
 def buildNotam(effectiveStartDate, effectiveEndDate, long, lat, radius):
-    combined_responses = []  # To store the full responses from all pages
-    initial_response = getNotam(effectiveStartDate, effectiveEndDate, long, lat, 1, radius)  # pageNum=1 for the initial call
+    initial_response = getNotam(effectiveStartDate, effectiveEndDate, long, lat, pageNum=1, radius=radius)
     total_pages = initial_response.get('totalPages', 1)
-    combined_responses.append(initial_response)  # Add the initial response to the combined list
 
-    # If there are more pages, loop through them and add their responses to the combined list
-    if total_pages > 1:
-        for page_num in range(2, total_pages + 1):  # Start from 2 since we already have page 1
-            page_response = getNotam(effectiveStartDate, effectiveEndDate, long, lat, page_num, radius)
-            combined_responses.append(page_response)  # Add the current page's response
+    # Loop through all pages for an API Call
+    combined_core_notam_data = []
 
-    return combined_responses
+    with concurrent.futures.ProcessPoolExecutor() as executor:
+        # Submit API calls for all pages concurrently
+        futures = [executor.submit(getNotam, effectiveStartDate, effectiveEndDate, long, lat, pageNum=page_num, radius=radius) 
+                   for page_num in range(1, total_pages + 1)]
+
+        # Wait for all API calls to complete and get results
+        with lock:  # Acquire lock for the critical section
+            combined_core_notam_data.extend([future.result() for future in futures])
+
+    return combined_core_notam_data
