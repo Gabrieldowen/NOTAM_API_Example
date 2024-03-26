@@ -15,11 +15,15 @@ def index():
     # If form is submitted
     if request.method == 'POST':
         NotamRequest = Models.NotamRequest(request.form)
-        airports = [NotamRequest.startAirport, NotamRequest.destAirport, NotamRequest.additionalAirport1, NotamRequest.additionalAirport2, NotamRequest.additionalAirport3 ]
+        airports = [NotamRequest.startAirport, NotamRequest.destAirport]
+        countAirports = 0
+        for destination in NotamRequest.destinations:
+            airports.append(destination)
+            countAirports = countAirports +1
         apiOutputs = []
-        i= 0
         
-        while i != 4 and airports[i+1] is not None:
+        i = 0
+        while i < countAirports:
             
             # get lat/long of airports
             NotamRequest.startLat, NotamRequest.startLong = alc.get_lat_and_lon(airports[i])
