@@ -33,13 +33,23 @@ def index():
             NotamRequest.pathWidth = int(NotamRequest.pathWidth)
 
             # get the list of coordinates that need to be called to cover area
-            coordList = MinimalCirclesPath.getPath(NotamRequest.startLat, 
-                                                   NotamRequest.startLong,
-                                                   NotamRequest.destLat,
-                                                   NotamRequest.destLong, 
-                                                   NotamRequest.radius, # circle radius
-                                                   NotamRequest.pathWidth) # path width
-
+            if i >= 1:
+                # updates the start to a be outside of the previous call area from the start being the previous destination
+                bearing = MinimalCirclesPath.calculateBearing(NotamRequest.startLat, NotamRequest.startLong, NotamRequest.destLat, NotamRequest.destLong)
+                updatedStart = MinimalCirclesPath.nextPoint(NotamRequest.startLat, NotamRequest.startLong, bearing, NotamRequest.radius)
+                coordList = MinimalCirclesPath.getPath(updatedStart[0], 
+                                                       updatedStart[1],
+                                                       NotamRequest.destLat,
+                                                       NotamRequest.destLong, 
+                                                       NotamRequest.radius, # circle radius
+                                                       NotamRequest.pathWidth) # path width
+            else:
+                coordList = MinimalCirclesPath.getPath(NotamRequest.startLat, 
+                                                       NotamRequest.startLong,
+                                                       NotamRequest.destLat,
+                                                       NotamRequest.destLong, 
+                                                       NotamRequest.radius, # circle radius
+                                                       NotamRequest.pathWidth) # path width
             # start timer
             startTime = time.time() 
 
