@@ -64,8 +64,23 @@ def index():
         closed_runways = filterNotam.extract_closed_runways(Notams)
 
         # Filter out NOTAMs related to the closed runways
+
+        """
+        THIS IS FOR THE FUTURE WHEN THE USER WILL BE ABLE TO CHOOSE HOW HE WANTS OBSTACLES TO BE DISPLAYED
+        
+        user_pref = request.form.get('user_preference')
+        
+        if user_pref == 'ignore_all_obstacles':
+            filtered_Notams = filterNotam.filter_out_obstacle_notams(filtered_Notams)
+        elif user_pref == 'keep_high_obstacles':
+            filtered_Notams = filterNotam.filter_keep_high_obstacle_notams(filtered_Notams, 500)
+
         filtered_Notams = filterNotam.filter_notams(Notams, closed_runways)
 
+        """
+
+        filtered_Notams = filterNotam.filter_out_obstacle_notams(filtered_Notams)
+    
         return render_template('display.html', notams = filtered_Notams)
         
     return render_template('form.html', airportIATA = airportIATA)

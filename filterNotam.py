@@ -1,4 +1,5 @@
 from Models import Notam, NotamRequest
+import re
 import ParseNOTAM
 import GetNOTAM
 import time
@@ -30,3 +31,21 @@ def filter_notams(notams, closed_runways):
         if not any(closed_runway in notam.text for closed_runway in closed_runways):
             filtered_notams.append(notam)
     return filtered_notams
+
+# This function will remove all NOTAMs related to obstacles.
+def filter_out_obstacle_notams(notams):
+    return [notam for notam in notams if "OBST" not in notam.text]
+
+# This function will keep NOTAMs with obstacles higher than a certain height.
+def filter_keep_high_obstacle_notams(notams, height_threshold=500):
+    high_obstacle_notams = []
+    for notam in notams:
+        if "OBST" in notam.text:
+            # Search for height information in the NOTAM text
+            match = re.search(r'(\d+)\s?FT', notam.text)
+            if match:
+                # Convert the captured height to an integer
+                height = int(match.group(1))
+                if height > height_threshold:
+                    high_obstacle_notams.append(notam)
+    return high_obstacle_notams
