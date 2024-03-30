@@ -2,6 +2,7 @@ from flask import Flask, render_template, request
 import Models
 import ParseNOTAM
 import MinimalCirclesPath
+import filterNotam
 import AirportsLatLongConverter as alc
 import GetNOTAM
 import time
@@ -30,6 +31,7 @@ def index():
                                                NotamRequest.destLong, 
                                                NotamRequest.radius, # circle radius
                                                NotamRequest.pathWidth) # path width
+        
         # start timer
         startTime = time.time() 
 
@@ -59,8 +61,12 @@ def index():
         endTime = time.time()    # Record end time
         print(f"time parsing: {endTime - startTime} seconds\n")
 
+        closed_runways = filterNotam.extract_closed_runways(Notams)
 
-        return render_template('display.html', notams = Notams)
+        # Filter out NOTAMs related to the closed runways
+        filtered_Notams = filterNotam.filter_notams(Notams, closed_runways)
+
+        return render_template('display.html', notams = filtered_Notams)
         
     return render_template('form.html', airportIATA = airportIATA)
 
