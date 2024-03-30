@@ -32,7 +32,12 @@ def filter_notams(notams, closed_runways):
             filtered_notams.append(notam)
     return filtered_notams
 
-# This function will remove all NOTAMs related to obstacles.
+
+"""
+    Remove all NOTAMs related to obstacles. Such NOTAMs typically describe temporary
+    structures or equipment that may penetrate navigable airspace but are not always
+    significant for aircraft operating at standard flight levels, especially for IFR pilots.
+"""
 def filter_out_obstacle_notams(notams):
     return [notam for notam in notams if "OBST" not in notam.text]
 
@@ -49,6 +54,13 @@ def filter_keep_high_obstacle_notams(notams, height_threshold=500):
                 if height > height_threshold:
                     high_obstacle_notams.append(notam)
     return high_obstacle_notams
+
+"""
+    Identify NOTAMs related to non-standard airport lighting or markings. Variations from
+    standard lighting and markings are often not critical to the operations of larger aircraft
+    or those under IFR, and such NOTAMs can typically be disregarded to focus on more
+    pertinent flight information.
+"""
 
 def identify_lighting_marking_notams(notams):
     marked_notams = set()
