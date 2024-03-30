@@ -41,6 +41,12 @@ def filter_notams(notams, closed_runways):
 def filter_out_obstacle_notams(notams):
     return [notam for notam in notams if "OBST" not in notam.text]
 
+"""
+    Retain NOTAMs for obstacles exceeding a specified height threshold. High obstacles
+    could present a risk to aircraft during critical phases of flight like approach or departure
+    and are therefore significant enough to be considered in flight planning.
+"""
+
 # This function will keep NOTAMs with obstacles higher than a certain height.
 def filter_keep_high_obstacle_notams(notams, height_threshold=500):
     high_obstacle_notams = []
