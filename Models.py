@@ -29,7 +29,7 @@ class NotamRequest:
         self.destAirport = data.get('destAirport', None)
         self.destinations = []
         index = 2
-        while data.get( f'destinationLocation{index}', None ) is not None:
+        while f'destinationLocation{index}' in data:
             self.destinations.append( data.get(f'destinationLocation{index}') )
             index += 1
         self.responseFormat = data.get('responseFormat', None)

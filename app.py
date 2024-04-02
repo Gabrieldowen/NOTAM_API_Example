@@ -17,10 +17,9 @@ def index():
         NotamRequest = Models.NotamRequest(request.form)
         airports = [NotamRequest.startAirport, NotamRequest.destAirport]
         #counts in the number of airports the user is travelling to
-        countAirports = 0
+        countAirports = len(NotamRequest.destinations)
         for destination in NotamRequest.destinations:
             airports.append(destination)
-            countAirports = countAirports + 1
         apiOutputs = []
         
         #i is used to track where we are in the array of airports
