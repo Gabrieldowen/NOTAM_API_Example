@@ -1,4 +1,9 @@
 from math import sin, cos, radians, asin, atan2, sqrt, degrees, ceil, floor
+import matplotlib.pyplot as plt
+import geopandas as gpd
+
+# load US map
+gdf = gpd.read_file('us.geojson')
 
 def calculateBearing(startLat, startLon, destLat, destLon):
     startLatRad = radians(startLat)
@@ -94,13 +99,49 @@ def getPath( startLat, startLong, destLat, destLong, radius, pathWidth):
     return coordList
        
 
-
+def plot_path_on_us_map(coordList):
+    # Load the US map from the GeoJSON file
+    us_map = gpd.read_file('us.geojson')
+    
+    # Extract latitude and longitude from coordList
+    latitudes, longitudes = zip(*coordList)
+    
+    # Create a GeoDataFrame for the path points
+    path_gdf = gpd.GeoDataFrame(geometry=gpd.points_from_xy(longitudes, latitudes))
+    
+    # Initialize the plot
+    fig, ax = plt.subplots(figsize=(10, 6))
+    
+    # Plot the US map
+    us_map.plot(ax=ax, color='lightgray', edgecolor='black')
+    
+    # Plot the path
+    path_gdf.plot(ax=ax, marker='o', color='blue', linestyle='-', markersize=5, linewidth=2)
+    
+    # Optional: Annotate the start and end points
+    plt.text(longitudes[0], latitudes[0], ' Start', color='green', fontsize=12)
+    plt.text(longitudes[-1], latitudes[-1], ' End', color='red', fontsize=12)
+    
+    # Set titles and labels
+    plt.title('Path Visualization on US Map')
+    plt.xlabel('Longitude')
+    plt.ylabel('Latitude')
+    
+    # Show the plot
+    plt.show()
 
 # THIS IS AN EXAMPLE
-# uncomment and run `python3 MinimalCirclesPath.py` to see example of what getPath() returns
+# uncomment and run `python3 MinimalCirclesPath.py` to see example of what getPath() and plot_path_on_us_map(pathList) returns
 """
 if __name__ == '__main__':
-    pathList = getPath(startLat = 32.7767, startLong = 96.7970, destLat = 39.7392, destLong = 104.9903, radius = 100,  pathWidth = 50)
+    pathList = getPath(startLat = 32.8968,  # DFW Latitude
+                   startLong = -97.0380,  # DFW Longitude
+                   destLat = 33.9416,  # LAX Latitude
+                   destLong = -118.4085,  # LAX Longitude
+                   radius = 100, 
+                   pathWidth = 50)
+
     for i,item in enumerate(pathList):
         print(f"point #{i+1}) {item}\n")
+    plot_path_on_us_map(pathList)
 """

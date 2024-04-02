@@ -30,7 +30,6 @@ def index():
                                                NotamRequest.destLong, 
                                                NotamRequest.radius, # circle radius
                                                NotamRequest.pathWidth) # path width
-
         # start timer
         startTime = time.time() 
 
@@ -50,10 +49,6 @@ def index():
             new_data = GetNOTAM.buildNotam(NotamRequest.effectiveStartDate, NotamRequest.effectiveEndDate, longitude, latitude, NotamRequest.radius)
             apiOutputs.extend(new_data)
 
-        for latitude, longitude in coordList:
-            new_data = GetNOTAM.buildNotam(NotamRequest.effectiveStartDate, NotamRequest.effectiveEndDate, longitude, latitude, NotamRequest.radius)
-            apiOutputs.extend(new_data)
-        
         # Record end time
         endTime = time.time()    
         print(f"\ntime calling API {endTime - startTime} seconds")
