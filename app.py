@@ -16,18 +16,17 @@ def index():
     if request.method == 'POST':
         NotamRequest = Models.NotamRequest(request.form)
         airports = [NotamRequest.startAirport, NotamRequest.destAirport]
-        #counts in the number of airports the user is travelling to
-        countAirports = len(NotamRequest.destinations)
         for destination in NotamRequest.destinations:
             airports.append(destination)
         apiOutputs = []
-        
+
         #i is used to track where we are in the array of airports
         i = 0
         # start timer
         startTime = time.time() 
         
-        while i < countAirports:
+        #len(airports) -1 ensures the loop treats i as the starting location for each iteration and prevents out of index errors
+        while i < len(airports) - 1:
             
             # get lat/long of airports
             NotamRequest.startLat, NotamRequest.startLong = alc.get_lat_and_lon(airports[i])
