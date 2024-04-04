@@ -21,42 +21,31 @@ def index():
         apiOutputs = []
 
         #i is used to track where we are in the array of airports
-        i = 0
         # start timer
         startTime = time.time() 
         
+        
         #len(airports) -1 ensures the loop treats i as the starting location for each iteration and prevents out of index errors
-        while i < len(airports) - 1:
+        for i in range(len(airports) - 1):
             
             # get lat/long of airports
-            NotamRequest.startLat, NotamRequest.startLong = alc.get_lat_and_lon(airports[i])
-            NotamRequest.destLat, NotamRequest.destLong = alc.get_lat_and_lon(airports[i+1])
+            startLat, startLong = alc.get_lat_and_lon(airports[i])
+            destLat, destLong = alc.get_lat_and_lon(airports[i+1])
         
             NotamRequest.radius = int(NotamRequest.radius)
             NotamRequest.pathWidth = int(NotamRequest.pathWidth)
 
-
-            #handles every other path thus prevents double calls for the same location being the final location for one path and the start location for the next path
+            
+            coordList = MinimalCirclesPath.getPath(startLat, 
+                                                       startLong,
+                                                       destLat,
+                                                       destLong, 
+                                                       NotamRequest.radius, # circle radius
+                                                       NotamRequest.pathWidth) # path width
+            
+            #deletes the first lat and long to prevent double calls
             if i >= 1:
-                # updates the start to a be outside of the previous call area from the start being the previous destination
-                bearing = MinimalCirclesPath.calculateBearing(NotamRequest.startLat, NotamRequest.startLong, NotamRequest.destLat, NotamRequest.destLong)
-                # updatedstart is the lat and long outside of the previous call from being the final location
-                updatedStart = MinimalCirclesPath.nextPoint(NotamRequest.startLat, NotamRequest.startLong, bearing, NotamRequest.radius)
-                
-                coordList = MinimalCirclesPath.getPath(updatedStart[0], 
-                                                       updatedStart[1],
-                                                       NotamRequest.destLat,
-                                                       NotamRequest.destLong, 
-                                                       NotamRequest.radius, # circle radius
-                                                       NotamRequest.pathWidth) # path width
-            #handles the first path thus not needing to ensure double calls 
-            else:
-                coordList = MinimalCirclesPath.getPath(NotamRequest.startLat, 
-                                                       NotamRequest.startLong,
-                                                       NotamRequest.destLat,
-                                                       NotamRequest.destLong, 
-                                                       NotamRequest.radius, # circle radius
-                                                       NotamRequest.pathWidth) # path width
+                 del coordList[0]
 
 
             # call the API for each point
@@ -67,14 +56,11 @@ def index():
             for latitude, longitude in coordList:
                 new_data = GetNOTAM.buildNotam(NotamRequest.effectiveStartDate, NotamRequest.effectiveEndDate, longitude, latitude, NotamRequest.radius)
                 apiOutputs.extend(new_data)
-            #increments i after the path is finished
-            i = i+ 1    
-        # Record end time
-        endTime = time.time()    
-        print(f"\ntime calling API {endTime - startTime} seconds")
+            
+             
+
         
         # takes api output and parse it
-        startTime = time.time()  # Record start time
         Notams = ParseNOTAM.ParseNOTAM(apiOutputs)
         endTime = time.time()    # Record end time
         print(f"time parsing: {endTime - startTime} seconds\n")
