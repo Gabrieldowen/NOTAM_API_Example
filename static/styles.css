@@ -238,7 +238,6 @@ group .ticks span {
   overflow-y: auto;
 	z-index: 1;
 	background-color: #fff;
-
 }
 
 .dropdown-option {
@@ -248,4 +247,62 @@ group .ticks span {
 
 .dropdown-option:hover {
     background-color: #f0f0f0;
+}
+
+/* Styling for the drag and drop box */
+.draggable {
+    margin: 5px;
+    padding: 5px;
+	width: 50%;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    cursor: grab;
+}
+
+.draggable:active {
+    cursor: grabbing;
+}
+
+/* Style for the tooltip */
+label[title]::after {
+    content: attr(title);
+    display: none;
+    position: absolute;
+    background-color: #000;
+    color: #fff;
+    padding: 5px;
+    border-radius: 5px;
+    white-space: nowrap;
+    z-index: 1;
+}
+
+/* Show tooltip on hover */
+label:hover::after {
+    display: block;
+    bottom: 100%; /* Position the tooltip above the label */
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+#filterOptions {
+    display: none;
+    position: absolute;
+    z-index: 1;
+}
+
+#filterButton:hover + #filterOptions,
+#filterOptions:hover {
+    display: block;
+}
+
+.dropdown-menu {
+    background-color: #f9f9f9;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Disable tooltips for labels inside the dropdown menu */
+.dropdown-menu label[title]::after {
+    display: none;
 }
