@@ -23,8 +23,7 @@ def index():
         #i is used to track where we are in the array of airports
         # start timer
         startTime = time.time() 
-        
-        
+               
         #len(airports) -1 ensures the loop treats i as the starting location for each iteration and prevents out of index errors
         for i in range(len(airports) - 1):
             
@@ -34,8 +33,7 @@ def index():
         
             NotamRequest.radius = int(NotamRequest.radius)
             NotamRequest.pathWidth = int(NotamRequest.pathWidth)
-
-            
+ 
             coordList = MinimalCirclesPath.getPath(startLat, 
                                                        startLong,
                                                        destLat,
@@ -47,24 +45,22 @@ def index():
             if i >= 1:
                  del coordList[0]
 
-
             # call the API for each point
             print("LOADING...")
 
-            
             #after the lat and longs are gathered in coordList, buildNotam is used to gather all the notams for the path
             for latitude, longitude in coordList:
                 new_data = GetNOTAM.buildNotam(NotamRequest.effectiveStartDate, NotamRequest.effectiveEndDate, longitude, latitude, NotamRequest.radius)
                 apiOutputs.extend(new_data)
-            
-             
+        # Record end time
+        endTime = time.time()    
+        print(f"\ntime calling API {endTime - startTime} seconds")
 
-        
         # takes api output and parse it
+        startTime = time.time()  # Record start time
         Notams = ParseNOTAM.ParseNOTAM(apiOutputs)
         endTime = time.time()    # Record end time
-        print(f"time parsing: {endTime - startTime} seconds\n")
-
+        print(f"time parsing: {endTime - startTime} seconds\n")        
 
         return render_template('display.html', notams = Notams)
         
