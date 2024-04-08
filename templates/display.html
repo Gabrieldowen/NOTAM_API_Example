@@ -2,35 +2,36 @@
 
 {% block content %}
 <div style="display: flex; ">
-    <input type="image" id ="plane" src="static/images/plane.png" onclick="returnToForm()" alt="Submit">
-    <span class = "custom-text">
-        Go Back
-    </span>
+    <input type="image" id="plane" src="static/images/plane.png" onclick="returnToForm()" alt="Submit">
+    <span class="custom-text">Go Back</span>
 </div>
 
- <div class="container mt-5">
-        <h1 style="margin-left: -2px;">NOTAM Information</h1>
-            <p> Total number of Notams fetched: {{ notams|length }} </p>
-        
-        <div class="accordion">
-            {% for notam in notams %}
-            <div class="accordion-item">
-                <input type="checkbox" class="custom-checkbox" id="item{{ loop.index }}">
-                <label for="item{{ loop.index }}" class="accordion-header custom-checkbox-label">Notam ID: {{ notam.id }}</label>
-                <div class="accordion-content">
-                    <p><strong>Series: </strong>{{ notam.series }}</p>
-                    <p><strong>Number: </strong>{{ notam.number }}</p>
-                    <p><strong>Type: </strong>{{ notam.type }}</p>
-                    <p><strong>Text: </strong>{{ notam.text }}</p>
-                    <p><strong>Start: </strong>{{ notam.effectiveStart }}</p>
-                    <p><strong>End: </strong>{{ notam.effectiveEnd }}</p>
-                </div>
+<div class="container mt-5">
+    <h1 style="margin-left: -2px;">NOTAM Information</h1>
+    <p>Total number of Notams fetched: {{ notams|length }}</p>
+
+    <div class="accordion">
+        {% for notam in notams %}
+        <div class="accordion-item">
+            <input type="checkbox" class="custom-checkbox" id="item{{ loop.index }}">
+            <label for="item{{ loop.index }}" class="accordion-header custom-checkbox-label">Notam ID: {{ notam.id }}</label>
+            <div class="accordion-content">
+                <p><strong>Series: </strong>{{ notam.series }}</p>
+                <p><strong>Number: </strong>{{ notam.number }}</p>
+                <p><strong>Type: </strong>{{ notam.type }}</p>
+                <p>
+                    <button onclick="translateText()">Translate</button>
+                    <strong> Text: </strong>{{ notam.text }}
+                </p>
+                <p><strong>Start: </strong>{{ notam.effectiveStart }}</p>
+                <p><strong>End: </strong>{{ notam.effectiveEnd }}</p>
             </div>
-        {% endfor %}
         </div>
+        {% endfor %}
     </div>
+</div>
 
+<!-- Form script file reference. -->
+<script src="static/form.js" ></script>
 
-    
-    
 {% endblock %}

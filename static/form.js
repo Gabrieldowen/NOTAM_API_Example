@@ -425,3 +425,11 @@ function checkInputs(){
 function returnToForm() {
   window.location.href = "/";
 }
+
+function translateText() {
+  $.ajax({
+      type: 'POST',
+      url: '/translateText',
+      data: {"text": "hello"},
+  })
+}

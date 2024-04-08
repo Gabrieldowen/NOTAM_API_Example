@@ -66,5 +66,12 @@ def index():
         
     return render_template('form.html', airportIATA = airportIATA)
 
+@app.route('/translateText', methods=['POST'])
+def translateText():
+    if request.method == 'POST':  
+        print(f"Translating text: {request.form['text']}")
+    
+    return ('', 204)
+
 if __name__ == '__main__':
     app.run(debug=True)
