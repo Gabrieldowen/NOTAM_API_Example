@@ -14,7 +14,7 @@
         {% for notam in notams %}
         <div class="accordion-item">
             <input type="checkbox" class="custom-checkbox" id="item{{ loop.index }}">
-            <label for="item{{ loop.index }}" class="accordion-header custom-checkbox-label">Notam ID: {{ notam.id }}</label>
+            <label for="item{{ loop.index }}" class="accordion-header custom-checkbox-label">Notam ID: {{ notam.id }} Type: {{notam.type}}</label>
             <div class="accordion-content">
                 <p><strong>Series: </strong>{{ notam.series }}</p>
                 <p><strong>Number: </strong>{{ notam.number }}</p>
