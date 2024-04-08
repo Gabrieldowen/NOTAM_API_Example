@@ -1,10 +1,11 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 import Models
 import ParseNOTAM
 import MinimalCirclesPath
 import AirportsLatLongConverter as alc
 import GetNOTAM
 import time
+import translateNOTAM
 
 app = Flask(__name__)
 
@@ -69,9 +70,9 @@ def index():
 @app.route('/translateText', methods=['POST'])
 def translateText():
     if request.method == 'POST':  
-        print(f"Translating text: {request.form['text']}")
+        translatedText = translateNOTAM.callGemini(request.form['text'])
     
-    return ('', 204)
+        return jsonify({'text' : translatedText})
 
 if __name__ == '__main__':
     app.run(debug=True)

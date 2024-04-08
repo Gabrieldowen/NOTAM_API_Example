@@ -19,10 +19,13 @@
                 <p><strong>Series: </strong>{{ notam.series }}</p>
                 <p><strong>Number: </strong>{{ notam.number }}</p>
                 <p><strong>Type: </strong>{{ notam.type }}</p>
-                <p>
-                    <button onclick="translateText()">Translate</button>
-                    <strong> Text: </strong>{{ notam.text }}
+                <p id="sectionID{{loop.index}}">
+                    <button onclick="translateText('{{ loop.index }}')">Translate</button>
+                    <strong>Text: </strong>
+                    <a id="textID{{loop.index}}">{{ notam.text }}</a>
                 </p>
+                <p id="translation{{loop.index}}"></p>
+                
                 <p><strong>Start: </strong>{{ notam.effectiveStart }}</p>
                 <p><strong>End: </strong>{{ notam.effectiveEnd }}</p>
             </div>
