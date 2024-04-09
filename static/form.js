@@ -425,3 +425,5 @@ function checkInputs(){
 function returnToForm() {
   window.location.href = "/";
 }
+
+

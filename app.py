@@ -1,10 +1,11 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 import Models
 import ParseNOTAM
 import MinimalCirclesPath
 import AirportsLatLongConverter as alc
 import GetNOTAM
 import time
+import translateNOTAM
 
 app = Flask(__name__)
 
@@ -14,8 +15,10 @@ airportIATA = alc.airportsdata.load('IATA')
 def index():
     # If form is submitted
     if request.method == 'POST':
+        
         NotamRequest = Models.NotamRequest(request.form)
         airports = [NotamRequest.startAirport, NotamRequest.destAirport]
+
         for destination in NotamRequest.destinations:
             airports.append(destination)
         apiOutputs = []
@@ -65,6 +68,13 @@ def index():
         return render_template('display.html', notams = Notams)
         
     return render_template('form.html', airportIATA = airportIATA)
+
+@app.route('/translateText', methods=['POST'])
+def translateText():
+    if request.method == 'POST':  
+        translatedText = translateNOTAM.callGemini(request.form['text'])
+    
+        return jsonify({'text' : translatedText})
 
 if __name__ == '__main__':
     app.run(debug=True)
