@@ -100,3 +100,23 @@ def filter_keyword(notams, keyword):
 def filter_out_keyword(notams, keyword):
     marked_notams = filter_classification(notams, keyword)
     return [notam for notam in notams if notam not in marked_notams]
+
+def rank_notams(notams, ranked_order):
+    classification_ranks = {}
+
+    # Assign ranks based on the given ranked order
+    for i, classification in enumerate(ranked_order):
+        classification_ranks[classification] = i + 1
+    
+    # Assign ranks to each NOTAM based on their classification
+    for notam in notams:
+        notam.rank = classification_ranks[notam.classification]
+    
+    # Sort the NOTAMs by rank
+    notams.sort(key=lambda x: x.rank)
+    
+    # Remove the rank attribute from the NOTAMs
+    for notam in notams:
+        delattr(notam, 'rank')
+
+    return notams
