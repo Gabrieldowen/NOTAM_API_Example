@@ -20,7 +20,9 @@
                 <p><strong>Number: </strong>{{ notam.number }}</p>
                 <p><strong>Type: </strong>{{ notam.type }}</p>
                 <p id="sectionID{{loop.index}}">
-                    <button onclick="translateText('{{ loop.index }}')">Translate</button>
+                    <button class="btn btn-primary btn-sm" onclick="translateText('{{ loop.index }}')">
+                        <i class="fa-solid fa-robot"></i>
+                    </button>
                     <strong>Text: </strong>
                     <a id="textID{{loop.index}}">{{ notam.text }}</a>
                 </p>
