@@ -10,9 +10,5 @@ def callGemini(untranslated):
     prompt = "Translate the following NOTAM into plain language that someone who is not a pilot could understand. Do not include any newlines or special characters."
     response = model.generate_content(prompt +  untranslated)
     
-    # print(response.text) 
-
     return response.text
 
-
-        

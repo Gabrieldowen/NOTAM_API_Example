@@ -426,23 +426,4 @@ function returnToForm() {
   window.location.href = "/";
 }
 
-function translateText(textID) {
-  var text = $('#textID' + textID).text();
 
-  document.getElementById("translation"+textID).innerHTML =  '<p id="translationID"'+ textID+'><div class="spinner-border spinner-border-sm" role="status"><span class="visually-hidden">Loading...</span></div></p>';
-
-  $.ajax({
-      type: 'POST',
-      url: '/translateText',
-      data: {"text": text},
-      success:  function(data) {
-        //$('#translationID' + textID).remove();
-        document.getElementById("translation"+textID).innerHTML = '<p id="translationID"'+ textID+'><strong>Translation: </strong>' + data.text + '</p>';
-      },
-      error: function(data) {
-        //$('#translationID' + textID).remove();
-        document.getElementById("translation"+textID).innerHTML = '<p id="translationID"'+ textID+'><strong>Translation: </strong> There was an error... please try again</p>';
-      }
-  })
-
-}
