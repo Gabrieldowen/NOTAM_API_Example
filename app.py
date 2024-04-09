@@ -15,8 +15,10 @@ airportIATA = alc.airportsdata.load('IATA')
 def index():
     # If form is submitted
     if request.method == 'POST':
+        
         NotamRequest = Models.NotamRequest(request.form)
         airports = [NotamRequest.startAirport, NotamRequest.destAirport]
+
         for destination in NotamRequest.destinations:
             airports.append(destination)
         apiOutputs = []
