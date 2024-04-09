@@ -1,6 +1,13 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<style>
+    .custom-btn {
+        background-color: #aeb2eb;
+        color: #fff;
+    }
+</style>
+
 <div style="display: flex; ">
     <input type="image" id="plane" src="static/images/plane.png" onclick="returnToForm()" alt="Submit">
     <span class="custom-text">Go Back</span>
@@ -20,7 +27,7 @@
                 <p><strong>Number: </strong>{{ notam.number }}</p>
                 <p><strong>Type: </strong>{{ notam.type }}</p>
                 <p id="sectionID{{loop.index}}">
-                    <button class="btn btn-primary btn-sm" onclick="translateText('{{ loop.index }}')">
+                    <button class="btn custom-btn btn-sm" onclick="translateText('{{ loop.index }}')">
                         <i class="fa-solid fa-robot"></i>
                     </button>
                     <strong>Text: </strong>
