@@ -9,30 +9,33 @@
 </div>
 
 <div class="container mt-5">
-	<button id="filterButton" onmouseenter="showFilterOptions()" onmouseleave="hideFilterOptions()" class="btn btn-primary">Filter</button>
-    <button id="rankButton" onclick="" class="btn btn-primary">Rank</button>
+    <button id="filterButton" onmouseenter="showFilterOptions()" onmouseleave="hideFilterOptions()" class="btn btn-primary">Filter</button>
+    <button id="rankButton" onmouseenter="showRankList()" onmouseleave="hideRankList()" class="btn btn-primary">Rank</button>
 	
     <div id="filterOptions" class="dropdown-menu" onmouseenter="showFilterOptions()" onmouseleave="hideFilterOptions()">
         <form>
             <input type="checkbox" id="closed_runways" name="filter_options" value="closed_runways">
             <label for="closed_runways" title="Remove subsequent NOTAMs related to closed runway">Closed Runways</label><br>
-			<input type="checkbox" id="obstacle_notams" name="filter_options" value="obstacle_notams">
+            <input type="checkbox" id="obstacle_notams" name="filter_options" value="obstacle_notams">
             <label for="obstacle_notams" title="Remove ALL NOTAMs related to obstacles">Obstacle NOTAMs</label><br>
             <input type="checkbox" id="high_obstacle_notams" name="filter_options" value="high_obstacle_notams">
             <label for="high_obstacle_notams" title="Keep ONLY NOTAMs above 500ft">High Obstacle NOTAMs</label><br>
             <input type="checkbox" id="lighting_marking_notams" name="filter_options" value="lighting_marking_notams">
             <label for="lighting_marking_notams" title="Remove ALL NOTAMs marked as lighting or marking">Lighting & Marking NOTAMs</label><br>
             <input type="hidden" id="notamsJson" value="{{ notams_json }}">
-			<button type="button" onclick="applyFilters()">Apply Filters</button>
+            <button type="button" onclick="applyFilters()">Apply Filters</button>
         </form>
     </div>
 	
-	<div id="notamBoxes" style="display: none;">
-		<div class="draggable">FDC</div>
-		<div class="draggable">INTL</div>
-		<div class="draggable">DOM</div>
-		<div class="draggable">MIL</div>
-		<div class="draggable">SAA</div>
+	<div class="sortable-list" id="sortableListContainer" onmouseenter="showListContainer()" onmouseleave="hideListContainer()">
+		<ul id="notamBoxes">
+			<li draggable="true">FDC</li>
+			<li draggable="true">INTL</li>
+			<li draggable="true">DOM</li>
+			<li draggable="true">MIL</li>
+			<li draggable="true">SAA</li>
+		</ul>
+		<button type="button" onclick="">Apply Rank</button>
 	</div>
 </div>
 
@@ -56,7 +59,4 @@
         </div>
     </div>
 
-
-    
-    
 {% endblock %}
