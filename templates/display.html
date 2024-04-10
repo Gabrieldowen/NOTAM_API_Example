@@ -1,11 +1,16 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<style>
+    .custom-btn {
+        background-color: #aeb2eb;
+        color: #fff;
+    }
+</style>
+
 <div style="display: flex; ">
-    <input type="image" id ="plane" src="static/images/plane.png" onclick="returnToForm()" alt="Submit">
-    <span class = "custom-text">
-        Go Back
-    </span>
+    <input type="image" id="plane" src="static/images/plane.png" onclick="returnToForm()" alt="Submit">
+    <span class="custom-text">Go Back</span>
 </div>
 
 <div class="container mt-5">
@@ -39,24 +44,34 @@
 	</div>
 </div>
 
- <div class="container mt-5" id="notamList">
-        <h1 style="margin-left: -2px;">NOTAM Information</h1>
-            <p> Total number of Notams fetched: {{ notams|length }} </p>
-        
-        <div class="accordion">
-            {% for notam in notams %}
-            <div class="accordion-item">
-                <input type="checkbox" class="custom-checkbox" id="item{{ loop.index }}">
-                <label for="item{{ loop.index }}" class="accordion-header custom-checkbox-label">Notam ID: {{ notam.id }}</label>
-                <div class="accordion-content">
-                    <p><strong>Series: </strong>{{ notam.series }}</p>
-                    <p><strong>Number: </strong>{{ notam.number }}</p>
-                    <p><strong>Type: </strong>{{ notam.type }}</p>
-                    <p style="margin-bottom: 5px;"><strong>Issued: </strong>{{ notam.issued }}</p>
-                </div>
+ <div class="container mt-5" id="notamList">   
+    <h1 style="margin-left: -2px;">NOTAM Information</h1>
+    <p>Total number of Notams fetched: {{ notams|length }}</p>
+
+    <div class="accordion">
+        {% for notam in notams %}
+        <div class="accordion-item">
+            <input type="checkbox" class="custom-checkbox" id="item{{ loop.index }}">
+            <label for="item{{ loop.index }}" class="accordion-header custom-checkbox-label">Notam ID: {{ notam.id }} Type: {{notam.type}}</label>
+            <div class="accordion-content">
+                <p><strong>Series: </strong>{{ notam.series }}</p>
+                <p><strong>Number: </strong>{{ notam.number }}</p>
+                <p><strong>Type: </strong>{{ notam.type }}</p>
+                <p id="sectionID{{loop.index}}">
+                    <button class="btn custom-btn btn-sm" onclick="translateText('{{ loop.index }}')">
+                        <i class="fa-solid fa-robot"></i>
+                    </button>
+                    <strong>Text: </strong>
+                    <a id="textID{{loop.index}}">{{ notam.text }}</a>
+                </p>
+                <p id="translation{{loop.index}}"></p>
+                
+                <p><strong>Start: </strong>{{ notam.effectiveStart }}</p>
+                <p><strong>End: </strong>{{ notam.effectiveEnd }}</p>
             </div>
-        {% endfor %}
         </div>
+        {% endfor %}
     </div>
+</div>
 
 {% endblock %}
