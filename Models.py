@@ -47,7 +47,8 @@ class Notam:
             'lastUpdated': self.lastUpdated,
             'icaoLocation': self.icaoLocation,
             'coordinates': self.coordinates,
-            'radius': self.radius
+            'radius': self.radius,
+            'color': self.color
         }
 
 class NotamRequest:

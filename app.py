@@ -56,6 +56,8 @@ def index():
             new_data = GetNOTAM.buildNotam(NotamRequest.effectiveStartDate, NotamRequest.effectiveEndDate, longitude, latitude, NotamRequest.radius)
             apiOutputs.extend(new_data)
 
+        # Add color filtering here !
+
         # Record end time
         endTime = time.time()    
         print(f"\ntime calling API {endTime - startTime} seconds")
