@@ -6,6 +6,7 @@ import AirportsLatLongConverter as alc
 import GetNOTAM
 import time
 import translateNOTAM
+import os
 
 app = Flask(__name__)
 
@@ -77,4 +78,5 @@ def translateText():
         return jsonify({'text' : translatedText})
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port, debug=True)
