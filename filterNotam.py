@@ -16,8 +16,6 @@ def extract_closed_runways(notams):
     closed_runways = set()
     for notam in notams:
         if 'CLSD' in notam.text:
-            # Assign red color for display
-            notam.color = '#ff7f7f'
             # Extract the runway identifier
             parts = notam.text.split()
             for i, part in enumerate(parts):
@@ -54,8 +52,6 @@ def filter_keep_high_obstacle_notams(notams, height_threshold=500):
     high_obstacle_notams = []
     for notam in notams:
         if "OBST" in notam.text:
-            # Assign yellow color for display
-            notam.color = '#ffd966'
             # Search for height information in the NOTAM text
             match = re.search(r'(\d+)\s?FT', notam.text)
             if match:
@@ -77,10 +73,13 @@ def identify_lighting_marking_notams(notams):
     for notam in notams:
         if 'LGT' in notam.text or 'MKR' in notam.text or 'MARKINGS' in notam.text or 'LIGHTING' in notam.text:
             marked_notams.add(notam)
-            # Assign color for display
-            notam.color = '#ffd966'
+    
     return marked_notams
 
 # This function will filter out NOTAMs that have been marked as lighting or marking NOTAMs.
 def filter_out_lighting_marking_notams(notams, marked_notams):
     return [notam for notam in notams if notam not in marked_notams]
+
+
+
+

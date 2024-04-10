@@ -77,7 +77,7 @@ function updateNotamsList(notams) {
         label.classList.add('accordion-header', 'custom-checkbox-label');
         label.setAttribute('for', 'item');
         label.textContent = 'Notam ID: ' + notam.id;
-        label.style.backgroundColor = notam.color;      // This is what I added but it's not changing the output
+        label.style.backgroundColor = notam.color;
         accordionItem.appendChild(label);
 
         var accordionContent = document.createElement('div');

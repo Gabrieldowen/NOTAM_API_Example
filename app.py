@@ -56,7 +56,7 @@ def index():
             new_data = GetNOTAM.buildNotam(NotamRequest.effectiveStartDate, NotamRequest.effectiveEndDate, longitude, latitude, NotamRequest.radius)
             apiOutputs.extend(new_data)
 
-        # Add color filtering here !
+    
 
         # Record end time
         endTime = time.time()    
@@ -67,9 +67,14 @@ def index():
         Notams = ParseNOTAM.ParseNOTAM(apiOutputs)
         endTime = time.time()    # Record end time
         print(f"time parsing: {endTime - startTime} seconds\n")
+
         
         # Store initial NOTAMs in session
         session['initial_notams'] = [notam.to_dict() for notam in Notams]
+
+        ParseNOTAM.assign_color_to_notam(Notams)
+        for notam in Notams:
+            print(notam.id + "   " + notam.color)
         
         return render_template('display.html', notams = Notams)
         
