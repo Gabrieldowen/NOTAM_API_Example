@@ -11,6 +11,7 @@
  <div class="container mt-5">
         <h1 style="margin-left: -2px;">NOTAM Information</h1>
             <p> Total number of Notams fetched: {{ notams|length }} </p>
+            <p> {{ closedR|length }} deal with Runway Closures</p>
         
         <div class="accordion">
             {% for notam in notams %}

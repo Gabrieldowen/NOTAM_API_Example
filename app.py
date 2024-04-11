@@ -82,8 +82,10 @@ def index():
         markingNotams = filterNotam.identify_lighting_marking_notams(filtered_Notams)
 
         filtered_Notams = filterNotam.filter_out_lighting_marking_notams(filtered_Notams, markingNotams)
-    
-        return render_template('display.html', notams = filtered_Notams)
+        
+        filter_Notams = filterNotam.filter_out_keyword(filtered_Notams, 'CANCELLED')
+        
+        return render_template('display.html', notams = filtered_Notams, closedR = closed_runways)
         
     return render_template('form.html', airportIATA = airportIATA)
 
