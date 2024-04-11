@@ -23,6 +23,32 @@ class Notam:
         self.icaoLocation = data.get('icaoLocation', None)
         self.coordinates = data.get('coordinates', None)
         self.radius = data.get('radius', None)
+    
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'series': self.series,
+            'number': self.number,
+            'type': self.type,
+            'issued': self.issued,
+            'affectedFIR': self.affectedFIR,
+            'selectionCode': self.selectionCode,
+            'traffic': self.traffic,
+            'purpose': self.purpose,
+            'scope': self.scope,
+            'minimumFL': self.minimumFL,
+            'maximumFL': self.maximumFL,
+            'location': self.location,
+            'effectiveStart': self.effectiveStart,
+            'effectiveEnd': self.effectiveEnd,
+            'text': self.text,
+            'classification': self.classification,
+            'accountId': self.accountId,
+            'lastUpdated': self.lastUpdated,
+            'icaoLocation': self.icaoLocation,
+            'coordinates': self.coordinates,
+            'radius': self.radius
+        }
 
 class NotamRequest:
     def __init__(self, data):
