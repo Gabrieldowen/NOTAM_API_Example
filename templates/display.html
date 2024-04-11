@@ -53,10 +53,11 @@
     calledPoints = JSON.parse(calledPoints);
 
     // notamCoords are in 00000N00000E format
-    // var notamCoords = []; 
-    // {% for notam in notams %}
-    //     notamCoords.push([{{notam.coordinates[0]}}, {{notam.coordinates[1]}}]);
-    // {% endfor %}
+    var notamCoords = []; 
+    {% for notam in notams %}
+        if ("{{ notam.coordinates }}" != "None")
+        notamCoords.push([parseCoord("{{ notam.coordinates }}")]);
+    {% endfor %}
 
 </script>
 <script src="static/map.js" ></script>
