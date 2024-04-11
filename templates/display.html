@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
 {% block content %}
 <div style="display: flex; ">
@@ -36,27 +36,26 @@
 	</div>
 </div>
 
- <div class="container mt-5" id="notamList">
-        <h1 style="margin-left: -2px;">NOTAM Information</h1>
-            <p> Total number of Notams fetched: {{ notams|length }} </p>
-        
-        <div class="accordion">
-            {% for notam in notams %}
-            <div class="accordion-item">
-                <input type="checkbox" class="custom-checkbox" id="item{{ loop.index }}">
-                <label for="item{{ loop.index }}" class="accordion-header custom-checkbox-label">Notam ID: {{ notam.id }}</label>
-                <div class="accordion-content">
-                    <p><strong>Series: </strong>{{ notam.series }}</p>
-                    <p><strong>Number: </strong>{{ notam.number }}</p>
-                    <p><strong>Type: </strong>{{ notam.type }}</p>
-                    <p style="margin-bottom: 5px;"><strong>Issued: </strong>{{ notam.issued }}</p>
-                </div>
+<div class="container mt-5" id="notamList">
+    <h1 style="margin-left: -2px;">NOTAM Information</h1>
+        <p> Total number of Notams fetched: {{ notams|length }} </p>
+    
+    <div class="accordion">
+        {% for notam in notams %}
+        <div class="accordion-item">
+            <input type="checkbox" class="custom-checkbox" id="item{{ loop.index }}">
+            <label for="item{{ loop.index }}" style="background-color: {{ notam.color }};" class="accordion-header custom-checkbox-label">Notam ID: {{ notam.id }}</label>
+            <div class="accordion-content">
+                <p><strong>Series: </strong>{{ notam.series }}</p>
+                <p><strong>Number: </strong>{{ notam.number }}</p>
+                <p><strong>Type: </strong>{{ notam.type }}</p>
+                <p style="margin-bottom: 5px;"><strong>Issued: </strong>{{ notam.issued }}</p>
             </div>
-        {% endfor %}
         </div>
+        {% endfor %}
     </div>
+</div>
 
+<script src="static/display.js"></script>
 
-    
-    
 {% endblock %}

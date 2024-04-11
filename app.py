@@ -18,8 +18,14 @@ airportIATA = alc.airportsdata.load('IATA')
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
+    return render_template('form.html', airportIATA = airportIATA)
+
+
+@app.route('/submit_form', methods=['POST'])
+def submit_form():
     # If form is submitted
     if request.method == 'POST':
+        
         NotamRequest = Models.NotamRequest(request.form)
 
         # get lat/long of airports
@@ -68,17 +74,25 @@ def index():
         endTime = time.time()    # Record end time
         print(f"time parsing: {endTime - startTime} seconds\n")
 
+        ParseNOTAM.assign_color_to_notam(Notams)
         
         # Store initial NOTAMs in session
         session['initial_notams'] = [notam.to_dict() for notam in Notams]
 
-        ParseNOTAM.assign_color_to_notam(Notams)
         for notam in Notams:
             print(notam.id + "   " + notam.color)
         
-        return render_template('display.html', notams = Notams)
-        
-    return render_template('form.html', airportIATA = airportIATA)
+        #time.sleep(2)
+        #session['notams'] = [2,2,2]
+
+        return ''
+
+@app.route('/display', methods=['GET'])
+def display():
+    # Get the Notams from the session.
+    Notams = [Models.Notam(notam_dict) for notam_dict in session.get('initial_notams', [])]
+
+    return render_template('display.html', notams = Notams)
 
 @app.route('/apply_filters', methods=['POST'])
 def apply_filters():

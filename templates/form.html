@@ -1,11 +1,11 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
 {% block content %}
 
 <div class="container" style="transform: translateY(10px);">
     <h1 id = "Title">NOTAM Sorter</h1>
       <div class="container mt-5" style="transform: translateY(-20px);">
-        <form id = "dataForm" onSubmit="checkInputs(); return false;">
+        <form id = "dataForm" action="/submit_form" method="post">
 	        <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="effectiveStartDate" class="form-label"><strong>Effective Start Date</strong></label>
@@ -88,11 +88,12 @@
     </group> 
 </div>
 
+
 <script>
     var airportIATA = {{ airportIATA | safe }};
 </script>
 
 <!-- Form script file reference. -->
 <script src="static/form.js" ></script>
-
 {% endblock %}
+

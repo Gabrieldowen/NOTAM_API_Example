@@ -22,7 +22,7 @@ class Notam:
         self.icaoLocation = data.get('icaoLocation', None)
         self.coordinates = data.get('coordinates', None)
         self.radius = data.get('radius', None)
-        self.color = '#bad4b7' # default color is green
+        self.color = '#bad4b7' if data is None else data.get('color', '#bad4b7') # default color is green
     
     def to_dict(self):
         return {

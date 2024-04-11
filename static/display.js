@@ -61,6 +61,14 @@ function updateNotamsList(notams) {
     var totalNotams = document.createElement('p');
     totalNotams.textContent = 'Total number of Notams fetched: ' + notams.length;
     notamsContainer.appendChild(totalNotams);
+
+    // Create div element for accordion
+    var accordion = document.createElement("div");
+    accordion.classList.add("accordion");
+    notamsContainer.appendChild(accordion);
+
+    // Notam item number for each notam to have a different id
+    let notamItemNumber = 1;
 	
 	// Populate the container with the filtered NOTAMs
     notams.forEach(function(notam) {
@@ -70,12 +78,14 @@ function updateNotamsList(notams) {
         var checkbox = document.createElement('input');
         checkbox.type = 'checkbox';
         checkbox.classList.add('custom-checkbox');
-        checkbox.id = 'item';
+        // Unique id for each notam
+        checkbox.id = 'item' + notamItemNumber;
         accordionItem.appendChild(checkbox);
 
         var label = document.createElement('label');
         label.classList.add('accordion-header', 'custom-checkbox-label');
-        label.setAttribute('for', 'item');
+        // Unique id for each notam
+        label.setAttribute('for', 'item' + notamItemNumber);
         label.textContent = 'Notam ID: ' + notam.id;
         label.style.backgroundColor = notam.color;
         accordionItem.appendChild(label);
@@ -101,6 +111,15 @@ function updateNotamsList(notams) {
         issuedParagraph.style.marginBottom = '5px'; // Apply margin-bottom style
         accordionContent.appendChild(issuedParagraph);
 
-        notamsContainer.appendChild(accordionItem);
+        accordion.appendChild(accordionItem);
+        
+        // Increment id number for next notam
+        notamItemNumber++
     });
+}
+
+
+// Function to return to the form page.
+function returnToForm() {
+    window.location.href = "/";
 }
