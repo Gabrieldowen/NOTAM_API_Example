@@ -17,6 +17,9 @@
     <h1 style="margin-left: -2px;">NOTAM Information</h1>
     <p>Total number of Notams fetched: {{ notams|length }}</p>
 
+    <div style="height: 180px; width: 70%;" id="map"></div>
+
+
     <div class="accordion">
         {% for notam in notams %}
         <div class="accordion-item">
@@ -43,7 +46,5 @@
     </div>
 </div>
 
-<!-- Form script file reference. -->
-<script src="static/form.js" ></script>
-
+<script src="static/map.js" ></script>
 {% endblock %}
