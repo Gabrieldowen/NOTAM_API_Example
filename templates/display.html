@@ -47,6 +47,10 @@
     </div>
 </div>
 
+<script>
+    var calledPoints = '{{calledPoints|tojson}}';
+    calledPoints = JSON.parse(calledPoints);
+</script>
 <script src="static/map.js" ></script>
 
 {% endblock %}

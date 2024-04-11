@@ -7,25 +7,33 @@
 
 $(document).ready( function() {
     if (document.getElementById("map")) {
-        loadMap();
-    }
-    else {
-        alert("map not found!");
+        if(calledPoints !== null && calledPoints !== undefined && calledPoints !== ''){
+            loadMap();
+        }
     }
 });
 
 function loadMap() {
 
-      // alert("points:: >>" + typeof calledPoints + calledPoints)
-
-    var map = L.map('map').setView([51.505, -0.09], 13);
+    if (calledPoints.type === "FeatureCollection") {
+        // alert("The GeoJSON data has the correct type: FeatureCollection");
+    } else {
+       alert("The GeoJSON data does not have the correct type: FeatureCollection");
+    }
+    
+    var coordinatesLength = calledPoints.features[0].geometry.coordinates.length;
+    middlePoint = parseInt(coordinatesLength/2)
+    // alert("coordinates" + calledPoints.features[0].geometry.coordinates)
+    var map = L.map('map').setView([ calledPoints.features[middlePoint].geometry.coordinates[1],  calledPoints.features[middlePoint].geometry.coordinates[0]], (coordinatesLength*10));
 
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
 
     var myLayer = L.geoJSON().addTo(map);
-    myLayer.addData(calledPoints.features[0]);    
+    calledPoints.features.forEach(function(feature) {
+        myLayer.addData(feature);
+    });
 
 
 
