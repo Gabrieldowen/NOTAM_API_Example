@@ -201,6 +201,7 @@ function submitForm() {
   document.getElementById('addButton').remove();
   document.getElementById('additionalDestinations').remove();
     
+
   // Remove all the additional destinations
   
   var hiddenElements = document.querySelectorAll('.hiddenObj');
@@ -221,7 +222,11 @@ function submitForm() {
   .then(data => {
       // Replace the entire body with the new content
       document.body.innerHTML = data;
+      
+      //load the map
+      loadMap();
   })
+  
   // Error catching just in case
   .catch(error => console.error('Error:', error))
   .finally(() => {
@@ -229,7 +234,9 @@ function submitForm() {
       hiddenElements.forEach(function (element) {
           element.style.display = 'none';
       });
+
   });
+  
   
 }
 

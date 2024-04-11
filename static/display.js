@@ -24,3 +24,5 @@ function translateText(textID) {
   
   }
 
+
+  
