@@ -29,6 +29,7 @@
             <div class="accordion-content">
                 <p><strong>Series: </strong>{{ notam.series }}</p>
                 <p><strong>Number: </strong>{{ notam.number }}</p>
+                <p><strong>coordinates: </strong>{{ notam.coordinates }}</p>
                 <p><strong>Type: </strong>{{ notam.type }}</p>
                 <p id="sectionID{{loop.index}}">
                     <button class="btn custom-btn btn-sm" onclick="translateText('{{ loop.index }}')">
@@ -50,6 +51,13 @@
 <script>
     var calledPoints = '{{calledPoints|tojson}}';
     calledPoints = JSON.parse(calledPoints);
+
+    // notamCoords are in 00000N00000E format
+    // var notamCoords = []; 
+    // {% for notam in notams %}
+    //     notamCoords.push([{{notam.coordinates[0]}}, {{notam.coordinates[1]}}]);
+    // {% endfor %}
+
 </script>
 <script src="static/map.js" ></script>
 

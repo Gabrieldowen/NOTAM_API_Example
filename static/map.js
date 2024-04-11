@@ -21,10 +21,11 @@ function loadMap() {
        alert("The GeoJSON data does not have the correct type: FeatureCollection");
     }
     
-    var coordinatesLength = calledPoints.features[0].geometry.coordinates.length;
+    var coordinatesLength = calledPoints.features.length;
     middlePoint = parseInt(coordinatesLength/2)
+    var zoom  = 4
     // alert("coordinates" + calledPoints.features[0].geometry.coordinates)
-    var map = L.map('map').setView([ calledPoints.features[middlePoint].geometry.coordinates[1],  calledPoints.features[middlePoint].geometry.coordinates[0]], (coordinatesLength*10));
+    var map = L.map('map').setView([ calledPoints.features[middlePoint].geometry.coordinates[1],  calledPoints.features[middlePoint].geometry.coordinates[0]], zoom );
 
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
