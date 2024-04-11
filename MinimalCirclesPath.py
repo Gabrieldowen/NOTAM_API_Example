@@ -1,5 +1,6 @@
 from math import sin, cos, radians, asin, atan2, sqrt, degrees, ceil, floor
 
+
 def calculateBearing(startLat, startLon, destLat, destLon):
     startLatRad = radians(startLat)
     startLonRad = radians(startLon)
@@ -95,12 +96,14 @@ def getPath( startLat, startLong, destLat, destLong, radius, pathWidth):
        
 
 
-
 # THIS IS AN EXAMPLE
-# uncomment and run `python3 MinimalCirclesPath.py` to see example of what getPath() returns
-"""
 if __name__ == '__main__':
-    pathList = getPath(startLat = 32.7767, startLong = 96.7970, destLat = 39.7392, destLong = 104.9903, radius = 100,  pathWidth = 50)
+    pathList = getPath(startLat = 32.8968,  # DFW Latitude
+                   startLong = -97.0380,  # DFW Longitude
+                   destLat = 33.9416,  # LAX Latitude
+                   destLong = -118.4085,  # LAX Longitude
+                   radius = 100, 
+                   pathWidth = 50)
+
     for i,item in enumerate(pathList):
         print(f"point #{i+1}) {item}\n")
-"""

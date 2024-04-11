@@ -6,26 +6,34 @@ import urllib.parse
 import os
 import ZuluConverter
 import AirportsLatLongConverter
+from datetime import datetime
 
   
     
 #getNotam: takes the lat, long, start and end time and the page number then runs an API call to the FAA for a json of the api
 #@returns parsed_req: the json of the request
 def getNotam(effectiveStartDate, effectiveEndDate, longitude, latitude, pageNum, radius):
-    url = 'https://external-api.faa.gov/notamapi/v1/notams'
-    url = (f"{url}?responseFormat=geoJson&effectiveStartDate={effectiveStartDate}"
+  # Convert start and end dates to the desired format if provided
+  if effectiveStartDate:
+    effectiveStartDate = datetime.strptime(effectiveStartDate, "%Y-%m-%d %H:%M:%S").strftime("%Y-%m-%dT%H:%M:%SZ")
+        
+  if effectiveEndDate:
+    effectiveEndDate = datetime.strptime(effectiveEndDate, "%Y-%m-%d %H:%M:%S").strftime("%Y-%m-%dT%H:%M:%SZ") 
+  
+  url = 'https://external-api.faa.gov/notamapi/v1/notams'
+  url = (f"{url}?responseFormat=geoJson&effectiveStartDate={effectiveStartDate}"
        f"&effectiveEndDate={effectiveEndDate}&locationLongitude={longitude}"
        f"&locationLatitude={latitude}&locationRadius={radius}"
-       f"&pageNum={pageNum}&pageSize=50"
+       f"&pageNum={pageNum}&pageSize=1000"
        f"&sortBy=notamType&sortOrder=Asc")
 
-    headers = {'client_id': credentials.clientID, 'client_secret': credentials.clientSecret}
+  headers = {'client_id': credentials.clientID, 'client_secret': credentials.clientSecret}
 
-    req = requests.get(url, headers=headers)
+  req = requests.get(url, headers=headers)
     
-    parsed_req = req.json()
+  parsed_req = req.json()
     
-    return parsed_req
+  return parsed_req
 
 #buildNotam: does multiple API calls of a location given in inputs and combines all Jsons of each page into a single Json file
 #@returns: combinded_core_notam_data, the combinded Json of all pages for one location
@@ -33,23 +41,16 @@ def getNotam(effectiveStartDate, effectiveEndDate, longitude, latitude, pageNum,
 #         long: lat for a location
 #         lat: long for a location
 #         combined_core_notam_data: a Json being built by runNotam of all Jsons for a path
-def buildNotam(effectiveStartDate, effectiveEndDate, long, lat, combined_core_notam_data):
-    #gets the first page of the API call for a single location
-    initial_response = getNotam(effectiveStartDate, effectiveEndDate, long, lat, pageNum=1)
-    #Gets the total number of pages for all the notams in a single location
+def buildNotam(effectiveStartDate, effectiveEndDate, long, lat, radius):
+    combined_responses = []  # To store the full responses from all pages
+    initial_response = getNotam(effectiveStartDate, effectiveEndDate, long, lat, 1, radius)  # pageNum=1 for the initial call
     total_pages = initial_response.get('totalPages', 1)
+    combined_responses.append(initial_response)  # Add the initial response to the combined list
 
-    # Loop through all pages for an API Call
-    for page_num in range(1, total_pages + 1):
-        page_response = getNotam(effectiveStartDate, effectiveEndDate, long, lat, pageNum=page_num)
-        page_items = page_response.get('items', [])
-        #Removes duplicates from the parsed Json 
-        for item in page_items:
-            if 'coreNOTAMData' in item['properties']:
-                core_notam_data = item['properties']['coreNOTAMData']['notam']
-                #Adds to parsed if the Notam doesn't already exist
-                if core_notam_data not in combined_core_notam_data:
-                    combined_core_notam_data.append(core_notam_data)
-    return combined_core_notam_data
+    # If there are more pages, loop through them and add their responses to the combined list
+    if total_pages > 1:
+        for page_num in range(2, total_pages + 1):  # Start from 2 since we already have page 1
+            page_response = getNotam(effectiveStartDate, effectiveEndDate, long, lat, page_num, radius)
+            combined_responses.append(page_response)  # Add the current page's response
 
-   
+    return combined_responses

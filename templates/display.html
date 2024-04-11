@@ -1,23 +1,77 @@
 {% extends 'base.html' %}
 
 {% block content %}
- <div class="container mt-5">
-        <h1i>NOTAM Information</h1i>
-        <div class="row row-cols-1 row-cols-md-2 g-4">
-            {% for notam in notams %}
-            <div class="col">
-                <div class="card h-100">
-                    <div class="card-body">
-                        <h5 class="card-title">NOTAM ID: {{ notam.id }}</h5>
-                        <p class="card-text"><strong>Series:</strong> {{ notam.series }}</p>
-                        <p class="card-text"><strong>Number:</strong> {{ notam.number }}</p>
-                        <p class="card-text"><strong>Type:</strong> {{ notam.type }}</p>
-                        <p class="card-text"><strong>Issued:</strong> {{ notam.issued }}</p>
-                        <!-- Add other attributes here -->
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
+<style>
+    .custom-btn {
+        background-color: #aeb2eb;
+        color: #fff;
+    }
+</style>
+
+<div style="display: flex; ">
+    <input type="image" id="plane" src="static/images/plane.png" onclick="returnToForm()" alt="Submit">
+    <span class="custom-text">Go Back</span>
+</div>
+
+<div class="container mt-5">
+    <button id="filterButton" onmouseenter="showFilterOptions()" onmouseleave="hideFilterOptions()" class="btn btn-primary">Filter</button>
+    <button id="rankButton" onmouseenter="showRankList()" onmouseleave="hideRankList()" class="btn btn-primary">Rank</button>
+	
+    <div id="filterOptions" class="dropdown-menu" onmouseenter="showFilterOptions()" onmouseleave="hideFilterOptions()">
+        <form>
+            <input type="checkbox" id="closed_runways" name="filter_options" value="closed_runways">
+            <label for="closed_runways" title="Remove subsequent NOTAMs related to closed runway">Closed Runways</label><br>
+            <input type="checkbox" id="obstacle_notams" name="filter_options" value="obstacle_notams">
+            <label for="obstacle_notams" title="Remove ALL NOTAMs related to obstacles">Obstacle NOTAMs</label><br>
+            <input type="checkbox" id="high_obstacle_notams" name="filter_options" value="high_obstacle_notams">
+            <label for="high_obstacle_notams" title="Keep ONLY NOTAMs above 500ft">High Obstacle NOTAMs</label><br>
+            <input type="checkbox" id="lighting_marking_notams" name="filter_options" value="lighting_marking_notams">
+            <label for="lighting_marking_notams" title="Remove ALL NOTAMs marked as lighting or marking">Lighting & Marking NOTAMs</label><br>
+            <input type="hidden" id="notamsJson" value="{{ notams_json }}">
+            <button type="button" onclick="applyFilters()">Apply Filters</button>
+        </form>
     </div>
+	
+	<div class="sortable-list" id="sortableListContainer" onmouseenter="showListContainer()" onmouseleave="hideListContainer()">
+		<ul id="notamBoxes">
+			<li draggable="true">FDC</li>
+			<li draggable="true">INTL</li>
+			<li draggable="true">DOM</li>
+			<li draggable="true">MIL</li>
+			<li draggable="true">SAA</li>
+		</ul>
+		<button type="button" onclick="">Apply Rank</button>
+	</div>
+</div>
+
+ <div class="container mt-5" id="notamList">   
+    <h1 style="margin-left: -2px;">NOTAM Information</h1>
+    <p>Total number of Notams fetched: {{ notams|length }}</p>
+
+    <div class="accordion">
+        {% for notam in notams %}
+        <div class="accordion-item">
+            <input type="checkbox" class="custom-checkbox" id="item{{ loop.index }}">
+            <label for="item{{ loop.index }}" class="accordion-header custom-checkbox-label">Notam ID: {{ notam.id }} Type: {{notam.type}}</label>
+            <div class="accordion-content">
+                <p><strong>Series: </strong>{{ notam.series }}</p>
+                <p><strong>Number: </strong>{{ notam.number }}</p>
+                <p><strong>Type: </strong>{{ notam.type }}</p>
+                <p id="sectionID{{loop.index}}">
+                    <button class="btn custom-btn btn-sm" onclick="translateText('{{ loop.index }}')">
+                        <i class="fa-solid fa-robot"></i>
+                    </button>
+                    <strong>Text: </strong>
+                    <a id="textID{{loop.index}}">{{ notam.text }}</a>
+                </p>
+                <p id="translation{{loop.index}}"></p>
+                
+                <p><strong>Start: </strong>{{ notam.effectiveStart }}</p>
+                <p><strong>End: </strong>{{ notam.effectiveEnd }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
 {% endblock %}
