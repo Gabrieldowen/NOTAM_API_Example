@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, redirect
 import Models
 import ParseNOTAM
 import MinimalCirclesPath
@@ -13,7 +13,12 @@ airportIATA = alc.airportsdata.load('IATA')
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    # If form is submitted
+   
+    return render_template('form.html', airportIATA = airportIATA)
+
+@app.route('/submit_form', methods=['POST'])
+def submit_form():
+     # If form is submitted
     if request.method == 'POST':
         
         NotamRequest = Models.NotamRequest(request.form)
@@ -55,6 +60,13 @@ def index():
             for latitude, longitude in coordList:
                 new_data = GetNOTAM.buildNotam(NotamRequest.effectiveStartDate, NotamRequest.effectiveEndDate, longitude, latitude, NotamRequest.radius)
                 apiOutputs.extend(new_data)
+
+                NotamRequest.calledPoints.append((latitude, longitude))
+
+
+        NotamRequest.calledPoints = MinimalCirclesPath.createGeoJSON(NotamRequest.calledPoints)
+        print(f"Notamreq {NotamRequest.calledPoints} type: {type(NotamRequest.calledPoints)}\n")
+
         # Record end time
         endTime = time.time()    
         print(f"\ntime calling API {endTime - startTime} seconds")
@@ -65,9 +77,8 @@ def index():
         endTime = time.time()    # Record end time
         print(f"time parsing: {endTime - startTime} seconds\n")        
 
-        return render_template('display.html', notams = Notams)
+        return render_template('display.html', notams = Notams, calledPoints = NotamRequest.calledPoints)
         
-    return render_template('form.html', airportIATA = airportIATA)
 
 @app.route('/translateText', methods=['POST'])
 def translateText():

@@ -5,16 +5,18 @@
 // Check if Leaflet library is imported
 // Creating map options
 
-// document.addEventListener("DOMContentLoaded", function() {
-//     if (document.getElementById("map")) {
-//         loadMap();
-//     }
-//     else {
-//         alert("map not found!");
-//     }
-// });
+$(document).ready( function() {
+    if (document.getElementById("map")) {
+        loadMap();
+    }
+    else {
+        alert("map not found!");
+    }
+});
 
 function loadMap() {
+
+      // alert("points:: >>" + typeof calledPoints + calledPoints)
 
     var map = L.map('map').setView([51.505, -0.09], 13);
 
@@ -22,8 +24,9 @@ function loadMap() {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
 
-    L.marker([51.5, -0.09]).addTo(map)
-        .bindPopup('A pretty CSS popup.<br> Easily customizable.')
-        .openPopup();
+    var myLayer = L.geoJSON().addTo(map);
+    myLayer.addData(calledPoints.features[0]);    
+
+
 
 }

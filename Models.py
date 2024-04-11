@@ -44,3 +44,4 @@ class NotamRequest:
         self.sortOrder =  data.get('sortOrder', None)
         self.radius = int(data.get('radius', 100)) if data.get('radius', None) is not None and data.get('radius', '') != '' else 100
         self.pathWidth = int(data.get('pathWidth', 50)) if data.get('pathWidth', None) is not None and data.get('pathWidth', '') != '' else 50
+        self.calledPoints = []

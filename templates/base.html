@@ -30,6 +30,12 @@
     <!-- Form script file reference. -->
     <script src="static/display.js" ></script>
     <script src="static/map.js" ></script>
+
+    <!-- create variables for passed in model -->
+    <script type="text/javascript">
+        var calledPoints = '{{calledPoints|tojson}}';
+        calledPoints = JSON.parse(calledPoints);
+    </script>
     
 </head>
 <body>

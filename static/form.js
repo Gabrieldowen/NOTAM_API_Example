@@ -215,6 +215,7 @@ function submitForm() {
   fetch(document.getElementById('dataForm').action, {
       method: 'POST',
       body: formData,
+
   })
   
   // Update the display page after the call to the server is done.
@@ -222,10 +223,8 @@ function submitForm() {
   .then(data => {
       // Replace the entire body with the new content
       document.body.innerHTML = data;
-      
-      //load the map
-      loadMap();
-  })
+
+  }).then(response => response.json())
   
   // Error catching just in case
   .catch(error => console.error('Error:', error))
