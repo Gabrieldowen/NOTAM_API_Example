@@ -24,5 +24,9 @@ function translateText(textID) {
   
   }
 
+  // Function to return to the form page.
+function returnToForm() {
+  window.location.href = "/";
+}
 
   
