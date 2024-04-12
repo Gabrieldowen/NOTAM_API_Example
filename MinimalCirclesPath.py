@@ -105,8 +105,8 @@ def createGeoJSON(coordList):
     feature_collection = gj.FeatureCollection(features)
 
         # Write GeoJSON to a file
-    with open('static/TestData/points.geojson', 'w') as f:
-        json.dump(feature_collection, f)
+    # with open('static/TestData/points.geojson', 'w') as f:
+    #     json.dump(feature_collection, f)
 
     return feature_collection
 
