@@ -98,7 +98,7 @@ def filter_keyword(notams, keyword):
     return marked_notams
 
 def filter_out_keyword(notams, keyword):
-    marked_notams = filter_classification(notams, keyword)
+    marked_notams = filter_keyword(notams, keyword)
     return [notam for notam in notams if notam not in marked_notams]
 
 
