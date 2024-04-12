@@ -83,7 +83,7 @@ def index():
 
         filtered_Notams = filterNotam.filter_out_lighting_marking_notams(filtered_Notams, markingNotams)
         
-        filter_Notams = filterNotam.filter_out_keyword(filtered_Notams, 'CANCELLED')
+        filter_Notams = filterNotam.filter_out_keyword(filtered_Notams, 'CANCELED')
         
         return render_template('display.html', notams = filtered_Notams, closedR = closed_runways)
         
