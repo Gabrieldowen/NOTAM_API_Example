@@ -7,6 +7,7 @@ import GetNOTAM
 import time
 import translateNOTAM
 
+
 app = Flask(__name__)
 
 airportIATA = alc.airportsdata.load('IATA')
@@ -60,7 +61,6 @@ def submit_form():
             for latitude, longitude in coordList:
                 new_data = GetNOTAM.buildNotam(NotamRequest.effectiveStartDate, NotamRequest.effectiveEndDate, longitude, latitude, NotamRequest.radius)
                 apiOutputs.extend(new_data)
-
                 NotamRequest.calledPoints.append((latitude, longitude))
 
 
@@ -72,10 +72,7 @@ def submit_form():
         print(f"\ntime calling API {endTime - startTime} seconds")
 
         # takes api output and parse it
-        startTime = time.time()  # Record start time
         Notams = ParseNOTAM.ParseNOTAM(apiOutputs)
-        endTime = time.time()    # Record end time
-        print(f"time parsing: {endTime - startTime} seconds\n")        
 
         return render_template('display.html', notams = Notams, calledPoints = NotamRequest.calledPoints)
         
