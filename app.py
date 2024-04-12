@@ -6,7 +6,7 @@ import AirportsLatLongConverter as alc
 import GetNOTAM
 import time
 import translateNOTAM
-
+from multiprocessing import Pool, cpu_count
 
 app = Flask(__name__)
 
@@ -59,13 +59,18 @@ def submit_form():
 
             #after the lat and longs are gathered in coordList, buildNotam is used to gather all the notams for the path
             for latitude, longitude in coordList:
-                new_data = GetNOTAM.buildNotam(NotamRequest.effectiveStartDate, NotamRequest.effectiveEndDate, longitude, latitude, NotamRequest.radius)
-                apiOutputs.extend(new_data)
                 NotamRequest.calledPoints.append((latitude, longitude))
 
+            # map inputs for parrallel processing
+            inputs = [(NotamRequest.effectiveStartDate, NotamRequest.effectiveEndDate, longitude, latitude, NotamRequest.radius) for latitude, longitude in coordList]  # List of tuples with your inputs
+            with Pool(cpu_count()) as pool:
+                apiOutputsList = pool.starmap(GetNOTAM.buildNotam, inputs)
 
+            # flatten the list of lists
+            apiOutputs = [item for sublist in apiOutputsList for item in sublist]
+
+        # converts points along called path to geojson
         NotamRequest.calledPoints = MinimalCirclesPath.createGeoJSON(NotamRequest.calledPoints)
-        print(f"Notamreq {NotamRequest.calledPoints} type: {type(NotamRequest.calledPoints)}\n")
 
         # Record end time
         endTime = time.time()    
