@@ -68,7 +68,7 @@ function updateNotamsList(notams) {
     notamsContainer.appendChild(accordion);
 
     // Notam item number for each notam to have a different id
-    let notamItemNumber = 1;
+    var notamItemNumber = 1;
 	
 	// Populate the container with the filtered NOTAMs
     notams.forEach(function(notam) {
@@ -86,6 +86,7 @@ function updateNotamsList(notams) {
         label.classList.add('accordion-header', 'custom-checkbox-label');
         // Unique id for each notam
         label.setAttribute('for', 'item' + notamItemNumber);
+
         label.style.backgroundColor = notam.color;
 
         // Add the icons for each type of notam.
@@ -106,7 +107,7 @@ function updateNotamsList(notams) {
         if (icon) {
             label.appendChild(icon);
         }
-        label.appendChild(document.createTextNode(' Notam ID: ' + notam.id));
+        label.appendChild(document.createTextNode('Notam ID: ' + notam.id + " Type: " + notam.type));
         accordionItem.appendChild(label);
 
         var accordionContent = document.createElement('div');
@@ -125,13 +126,41 @@ function updateNotamsList(notams) {
         typeParagraph.innerHTML = '<strong>Type: </strong>' + notam.type;
         accordionContent.appendChild(typeParagraph);
 
-        var issuedParagraph = document.createElement('p');
-        issuedParagraph.innerHTML = '<strong>Issued: </strong>' + notam.issued;
-        issuedParagraph.style.marginBottom = '10px'; // Apply margin-bottom style
-        accordionContent.appendChild(issuedParagraph);
+        var sectionParagraph = document.createElement('p');
+        sectionParagraph.id = `sectionID${notamItemNumber}`;
+        accordionContent.appendChild(sectionParagraph);
+
+        // Create button element for translation
+        var translationButton = document.createElement('button');
+        translationButton.classList.add('btn', 'custom-btn', 'btn-sm');
+        translationButton.innerHTML = '<i class="fa-solid fa-robot"></i>';
+        function handleTranslationButtonClick(itemNumber) {
+            translationButton.addEventListener('click', function() {
+                translateText(itemNumber);
+            });
+        }
+        handleTranslationButtonClick(notamItemNumber);
+        sectionParagraph.appendChild(translationButton);
+
+        var textParagraph = document.createElement('a');
+        textParagraph.innerHTML = `<strong> Text: </strong><a id="textID${notamItemNumber}">${notam.text}</a>`;
+        sectionParagraph.appendChild(textParagraph);
+
+        var translationParagraph = document.createElement('p');
+        translationParagraph.id = `translation${notamItemNumber}`;
+        accordionContent.appendChild(translationParagraph);
+
+        var startParagraph = document.createElement('p');
+        startParagraph.innerHTML = '<strong>Start: </strong>' + notam.effectiveStart;
+        accordionContent.appendChild(startParagraph);
+
+        var endParagraph = document.createElement('p');
+        endParagraph.innerHTML = '<strong>End: </strong>' + notam.effectiveEnd;
+        endParagraph.style.marginBottom = '10px';
+        accordionContent.appendChild(endParagraph);
 
         accordion.appendChild(accordionItem);
-        
+
         // Increment id number for next notam
         notamItemNumber++
     });
