@@ -7,6 +7,8 @@ import filterNotam
 import AirportsLatLongConverter as alc
 import GetNOTAM
 import time
+import translateNOTAM
+import os
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '3af24b8e73398f446d45d66961a0bb4f'
@@ -27,51 +29,48 @@ def submit_form():
     if request.method == 'POST':
         
         NotamRequest = Models.NotamRequest(request.form)
+        airports = [NotamRequest.startAirport, NotamRequest.destAirport]
 
-        # get lat/long of airports
-        NotamRequest.startLat, NotamRequest.startLong = alc.get_lat_and_lon(NotamRequest.startAirport)
-        NotamRequest.destLat, NotamRequest.destLong = alc.get_lat_and_lon(NotamRequest.destAirport)
-        
-        NotamRequest.radius = int(NotamRequest.radius)
-        NotamRequest.pathWidth = int(NotamRequest.pathWidth)
-
-        # get the list of coordinates that need to be called to cover area
-        coordList = MinimalCirclesPath.getPath(NotamRequest.startLat, 
-                                               NotamRequest.startLong,
-                                               NotamRequest.destLat,
-                                               NotamRequest.destLong, 
-                                               NotamRequest.radius, # circle radius
-                                               NotamRequest.pathWidth) # path width
-        
-        # start timer
-        startTime = time.time() 
-
-        # call the API for each point
-        print("LOADING...")
-
-        # apiOutputs = [ GetNOTAM.getNotam( NotamRequest.effectiveStartDate,
-        #                                     NotamRequest.effectiveEndDate,
-        #                                     longitude, # longitude
-        #                                     latitude, # latitude
-        #                                     1, # page num
-        #                                     NotamRequest.radius) #page num here is one temporarily
-        #                                     for latitude, longitude in coordList ]
+        for destination in NotamRequest.destinations:
+            airports.append(destination)
         apiOutputs = []
 
-        for latitude, longitude in coordList:
-            new_data = GetNOTAM.buildNotam(NotamRequest.effectiveStartDate, NotamRequest.effectiveEndDate, longitude, latitude, NotamRequest.radius)
-            apiOutputs.extend(new_data)
+        #i is used to track where we are in the array of airports
+        # start timer
+        startTime = time.time() 
+               
+        #len(airports) -1 ensures the loop treats i as the starting location for each iteration and prevents out of index errors
+        for i in range(len(airports) - 1):
+            
+            # get lat/long of airports
+            startLat, startLong = alc.get_lat_and_lon(airports[i])
+            destLat, destLong = alc.get_lat_and_lon(airports[i+1])
+        
+            NotamRequest.radius = int(NotamRequest.radius)
+            NotamRequest.pathWidth = int(NotamRequest.pathWidth)
+ 
+            coordList = MinimalCirclesPath.getPath(startLat, 
+                                                       startLong,
+                                                       destLat,
+                                                       destLong, 
+                                                       NotamRequest.radius, # circle radius
+                                                       NotamRequest.pathWidth) # path width
+            
+            #deletes the first lat and long to prevent double calls
+            if i >= 1:
+                 del coordList[0]
 
     
 
         # Record end time
         endTime = time.time()    
         print(f"\ntime calling API {endTime - startTime} seconds")
-        
+
         # takes api output and parse it
         startTime = time.time()  # Record start time
         Notams = ParseNOTAM.ParseNOTAM(apiOutputs)
         endTime = time.time()    # Record end time
+
         print(f"time parsing: {endTime - startTime} seconds\n")
 
         ParseNOTAM.assign_color_to_notam(Notams)
@@ -124,5 +123,14 @@ def apply_filters():
     # Return the filtered NOTAM list as JSON data
     return jsonify(filtered_notams_dict)
 
+@app.route('/translateText', methods=['POST'])
+def translateText():
+    if request.method == 'POST':  
+        translatedText = translateNOTAM.callGemini(request.form['text'])
+    
+        return jsonify({'text' : translatedText})
+
+
 if __name__ == '__main__':
-    app.run(debug=True)
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port, debug=True)

@@ -10,7 +10,7 @@ function hideFilterOptions() {
     filterOptionsTimeout = setTimeout(function() {
         var filterOptionsDiv = document.getElementById("filterOptions");
         filterOptionsDiv.style.display = "none";
-    }, 200); // Adjust the delay as needed
+    }, 200);
 }
 
 function applyFilters() {
@@ -127,7 +127,7 @@ function updateNotamsList(notams) {
 
         var issuedParagraph = document.createElement('p');
         issuedParagraph.innerHTML = '<strong>Issued: </strong>' + notam.issued;
-        issuedParagraph.style.marginBottom = '5px'; // Apply margin-bottom style
+        issuedParagraph.style.marginBottom = '5px';
         accordionContent.appendChild(issuedParagraph);
 
         accordion.appendChild(accordionItem);
@@ -142,3 +142,131 @@ function updateNotamsList(notams) {
 function returnToForm() {
     window.location.href = "/";
 }
+var rankListTimeout; // Variable to store the timeout reference
+
+
+
+
+function updateRankNumbers() {
+    var listItems = document.querySelectorAll("#notamBoxes li");
+    listItems.forEach(function(item, index) {
+        var textContent = item.textContent.trim();
+        var match = textContent.match(/^\d+\.\s(.+)/);
+        if (match) {
+            item.textContent = (index + 1) + ". " + match[1];
+        } else {
+            item.textContent = (index + 1) + ". " + textContent;
+        }
+    });
+}
+
+function showRankList() {
+    clearTimeout(rankListTimeout); // Clear any existing timeout
+    var rankButton = document.getElementById("rankButton");
+    var rankListContainer = document.getElementById("sortableListContainer");
+    var buttonRect = rankButton.getBoundingClientRect();
+
+    rankListContainer.style.display = "block";
+    rankListContainer.style.top = buttonRect.bottom + "px";
+    rankListContainer.style.left = buttonRect.left + "px";
+	updateRankNumbers();
+    initializeDragAndDrop();
+}
+
+function hideRankList() {
+    clearTimeout(rankListTimeout);
+    rankListTimeout = setTimeout(function() {
+        var rankListContainer = document.getElementById("sortableListContainer");
+        rankListContainer.style.display = "none";
+    }, 200);
+}
+
+function showListContainer() {
+    clearTimeout(rankListTimeout);
+}
+
+function hideListContainer() {
+    rankListTimeout = setTimeout(function() {
+        var rankListContainer = document.getElementById("sortableListContainer");
+        rankListContainer.style.display = "none";
+    }, 200);
+}
+
+function initializeDragAndDrop() {
+    const sortableList = document.getElementById("notamBoxes");
+    let draggedItem = null;
+
+    sortableList.addEventListener("dragstart", (e) => {
+        draggedItem = e.target;
+        e.target.classList.add("dragging");
+        setTimeout(() => {
+            e.target.style.display = "none";
+        }, 0);
+    });
+
+    sortableList.addEventListener("dragend", (e) => {
+        e.target.style.display = "";
+        e.target.classList.remove("dragging");
+        draggedItem = null;
+		updateRankNumbers();
+    });
+
+    sortableList.addEventListener("dragover", (e) => {
+        e.preventDefault();
+        const afterElement = getDragAfterElement(sortableList, e.clientY);
+        const currentElement = document.querySelector(".dragging");
+        if (afterElement == null) {
+            sortableList.appendChild(draggedItem);
+        } else {
+            sortableList.insertBefore(draggedItem, afterElement);
+        }
+    });
+
+    const getDragAfterElement = (container, y) => {
+        const draggableElements = [...container.querySelectorAll("li:not(.dragging)")];
+        return draggableElements.reduce(
+            (closest, child) => {
+                const box = child.getBoundingClientRect();
+                const offset = y - box.top - box.height / 2;
+                if (offset < 0 && offset > closest.offset) {
+                    return {
+                        offset: offset,
+                        element: child,
+                    };
+                } else {
+                    return closest;
+                }
+            },
+            {
+                offset: Number.NEGATIVE_INFINITY,
+            }
+        ).element;
+    };
+}
+
+// function to translate the text asynchronously. This way you do not need to refresh the page
+function translateText(textID) {
+
+    // get the text to be translated
+    var text = $('#textID' + textID).text();
+  
+    // replace the previous translation if there was one with a loading animation
+    document.getElementById("translation"+textID).innerHTML =  '<p id="translationID"'+ textID+'><div class="spinner-border spinner-border-sm" role="status"><span class="visually-hidden">Loading...</span></div></p>';
+  
+    // call the server to translate the text
+    $.ajax({
+        type: 'POST',
+        url: '/translateText',
+        data: {"text": text},
+        success:  function(data) {
+          // if successfully translated, replace the loading animation with the translated text
+          document.getElementById("translation"+textID).innerHTML = '<p id="translationID"'+ textID+'><strong>Translation: </strong>' + data.text + '</p>';
+        },
+        error: function(data) {
+          // if unsucessful, replace the loading animation with an error message
+          document.getElementById("translation"+textID).innerHTML = '<p id="translationID"'+ textID+'><strong>Translation: </strong> There was an error... please try again</p>';
+        }
+    })
+  
+  }
+

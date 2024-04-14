@@ -55,3 +55,8 @@ def assign_color_to_notam(notams):
         else:
             notam.color = '#bad4b7' # green
 
+    
+
+if __name__ == '__main__':
+    NOTAMs = ParseNOTAM()
+    print(NOTAMs)
