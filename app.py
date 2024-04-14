@@ -81,9 +81,6 @@ def submit_form():
 
         for notam in Notams:
             print(notam.id + "   " + notam.color)
-        
-        #time.sleep(2)
-        #session['notams'] = [2,2,2]
 
         return ''
 
