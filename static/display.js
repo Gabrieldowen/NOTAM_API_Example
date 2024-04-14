@@ -86,8 +86,27 @@ function updateNotamsList(notams) {
         label.classList.add('accordion-header', 'custom-checkbox-label');
         // Unique id for each notam
         label.setAttribute('for', 'item' + notamItemNumber);
-        label.textContent = 'Notam ID: ' + notam.id;
         label.style.backgroundColor = notam.color;
+
+        // Add the icons for each type of notam.
+        var icon;
+        if (notam.color === '#ff7f7f') {
+            icon = document.createElement('i');
+            icon.classList.add('fas', 'fa-exclamation-triangle');
+            icon.style.color = 'black';
+        } else if (notam.color === '#bad4b7') {
+            icon = document.createElement('i');
+            icon.classList.add('fas', 'fa-check-square');
+            icon.style.color = 'black';
+        } else if (notam.color === '#ffd966') {
+            icon = document.createElement('i');
+            icon.classList.add('fas', 'fa-exclamation-circle');
+            icon.style.color = 'black';
+        }
+        if (icon) {
+            label.appendChild(icon);
+        }
+        label.appendChild(document.createTextNode(' Notam ID: ' + notam.id));
         accordionItem.appendChild(label);
 
         var accordionContent = document.createElement('div');
