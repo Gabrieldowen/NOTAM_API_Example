@@ -250,59 +250,69 @@ group .ticks span {
 }
 
 /* Styling for the drag and drop box */
-.draggable {
-    margin: 5px;
-    padding: 5px;
-	width: 50%;
-    border: 1px solid #ccc;
-    background-color: #f9f9f9;
-    cursor: grab;
+.sortable-list {
+  max-width: 300px;
+  margin: 0 auto;
+  position: absolute;
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  padding: 10px;
+  display: none;
+  z-index: 1;
 }
 
-.draggable:active {
-    cursor: grabbing;
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+ 
+li {
+  background-color: #f0f0f0;
+  padding: 10px;
+  margin: 5px;
+  cursor: grab;
 }
 
 /* Style for the tooltip */
 label[title]::after {
-    content: attr(title);
-    display: none;
-    position: absolute;
-    background-color: #000;
-    color: #fff;
-    padding: 5px;
-    border-radius: 5px;
-    white-space: nowrap;
-    z-index: 1;
+  content: attr(title);
+  display: none;
+  position: absolute;
+  background-color: #000;
+  color: #fff;
+  padding: 5px;
+  border-radius: 5px;
+  white-space: nowrap;
+  z-index: 1;
 }
 
 /* Show tooltip on hover */
 label:hover::after {
-    display: block;
-    bottom: 100%; /* Position the tooltip above the label */
-    left: 50%;
-    transform: translateX(-50%);
+  display: block;
+  bottom: 100%; /* Position the tooltip above the label */
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 #filterOptions {
-    display: none;
-    position: absolute;
-    z-index: 1;
+  display: none;
+  position: absolute;
+  z-index: 1;
 }
 
 #filterButton:hover + #filterOptions,
 #filterOptions:hover {
-    display: block;
+  display: block;
 }
 
 .dropdown-menu {
-    background-color: #f9f9f9;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+  background-color: #f9f9f9;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
 /* Disable tooltips for labels inside the dropdown menu */
 .dropdown-menu label[title]::after {
-    display: none;
+  display: none;
 }

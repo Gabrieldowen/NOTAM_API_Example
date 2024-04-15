@@ -7,6 +7,8 @@ import filterNotam
 import AirportsLatLongConverter as alc
 import GetNOTAM
 import time
+import translateNOTAM
+import os
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '3af24b8e73398f446d45d66961a0bb4f'
@@ -81,7 +83,7 @@ def submit_form():
 
         for notam in Notams:
             print(notam.id + "   " + notam.color)
-
+        
         return ''
 
 @app.route('/display', methods=['GET'])
@@ -124,5 +126,13 @@ def apply_filters():
     # Return the filtered NOTAM list as JSON data
     return jsonify(filtered_notams_dict)
 
+@app.route('/translateText', methods=['POST'])
+def translateText():
+    if request.method == 'POST':  
+        translatedText = translateNOTAM.callGemini(request.form['text'])
+    
+        return jsonify({'text' : translatedText})
+
 if __name__ == '__main__':
-    app.run(debug=True)
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port, debug=True)
