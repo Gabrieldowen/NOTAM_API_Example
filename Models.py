@@ -16,7 +16,6 @@ class Notam:
         self.effectiveStart = data.get('effectiveStart', None)
         self.effectiveEnd = data.get('effectiveEnd', None)
         self.text = data.get('text', None)
-        self.translatedText = None
         self.classification = data.get('classification', None)
         self.accountId = data.get('accountId', None)
         self.lastUpdated = data.get('lastUpdated', None)
@@ -56,11 +55,6 @@ class NotamRequest:
     def __init__(self, data):
         self.startAirport = data.get('startAirport', None)
         self.destAirport = data.get('destAirport', None)
-        self.destinations = []
-        index = 2
-        while f'destinationLocation{index}' in data:
-            self.destinations.append( data.get(f'destinationLocation{index}') )
-            index += 1
         self.responseFormat = data.get('responseFormat', None)
         self.effectiveStartDate =  data.get('effectiveStartDate', None)
         self.effectiveEndDate =  data.get('effectiveEndDate', None)
