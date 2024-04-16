@@ -107,7 +107,7 @@ function updateNotamsList(notams) {
         if (icon) {
             label.appendChild(icon);
         }
-        label.appendChild(document.createTextNode('Notam ID: ' + notam.id + " Type: " + notam.type));
+        label.appendChild(document.createTextNode(' Notam ID: ' + notam.id + " Type: " + notam.type));
         accordionItem.appendChild(label);
 
         var accordionContent = document.createElement('div');
