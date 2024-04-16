@@ -79,12 +79,9 @@ def identify_lighting_marking_notams(notams):
 def filter_out_lighting_marking_notams(notams, marked_notams):
     return [notam for notam in notams if notam not in marked_notams]
 
+
 def filter_classification(notams, classification):
-    marked_notams = set()
-    for notam in notams:
-        if classification in notam.classification:
-            marked_notams.add(notam)
-    return marked_notams
+    return { notam for notam in notams if classification == notam.classification }
 
 def filter_out_classification(notams, classification):
     marked_notams = filter_classification(notams, classification)
