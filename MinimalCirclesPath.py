@@ -96,7 +96,6 @@ def getPath( startLat, startLong, destLat, destLong, radius, pathWidth):
 
 
 # THIS IS AN EXAMPLE
-"""
 if __name__ == '__main__':
     pathList = getPath(startLat = 32.8968,  # DFW Latitude
                    startLong = -97.0380,  # DFW Longitude
@@ -107,4 +106,3 @@ if __name__ == '__main__':
 
     for i,item in enumerate(pathList):
         print(f"point #{i+1}) {item}\n")
-"""
