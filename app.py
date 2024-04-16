@@ -30,39 +30,44 @@ def submit_form():
         
         NotamRequest = Models.NotamRequest(request.form)
 
-        # get lat/long of airports
-        NotamRequest.startLat, NotamRequest.startLong = alc.get_lat_and_lon(NotamRequest.startAirport)
-        NotamRequest.destLat, NotamRequest.destLong = alc.get_lat_and_lon(NotamRequest.destAirport)
-        
-        NotamRequest.radius = int(NotamRequest.radius)
-        NotamRequest.pathWidth = int(NotamRequest.pathWidth)
+        airports = [NotamRequest.startAirport, NotamRequest.destAirport]
 
-        # get the list of coordinates that need to be called to cover area
-        coordList = MinimalCirclesPath.getPath(NotamRequest.startLat, 
-                                               NotamRequest.startLong,
-                                               NotamRequest.destLat,
-                                               NotamRequest.destLong, 
-                                               NotamRequest.radius, # circle radius
-                                               NotamRequest.pathWidth) # path width
-        
+        for destination in NotamRequest.destinations:
+            airports.append(destination)
+        apiOutputs = []
+
+        #i is used to track where we are in the array of airports
         # start timer
         startTime = time.time() 
 
-        # call the API for each point
-        print("LOADING...")
+        #len(airports) -1 ensures the loop treats i as the starting location for each iteration and prevents out of index errors
+        for i in range(len(airports) - 1):
 
-        # apiOutputs = [ GetNOTAM.getNotam( NotamRequest.effectiveStartDate,
-        #                                     NotamRequest.effectiveEndDate,
-        #                                     longitude, # longitude
-        #                                     latitude, # latitude
-        #                                     1, # page num
-        #                                     NotamRequest.radius) #page num here is one temporarily
-        #                                     for latitude, longitude in coordList ]
-        apiOutputs = []
+            # get lat/long of airports
+            startLat, startLong = alc.get_lat_and_lon(airports[i])
+            destLat, destLong = alc.get_lat_and_lon(airports[i+1])
 
-        for latitude, longitude in coordList:
-            new_data = GetNOTAM.buildNotam(NotamRequest.effectiveStartDate, NotamRequest.effectiveEndDate, longitude, latitude, NotamRequest.radius)
-            apiOutputs.extend(new_data)
+            NotamRequest.radius = int(NotamRequest.radius)
+            NotamRequest.pathWidth = int(NotamRequest.pathWidth)
+
+            coordList = MinimalCirclesPath.getPath(startLat, 
+                                                       startLong,
+                                                       destLat,
+                                                       destLong, 
+                                                       NotamRequest.radius, # circle radius
+                                                       NotamRequest.pathWidth) # path width
+
+            #deletes the first lat and long to prevent double calls
+            if i >= 1:
+                 del coordList[0]
+
+            # call the API for each point
+            print("LOADING...")
+
+            #after the lat and longs are gathered in coordList, buildNotam is used to gather all the notams for the path
+            for latitude, longitude in coordList:
+                new_data = GetNOTAM.buildNotam(NotamRequest.effectiveStartDate, NotamRequest.effectiveEndDate, longitude, latitude, NotamRequest.radius)
+                apiOutputs.extend(new_data)
 
     
 
@@ -80,9 +85,6 @@ def submit_form():
         
         # Store initial NOTAMs in session
         session['initial_notams'] = [notam.to_dict() for notam in Notams]
-
-        for notam in Notams:
-            print(notam.id + "   " + notam.color)
         
         return ''
 

@@ -10,7 +10,7 @@ function hideFilterOptions() {
     filterOptionsTimeout = setTimeout(function() {
         var filterOptionsDiv = document.getElementById("filterOptions");
         filterOptionsDiv.style.display = "none";
-    }, 200); // Adjust the delay as needed
+    }, 200);
 }
 
 function applyFilters() {
@@ -127,7 +127,7 @@ function updateNotamsList(notams) {
 
         var issuedParagraph = document.createElement('p');
         issuedParagraph.innerHTML = '<strong>Issued: </strong>' + notam.issued;
-        issuedParagraph.style.marginBottom = '5px'; // Apply margin-bottom style
+        issuedParagraph.style.marginBottom = '10px'; // Apply margin-bottom style
         accordionContent.appendChild(issuedParagraph);
 
         accordion.appendChild(accordionItem);
