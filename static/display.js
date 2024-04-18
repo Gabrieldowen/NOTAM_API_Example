@@ -19,13 +19,15 @@ function applyFilters() {
     var obstacleNotamsChecked = document.getElementById("obstacle_notams").checked;
     var highObstacleNotamsChecked = document.getElementById("high_obstacle_notams").checked;
     var lightingMarkingNotamsChecked = document.getElementById("lighting_marking_notams").checked;
+    var cancelledNotamsChecked = document.getElementById("cancelled_notams").checked;
 
     // Prepare a data object to send to the server
     var filters = {
         closedRunways: closedRunwaysChecked,
         obstacleNotams: obstacleNotamsChecked,
         highObstacleNotams: highObstacleNotamsChecked,
-        lightingMarkingNotams: lightingMarkingNotamsChecked
+        lightingMarkingNotams: lightingMarkingNotamsChecked,
+        cancelledNotams : cancelledNotamsChecked
     };
 
     // Convert the filters object to JSON string

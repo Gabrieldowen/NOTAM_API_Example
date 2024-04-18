@@ -75,8 +75,8 @@ def index():
         
         # Store initial NOTAMs in session
         session['initial_notams'] = [notam.to_dict() for notam in Notams]
-        
-        return render_template('display.html', notams = Notams)
+        closedR = filterNotam.extract_closed_runways(Notams)
+        return render_template('display.html', notams = Notams, closedR = closedR)
         
     return render_template('form.html', airportIATA = airportIATA)
 
@@ -103,6 +103,9 @@ def apply_filters():
     if filter_options.get('lightingMarkingNotams') == True:
         markingNotams = filterNotam.identify_lighting_marking_notams(filtered_Notams)
         filtered_Notams = filterNotam.filter_out_lighting_marking_notams(filtered_Notams, markingNotams)
+     
+    if filter_options.get('cancelledNotams') == True:
+        filtered_Notams = filterNotam.filter_out_keyword(filtered_Notams, "CANCELED")
     
     # Update session with filtered NOTAMs
     session['filtered_notams'] = [notam.to_dict() for notam in filtered_Notams]
