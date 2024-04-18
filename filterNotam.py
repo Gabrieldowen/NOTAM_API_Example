@@ -80,6 +80,22 @@ def identify_lighting_marking_notams(notams):
 def filter_out_lighting_marking_notams(notams, marked_notams):
     return [notam for notam in notams if notam not in marked_notams]
 
+def filter_classification(notams, classification):
+    return { notam for notam in notams if classification == notam.classification }
 
+def filter_out_classification(notams, classification):
+    marked_notams = filter_classification(notams, classification)
+    return [notam for notam in notams if notam not in marked_notams]
+
+def filter_keyword(notams, keyword):
+    marked_notams = set()
+    for notam in notams:
+        if keyword in notam.text:
+            marked_notams.add(notam)
+    return marked_notams
+
+def filter_out_keyword(notams, keyword):
+    marked_notams = filter_keyword(notams, keyword)
+    return [notam for notam in notams if notam not in marked_notams]
 
 

@@ -27,6 +27,8 @@
             <label for="high_obstacle_notams" title="Keep ONLY NOTAMs above 500ft">High Obstacle NOTAMs</label><br>
             <input type="checkbox" id="lighting_marking_notams" name="filter_options" value="lighting_marking_notams">
             <label for="lighting_marking_notams" title="Remove ALL NOTAMs marked as lighting or marking">Lighting & Marking NOTAMs</label><br>
+            <input type="checkbox" id="cancelled_notams" name="filter_options" value="cancelled_notams">
+            <label for="cancelled_notams" title="remove ALL NOTAMs marked as Cancelled">Remove Cancelled NOTAMs</label><br>
             <input type="hidden" id="notamsJson" value="{{ notams_json }}">
             <button type="button" onclick="applyFilters()">Apply Filters</button>
         </form>
@@ -46,8 +48,8 @@
 
 <div class="container mt-5" id="notamList">
     <h1 style="margin-left: -2px;">NOTAM Information</h1>
-        <p> Total number of Notams fetched: {{ notams|length }} </p>
-    
+    <p>Total number of Notams fetched: {{ notams|length }}</p>
+    <p>{{ closedR|length }} deal with Runway Closures</p>
     <div class="accordion">
         {% for notam in notams %}
         <div class="accordion-item">
