@@ -1,6 +1,5 @@
 from math import sin, cos, radians, asin, atan2, sqrt, degrees, ceil, floor
 
-
 def calculateBearing(startLat, startLon, destLat, destLon):
     startLatRad = radians(startLat)
     startLonRad = radians(startLon)

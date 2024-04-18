@@ -63,6 +63,14 @@ function updateNotamsList(notams) {
     var totalNotams = document.createElement('p');
     totalNotams.textContent = 'Total number of Notams fetched: ' + notams.length;
     notamsContainer.appendChild(totalNotams);
+
+    // Create div element for accordion
+    var accordion = document.createElement("div");
+    accordion.classList.add("accordion");
+    notamsContainer.appendChild(accordion);
+
+    // Notam item number for each notam to have a different id
+    var notamItemNumber = 1;
 	
 	// Populate the container with the filtered NOTAMs
     notams.forEach(function(notam) {
@@ -72,13 +80,36 @@ function updateNotamsList(notams) {
         var checkbox = document.createElement('input');
         checkbox.type = 'checkbox';
         checkbox.classList.add('custom-checkbox');
-        checkbox.id = 'item';
+        // Unique id for each notam
+        checkbox.id = 'item' + notamItemNumber;
         accordionItem.appendChild(checkbox);
 
         var label = document.createElement('label');
         label.classList.add('accordion-header', 'custom-checkbox-label');
-        label.setAttribute('for', 'item');
-        label.textContent = 'Notam ID: ' + notam.id;
+        // Unique id for each notam
+        label.setAttribute('for', 'item' + notamItemNumber);
+
+        label.style.backgroundColor = notam.color;
+
+        // Add the icons for each type of notam.
+        var icon;
+        if (notam.color === '#ff7f7f') {
+            icon = document.createElement('i');
+            icon.classList.add('fas', 'fa-exclamation-triangle');
+            icon.style.color = 'black';
+        } else if (notam.color === '#bad4b7') {
+            icon = document.createElement('i');
+            icon.classList.add('fas', 'fa-check-square');
+            icon.style.color = 'black';
+        } else if (notam.color === '#ffd966') {
+            icon = document.createElement('i');
+            icon.classList.add('fas', 'fa-exclamation-circle');
+            icon.style.color = 'black';
+        }
+        if (icon) {
+            label.appendChild(icon);
+        }
+        label.appendChild(document.createTextNode(' Notam ID: ' + notam.id + " Type: " + notam.type));
         accordionItem.appendChild(label);
 
         var accordionContent = document.createElement('div');
@@ -97,12 +128,43 @@ function updateNotamsList(notams) {
         typeParagraph.innerHTML = '<strong>Type: </strong>' + notam.type;
         accordionContent.appendChild(typeParagraph);
 
-        var issuedParagraph = document.createElement('p');
-        issuedParagraph.innerHTML = '<strong>Issued: </strong>' + notam.issued;
-        issuedParagraph.style.marginBottom = '5px';
-        accordionContent.appendChild(issuedParagraph);
+        var sectionParagraph = document.createElement('p');
+        sectionParagraph.id = `sectionID${notamItemNumber}`;
+        accordionContent.appendChild(sectionParagraph);
 
-        notamsContainer.appendChild(accordionItem);
+        // Create button element for translation
+        var translationButton = document.createElement('button');
+        translationButton.classList.add('btn', 'custom-btn', 'btn-sm');
+        translationButton.innerHTML = '<i class="fa-solid fa-robot"></i>';
+        function handleTranslationButtonClick(itemNumber) {
+            translationButton.addEventListener('click', function() {
+                translateText(itemNumber);
+            });
+        }
+        handleTranslationButtonClick(notamItemNumber);
+        sectionParagraph.appendChild(translationButton);
+
+        var textParagraph = document.createElement('a');
+        textParagraph.innerHTML = `<strong> Text: </strong><a id="textID${notamItemNumber}">${notam.text}</a>`;
+        sectionParagraph.appendChild(textParagraph);
+
+        var translationParagraph = document.createElement('p');
+        translationParagraph.id = `translation${notamItemNumber}`;
+        accordionContent.appendChild(translationParagraph);
+
+        var startParagraph = document.createElement('p');
+        startParagraph.innerHTML = '<strong>Start: </strong>' + notam.effectiveStart;
+        accordionContent.appendChild(startParagraph);
+
+        var endParagraph = document.createElement('p');
+        endParagraph.innerHTML = '<strong>End: </strong>' + notam.effectiveEnd;
+        endParagraph.style.marginBottom = '10px';
+        accordionContent.appendChild(endParagraph);
+
+        accordion.appendChild(accordionItem);
+
+        // Increment id number for next notam
+        notamItemNumber++
     });
 }
 
@@ -210,10 +272,10 @@ function translateText(textID) {
 
     // get the text to be translated
     var text = $('#textID' + textID).text();
-  
+
     // replace the previous translation if there was one with a loading animation
     document.getElementById("translation"+textID).innerHTML =  '<p id="translationID"'+ textID+'><div class="spinner-border spinner-border-sm" role="status"><span class="visually-hidden">Loading...</span></div></p>';
-  
+
     // call the server to translate the text
     $.ajax({
         type: 'POST',
@@ -228,6 +290,11 @@ function translateText(textID) {
           document.getElementById("translation"+textID).innerHTML = '<p id="translationID"'+ textID+'><strong>Translation: </strong> There was an error... please try again</p>';
         }
     })
-  
+
   }
 
+
+// Function to return to the form page.
+function returnToForm() {
+    window.location.href = "/";
+}

@@ -46,7 +46,7 @@
 	</div>
 </div>
 
- <div class="container mt-5" id="notamList">   
+<div class="container mt-5" id="notamList">
     <h1 style="margin-left: -2px;">NOTAM Information</h1>
     <p>Total number of Notams fetched: {{ notams|length }}</p>
     <p>{{ closedR|length }} deal with Runway Closures</p>
@@ -54,7 +54,16 @@
         {% for notam in notams %}
         <div class="accordion-item">
             <input type="checkbox" class="custom-checkbox" id="item{{ loop.index }}">
-            <label for="item{{ loop.index }}" class="accordion-header custom-checkbox-label">Notam ID: {{ notam.id }} Type: {{notam.type}}</label>
+            <label for="item{{ loop.index }}" style="background-color: {{ notam.color }};" class="accordion-header custom-checkbox-label">
+                {% if notam.color == '#ff7f7f' %}
+                    <i class="fas fa-exclamation-triangle" style="color: black;"></i>
+                {% elif notam.color == '#bad4b7' %}
+                    <i class="fas fa-check-square" style="color: black;"></i>
+                {% elif notam.color == '#ffd966' %}
+                    <i class="fas fa-exclamation-circle" style="color: black;"></i>
+                {% endif %}
+                Notam ID: {{ notam.id }} Type: {{notam.type}}
+            </label>
             <div class="accordion-content">
                 <p><strong>Series: </strong>{{ notam.series }}</p>
                 <p><strong>Number: </strong>{{ notam.number }}</p>
@@ -75,5 +84,7 @@
         {% endfor %}
     </div>
 </div>
+
+<script src="static/display.js"></script>
 
 {% endblock %}

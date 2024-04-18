@@ -10,6 +10,5 @@ def install_dependencies():
         print("Dependencies installed successfully.")
     except subprocess.CalledProcessError as e:
         print(f"Error installing dependencies: {e}")
-
 if __name__ == "__main__":
     install_dependencies()

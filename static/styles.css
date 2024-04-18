@@ -241,12 +241,12 @@ group .ticks span {
 }
 
 .dropdown-option {
-  padding: 3px;
-  cursor: pointer;
+    padding: 3px;
+    cursor: pointer;
 }
 
 .dropdown-option:hover {
-  background-color: #f0f0f0;
+    background-color: #f0f0f0;
 }
 
 /* Styling for the drag and drop box */
@@ -260,7 +260,7 @@ group .ticks span {
   display: none;
   z-index: 1;
 }
- 
+
 ul {
   list-style-type: none;
   padding: 0;
