@@ -39,6 +39,16 @@ def ParseNOTAM(apiOutput=None):
 
     return NOTAMs
 
-if __name__ == '__main__':
-    NOTAMs = ParseNOTAM()
-    print(NOTAMs)
+
+def assign_color_to_notam(notams):
+    for notam in notams:
+        # Go through every notam and look for key words to assign color value
+        if 'LGT' in notam.text or 'MKR' in notam.text or 'MARKINGS' in notam.text or 'LIGHTING' in notam.text or 'OBST' in notam.text:
+            notam.color = '#ffd966' # yellow
+
+        elif 'CLSD' in notam.text:
+            notam.color = '#ff7f7f' # red
+
+        else:
+            notam.color = '#bad4b7' # green
+

@@ -195,17 +195,18 @@ function submitForm() {
   document.querySelector('label[for="startAirport"]').remove();
 
   for (let i = 2; i <= 4; i++) {
-      document.getElementById('destinationLocation' + i);
+    document.getElementById('destinationLocation' + i);
   }
+
   document.getElementById('submitButton').remove();
   document.getElementById('addButton').remove();
-  document.getElementById('additionalDestinations').remove();
-    
   // Remove all the additional destinations
-  
+  document.getElementById('additionalDestinations').remove();
+
+
   var hiddenElements = document.querySelectorAll('.hiddenObj');
 
-  // Display loading text for the user.
+  // Display loading animation for the user.
   hiddenElements.forEach(function (element) {
       element.style.display = 'block';
   });
@@ -215,17 +216,24 @@ function submitForm() {
       method: 'POST',
       body: formData,
   })
-  
-  // Update the display page after the call to the server is done.
-  .then(response => response.text())
-  .then(data => {
-      // Replace the entire body with the new content
-      document.body.innerHTML = data;
+
+  .then(response => {
+    // Check if the response is successful
+    if (response.ok) {
+        // Redirect to the new page (display.html) upon successful form submission
+        // Hide the loading animation
+        hiddenElements.forEach(function (element) {
+            element.style.display = 'none';
+        });
+        window.location.href = '/display';
+    } else {
+        // Handle error response
+        console.error('Server response not OK');
+    }
   })
-  // Error catching just in case
-  .catch(error => console.error('Error:', error))
-  .finally(() => {
-      // Hide loading elements
+  .catch(error => {
+      console.error('Error:', error);
+      // Hide the loading animation (in case of error)
       hiddenElements.forEach(function (element) {
           element.style.display = 'none';
       });
@@ -421,9 +429,10 @@ function checkInputs(){
   
 }
 
-// Function to return to the form page.
-function returnToForm() {
-  window.location.href = "/";
-}
+// Add an event listener to the dataForm to checkinputs before submitting.
+document.getElementById('dataForm').addEventListener('submit', function(event) {
+  event.preventDefault(); // Prevent default form submission
 
+  checkInputs();
+});
 

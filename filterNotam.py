@@ -73,12 +73,12 @@ def identify_lighting_marking_notams(notams):
     for notam in notams:
         if 'LGT' in notam.text or 'MKR' in notam.text or 'MARKINGS' in notam.text or 'LIGHTING' in notam.text:
             marked_notams.add(notam)
+    
     return marked_notams
 
 # This function will filter out NOTAMs that have been marked as lighting or marking NOTAMs.
 def filter_out_lighting_marking_notams(notams, marked_notams):
     return [notam for notam in notams if notam not in marked_notams]
-
 
 def filter_classification(notams, classification):
     return { notam for notam in notams if classification == notam.classification }
