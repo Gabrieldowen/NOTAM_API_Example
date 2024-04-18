@@ -38,4 +38,4 @@ if __name__ == "__main__":
     apiOutputs = generateTestData(testDataRequest)
 
     # save the test data
-    saveTestData(testDataRequest, apiOutputs)
+    # saveTestData(testDataRequest, apiOutputs)
