@@ -21,13 +21,21 @@ function applyFilters() {
     var lightingMarkingNotamsChecked = document.getElementById("lighting_marking_notams").checked;
     var cancelledNotamsChecked = document.getElementById("cancelled_notams").checked;
 
-    // Prepare a data object to send to the server
+    // Get the order of NOTAM types from the sortable list
+    var notamTypesOrder = [];
+    var notamTypeItems = document.querySelectorAll("#notamBoxes li");
+    notamTypeItems.forEach(function(item) {
+        notamTypesOrder.push(item.textContent.trim());
+    });
+	
+	// Prepare a data object to send to the server
     var filters = {
         closedRunways: closedRunwaysChecked,
         obstacleNotams: obstacleNotamsChecked,
         highObstacleNotams: highObstacleNotamsChecked,
         lightingMarkingNotams: lightingMarkingNotamsChecked,
-        cancelledNotams : cancelledNotamsChecked
+        cancelledNotams : cancelledNotamsChecked,
+		notamTypesOrder: notamTypesOrder
     };
 
     // Convert the filters object to JSON string
@@ -39,6 +47,39 @@ function applyFilters() {
         type: 'POST',
         contentType: 'application/json',
         data: filtersJson,
+        success: function(response) {
+            // Update the display with filtered NOTAMs
+            updateNotamsList(response);
+        },
+        error: function(xhr, status, error) {
+            // Handle errors
+            console.error(error);
+        }
+    });
+}
+
+function applyRanking() {
+	// Get the order of NOTAM types from the sortable list
+    var notamTypesOrder = [];
+    var notamTypeItems = document.querySelectorAll("#notamBoxes li");
+    notamTypeItems.forEach(function(item) {
+        notamTypesOrder.push(item.textContent.trim());
+    });
+	
+	// Prepare a data object to send to the server
+    var ranking = {
+		notamTypesOrder: notamTypesOrder
+    };
+	
+	// Convert the filters object to JSON string
+    var ranksJson = JSON.stringify(ranking);
+	
+	// Send an AJAX request to apply filters
+    $.ajax({
+        url: '/apply_sorting',
+        type: 'POST',
+        contentType: 'application/json',
+        data: ranksJson,
         success: function(response) {
             // Update the display with filtered NOTAMs
             updateNotamsList(response);
@@ -218,6 +259,7 @@ function hideListContainer() {
 function initializeDragAndDrop() {
     const sortableList = document.getElementById("notamBoxes");
     let draggedItem = null;
+	let lastY = 0;
 
     sortableList.addEventListener("dragstart", (e) => {
         draggedItem = e.target;
@@ -231,22 +273,27 @@ function initializeDragAndDrop() {
         e.target.style.display = "";
         e.target.classList.remove("dragging");
         draggedItem = null;
-		updateRankNumbers();
+        updateRankNumbers();
     });
 
     sortableList.addEventListener("dragover", (e) => {
         e.preventDefault();
-        const afterElement = getDragAfterElement(sortableList, e.clientY);
-        const currentElement = document.querySelector(".dragging");
-        if (afterElement == null) {
-            sortableList.appendChild(draggedItem);
-        } else {
-            sortableList.insertBefore(draggedItem, afterElement);
+        const y = e.clientY;
+
+        if (y > lastY + 20 || y < lastY - 20) {
+            lastY = y;
+            const afterElement = getDragAfterElement(sortableList, y);
+            const currentElement = document.querySelector(".dragging");
+            if (afterElement == null) {
+                sortableList.appendChild(draggedItem);
+            } else {
+                sortableList.insertBefore(draggedItem, afterElement);
+            }
         }
     });
 
     const getDragAfterElement = (container, y) => {
-        const draggableElements = [...container.querySelectorAll("li:not(.dragging)")];
+        const draggableElements = Array.from(container.querySelectorAll("li:not(.dragging)"));
         return draggableElements.reduce(
             (closest, child) => {
                 const box = child.getBoundingClientRect();
