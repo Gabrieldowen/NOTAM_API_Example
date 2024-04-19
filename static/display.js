@@ -169,6 +169,10 @@ function updateNotamsList(notams) {
         typeParagraph.innerHTML = '<strong>Type: </strong>' + notam.type;
         accordionContent.appendChild(typeParagraph);
 
+        var classificationParagraph = document.createElement('p');
+        classificationParagraph.innerHTML = '<strong>Classification: </strong>' + notam.classification;
+        accordionContent.appendChild(classificationParagraph);
+
         var sectionParagraph = document.createElement('p');
         sectionParagraph.id = `sectionID${notamItemNumber}`;
         accordionContent.appendChild(sectionParagraph);

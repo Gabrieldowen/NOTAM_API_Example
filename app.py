@@ -82,8 +82,12 @@ def submit_form():
         endTime = time.time()    # Record end time
         print(f"time parsing: {endTime - startTime} seconds\n")
 
+        # Assigns color severity to notams
         ParseNOTAM.assign_color_to_notam(Notams)
-        
+
+        # Sorts by color severity
+        Notams = ParseNOTAM.sort_by_color(Notams)
+
         # Remove previous session data
         session.clear()
         # Store initial NOTAMs in session
@@ -150,6 +154,11 @@ def apply_sorting():
     notams_by_classification = defaultdict(list)
     for notam in filtered_Notams:
         notams_by_classification[notam.classification].append(notam)
+
+    # Sort NOTAMs within each classification by severity
+    for classification, notamList in notams_by_classification.items():
+        notams_by_classification[classification] = sorted(notamList, key=lambda x: (
+            0 if x.color == '#ff7f7f' else (1 if x.color == '#ffd966' else 2), x.color))
     
     # Sort NOTAMs based on the order of classifications
     sorted_notams = []
