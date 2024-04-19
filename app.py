@@ -9,6 +9,7 @@ import GetNOTAM
 import time
 import translateNOTAM
 import os
+from collections import defaultdict
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '3af24b8e73398f446d45d66961a0bb4f'
@@ -83,6 +84,8 @@ def submit_form():
 
         ParseNOTAM.assign_color_to_notam(Notams)
         
+        # Remove previous session data
+        session.clear()
         # Store initial NOTAMs in session
         session['initial_notams'] = [notam.to_dict() for notam in Notams]
 
@@ -100,11 +103,11 @@ def display():
 @app.route('/apply_filters', methods=['POST'])
 def apply_filters():
     filter_options = request.json
-    # Retrieve initial NOTAMs from server-side session
-    initial_notams = [Models.Notam(notam_dict) for notam_dict in session.get('initial_notams', [])]
     
-    # Apply selected filters to the initial NOTAM list
-    filtered_Notams = initial_notams
+    # Retrieve sorted NOTAMs from server-side session if available, otherwise use initial NOTAMs
+    filtered_Notams = [Models.Notam(notam_dict) for notam_dict in session.get('sorted_notams', [])]
+    if not filtered_Notams:
+        filtered_Notams = [Models.Notam(notam_dict) for notam_dict in session.get('initial_notams', [])]
     
     if filter_options.get('closedRunways') == True:
         closed_runways = filterNotam.extract_closed_runways(filtered_Notams)
@@ -132,6 +135,35 @@ def apply_filters():
     
     # Return the filtered NOTAM list as JSON data
     return jsonify(filtered_notams_dict)
+
+@app.route('/apply_sorting', methods=['POST'])
+def apply_sorting():
+    # Get the sorted order of NOTAM types and extract classifications
+    classifications = [order.split('. ')[1] for order in request.json.get('notamTypesOrder', [])]
+    
+    # Retrieve filtered NOTAMs from server-side session if available, otherwise use initial NOTAMs
+    filtered_Notams = [Models.Notam(notam_dict) for notam_dict in session.get('filtered_notams', [])]
+    if not filtered_Notams:
+        filtered_Notams = [Models.Notam(notam_dict) for notam_dict in session.get('initial_notams', [])]
+    
+    # Group NOTAMs by type
+    notams_by_classification = defaultdict(list)
+    for notam in filtered_Notams:
+        notams_by_classification[notam.classification].append(notam)
+    
+    # Sort NOTAMs based on the order of classifications
+    sorted_notams = []
+    for classification in classifications:
+        sorted_notams.extend(notams_by_classification[classification])
+    
+    # Update session with sorted NOTAMs
+    session['sorted_notams'] = [notam.to_dict() for notam in sorted_notams]
+    
+    # Convert sorted NOTAMs to a list of dictionaries
+    sorted_notams_dict = [notam.to_dict() for notam in sorted_notams]
+    
+    # Return the sorted NOTAM list as JSON data
+    return jsonify(sorted_notams_dict)
 
 @app.route('/translateText', methods=['POST'])
 def translateText():
