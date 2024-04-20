@@ -105,7 +105,7 @@ def apply_filters():
         filtered_Notams = filterNotam.filter_out_lighting_marking_notams(filtered_Notams, markingNotams)
      
     if filter_options.get('cancelledNotams') == True:
-        filtered_Notams = filterNotam.filter_out_keyword(filtered_Notams, "CANCELED")
+        filtered_Notams = filterNotam.filter_cancelled(filtered_Notams)
     
     # Update session with filtered NOTAMs
     session['filtered_notams'] = [notam.to_dict() for notam in filtered_Notams]
