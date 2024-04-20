@@ -52,12 +52,13 @@
     var calledPoints = '{{calledPoints|tojson}}';
     calledPoints = JSON.parse(calledPoints);
 
-    // notamCoords are in 00000N00000E format
+    // converts all the coordinates to valid format
     var notamCoords = []; 
     {% for notam in notams %}
         if ("{{ notam.coordinates }}" != "None")
         notamCoords.push([parseCoord("{{ notam.coordinates }}")]);
     {% endfor %}
+
 
 </script>
 <script src="static/map.js" ></script>
