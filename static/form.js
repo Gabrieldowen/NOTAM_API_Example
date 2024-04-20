@@ -181,20 +181,6 @@ document.addEventListener('click', function (event) {
     }
 });
 
-// Close dropdowns when focus moves away from the input field
-document.addEventListener('focusout', function (event) {
-    // Delay to allow click events to occur before closing dropdowns
-    setTimeout(function() {
-        var focusedElement = document.activeElement;
-        if (!focusedElement || focusedElement.tagName !== 'INPUT') {
-            var dropdowns = document.querySelectorAll('.dropdown');
-			dropdowns.forEach(function (dropdown) {
-				dropdown.style.display = 'none';
-			});
-        }
-    }, 0);
-});
-
 // Close dropdowns when focus moves from one input field to another
 document.addEventListener('focusin', function (event) {
     var previousField = event.relatedTarget;
