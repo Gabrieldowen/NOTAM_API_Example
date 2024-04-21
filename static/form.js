@@ -164,80 +164,71 @@ document.addEventListener('click', function (event) {
 
 // Function to reset the body of the page and change it to loading.
 function submitForm() {
-  // Store the form data.
-  const formData = new FormData(document.getElementById('dataForm'));
+    // Store the form data.
+    const formData = new FormData(document.getElementById('dataForm'));
 
-  // Remove all the text and input boxes
-  document.getElementById('Title').remove();
+    // Remove all the text and input boxes
+    document.getElementById('Title')?.remove();
+    document.getElementById('effectiveStartDate')?.remove();
+    document.querySelector('label[for="effectiveStartDate"]')?.remove();
+    document.getElementById('effectiveEndDate')?.remove();
+    document.querySelector('label[for="effectiveEndDate"]')?.remove();
+    document.getElementById('radius')?.remove();
+    document.querySelector('label[for="radius"]')?.remove();
+    document.getElementById('pathWidth')?.remove();
+    document.querySelector('label[for="pathWidth"]')?.remove();
+    document.getElementById('sortOrder')?.remove();
+    document.querySelector('label[for="sortOrder"]')?.remove();
+    document.getElementById('sortBy')?.remove();
+    document.querySelector('label[for="sortBy"]')?.remove();
+    document.getElementById('startAirport')?.remove();
+    document.querySelector('label[for="destAirport"]')?.remove();
+    document.getElementById('destAirport')?.remove();
+    document.querySelector('label[for="startAirport"]')?.remove();
 
-  document.getElementById('effectiveStartDate').remove();
-  document.querySelector('label[for="effectiveStartDate"]').remove();
+    for (let i = 2; i <= 4; i++) {
+        document.getElementById('destinationLocation' + i)?.remove();
+    }
 
-  document.getElementById('effectiveEndDate').remove();
-  document.querySelector('label[for="effectiveEndDate"]').remove();
-      
-  document.getElementById('radius').remove();
-  document.querySelector('label[for="radius"]').remove();
+    document.getElementById('submitButton')?.remove();
+    document.getElementById('addButton')?.remove();
+    document.getElementById('additionalDestinations')?.remove();
 
-  document.getElementById('pathWidth').remove();
-  document.querySelector('label[for="pathWidth"]').remove();
-      
-  document.getElementById('sortOrder').remove();
-  document.querySelector('label[for="sortOrder"]').remove();
-      
-  document.getElementById('sortBy').remove();
-  document.querySelector('label[for="sortBy"]').remove();
-      
-  document.getElementById('startAirport').remove();
-  document.querySelector('label[for="destAirport"]').remove();
-      
-  document.getElementById('destAirport').remove();
-  document.querySelector('label[for="startAirport"]').remove();
+    var hiddenElements = document.querySelectorAll('.hiddenObj');
+    hiddenElements.forEach(function (element) {
+        element.style.display = 'block';
+    });
 
-  for (let i = 2; i <= 4; i++) {
-      document.getElementById('destinationLocation' + i);
-  }
-  document.getElementById('submitButton').remove();
-  document.getElementById('addButton').remove();
-  document.getElementById('additionalDestinations').remove();
-    
+    // Call the server with the data provided.
+    fetch(document.getElementById('dataForm').action, {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.text();
+    })
+    .then(data => {
+        // Optionally, update the display page directly with the new content
+        // document.body.innerHTML = data;
 
-  // Remove all the additional destinations
-  
-  var hiddenElements = document.querySelectorAll('.hiddenObj');
-
-  // Display loading text for the user.
-  hiddenElements.forEach(function (element) {
-      element.style.display = 'block';
-  });
-
-  // Call the server with the data provided.
-  fetch(document.getElementById('dataForm').action, {
-      method: 'POST',
-      body: formData,
-
-  })
-  
-  // Update the display page after the call to the server is done.
-  .then(response => response.text())
-  .then(data => {
-      // Replace the entire body with the new content
-      document.body.innerHTML = data;
-
-  }).then(response => response.json())
-  
-  // Error catching just in case
-  .catch(error => console.error('Error:', error))
-  .finally(() => {
-      // Hide loading elements
-      hiddenElements.forEach(function (element) {
-          element.style.display = 'none';
-      });
-
-  });
-  
-  
+        // Or redirect to a new page upon successful form submission
+        window.location.href = '/display';
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('There was an error processing your request.');
+    })
+    .finally(() => {
+        // Hide loading elements regardless of the outcome
+        hiddenElements.forEach(function (element) {
+            element.style.display = 'none';
+        });
+    });
 }
+
 
 // Function called to check if the airports are of the correct form.
 function checkInputAirport(inputId, errorMsg) {
@@ -427,9 +418,10 @@ function checkInputs(){
   
 }
 
-// Function to return to the form page.
-function returnToForm() {
-  window.location.href = "/";
-}
+// Add an event listener to the dataForm to checkinputs before submitting.
+document.getElementById('dataForm').addEventListener('submit', function(event) {
+  event.preventDefault(); // Prevent default form submission
 
+  checkInputs();
+});
 

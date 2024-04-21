@@ -23,6 +23,34 @@ class Notam:
         self.icaoLocation = data.get('icaoLocation', None)
         self.coordinates = data.get('coordinates', None)
         self.radius = data.get('radius', None)
+        self.color = '#bad4b7' if data is None else data.get('color', '#bad4b7') # default color is green
+    
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'series': self.series,
+            'number': self.number,
+            'type': self.type,
+            'issued': self.issued,
+            'affectedFIR': self.affectedFIR,
+            'selectionCode': self.selectionCode,
+            'traffic': self.traffic,
+            'purpose': self.purpose,
+            'scope': self.scope,
+            'minimumFL': self.minimumFL,
+            'maximumFL': self.maximumFL,
+            'location': self.location,
+            'effectiveStart': self.effectiveStart,
+            'effectiveEnd': self.effectiveEnd,
+            'text': self.text,
+            'classification': self.classification,
+            'accountId': self.accountId,
+            'lastUpdated': self.lastUpdated,
+            'icaoLocation': self.icaoLocation,
+            'coordinates': self.coordinates,
+            'radius': self.radius,
+            'color': self.color
+        }
 
 class NotamRequest:
     def __init__(self, data):
@@ -31,17 +59,17 @@ class NotamRequest:
         self.destinations = []
         index = 2
         while f'destinationLocation{index}' in data:
-            self.destinations.append( data.get(f'destinationLocation{index}') )
+            self.destinations.append(data.get(f'destinationLocation{index}'))
             index += 1
         self.responseFormat = data.get('responseFormat', None)
-        self.effectiveStartDate =  data.get('effectiveStartDate', None)
-        self.effectiveEndDate =  data.get('effectiveEndDate', None)
-        self.startLong =  data.get('startLong', None)
-        self.startLat =  data.get('startLat', None)
-        self.destLong =  data.get('destLong', None)
-        self.destLat =  data.get('destLat', None)
-        self.sortBy =  data.get('sortBy', None)
-        self.sortOrder =  data.get('sortOrder', None)
+        self.effectiveStartDate = data.get('effectiveStartDate', None)
+        self.effectiveEndDate = data.get('effectiveEndDate', None)
+        self.startLong = data.get('startLong', None)
+        self.startLat = data.get('startLat', None)
+        self.destLong = data.get('destLong', None)
+        self.destLat = data.get('destLat', None)
+        self.sortBy = data.get('sortBy', None)
+        self.sortOrder = data.get('sortOrder', None)
         self.radius = int(data.get('radius', 100)) if data.get('radius', None) is not None and data.get('radius', '') != '' else 100
         self.pathWidth = int(data.get('pathWidth', 50)) if data.get('pathWidth', None) is not None and data.get('pathWidth', '') != '' else 50
         self.calledPoints = []

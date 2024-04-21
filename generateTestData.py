@@ -17,7 +17,7 @@ def generateTestData(request):
 def saveTestData(request, apiOutputs):
     # Generate a unique filename with date and time
     current_datetime = datetime.datetime.now().strftime("%Y-%m-%d_%H:%M")
-    filename = f"static/TestData/{request.startAirport}-{request.destAirport}_{current_datetime}.json"
+    filename = f"static/TestData/{request.startAirport}-{request.destAirport}.json"
 
     # Save apiOutputs as JSON
     with open(filename, 'w') as file:
@@ -38,4 +38,4 @@ if __name__ == "__main__":
     apiOutputs = generateTestData(testDataRequest)
 
     # save the test data
-    saveTestData(testDataRequest, apiOutputs)
+    # saveTestData(testDataRequest, apiOutputs)
