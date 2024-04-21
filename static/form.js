@@ -105,50 +105,53 @@ function updateAirportOptions(inputId, dropdownId) {
 
     // Recursive function to traverse the nested structure
     function traverse(obj) {
-	var options = [];
+		var options = [];
 
-	function addOption(node) {
-		var option = document.createElement('div');
-		option.className = 'dropdown-option';
-		option.textContent = `${node.iata} - ${node.name}`;
-		option.addEventListener('click', function() {
-			inputElement.value = this.dataset.airportCode;
-			dropdownElement.style.display = 'none';
-		});
-		option.dataset.airportCode = node.iata;
-		options.push(option);
-	}
+		function addOption(node) {
+			var option = document.createElement('div');
+			option.className = 'dropdown-option';
+			option.textContent = `${node.iata} - ${node.name}`;
+			option.addEventListener('click', function() {
+				inputElement.value = this.dataset.airportCode;
+				dropdownElement.style.display = 'none';
+			});
+			option.dataset.airportCode = node.iata;
+			options.push(option);
+		}
 
-	for (var key in obj) {
-		if (obj.hasOwnProperty(key) && key !== 'name' && key !== 'country') {
-			var node = obj[key];
+		for (var key in obj) {
+			if (obj.hasOwnProperty(key) && key !== 'name' && key !== 'country') {
+				var node = obj[key];
 
-			if (node.hasOwnProperty('airports')) {
-				traverse(node.airports);
-			} else {
-				if (node.iata.includes(userInput) || node.name.toUpperCase().includes(userInput)) {
-					addOption(node);
+				if (node.hasOwnProperty('airports')) {
+					traverse(node.airports);
+				} else {
+					var iataMatch = node.iata.startsWith(userInput);
+				
+					// For IATA code, match only the beginning of the code
+					if ((userInput.length < 4 && iataMatch) || (userInput.length >= 4 && (iataMatch || node.name.toUpperCase().includes(userInput)))) {
+						addOption(node);
+					}
 				}
 			}
 		}
-	}
 
-	// Sort the options alphabetically by airport name
-	options.sort(function(a, b) {
-		return a.textContent.localeCompare(b.textContent);
-	});
+		// Sort the options alphabetically by airport name
+		options.sort(function(a, b) {
+			return a.textContent.localeCompare(b.textContent);
+		});
 
-	// Append sorted options to the dropdown
-	options.forEach(function(option) {
-		dropdownElement.appendChild(option);
-	});
+		// Append sorted options to the dropdown
+		options.forEach(function(option) {
+			dropdownElement.appendChild(option);
+		});
+		
+		// Show the dropdown if there are matching options
+        dropdownElement.style.display = options.length > 0 ? 'block' : 'none';
     }
 
     // Start the recursive traversal from the root
     traverse(airportIATA);
-
-    // Show the dropdown
-    dropdownElement.style.display = 'block';
 }
 
 // Closes the dropdown when clicking outside
@@ -161,6 +164,34 @@ document.addEventListener('click', function (event) {
         }
     });
 });
+
+// Show dropdown when clicking on input field if it exists, otherwise call updateAirportOptions
+document.addEventListener('click', function (event) {
+    var inputField = event.target.closest('.form-control');
+
+    if (inputField) {
+        var dropdown = inputField.nextElementSibling;
+        if (dropdown.children.length <= 0) {
+            var inputId = inputField.id;
+            var dropdownId = inputId + 'Dropdown';
+            updateAirportOptions(inputId, dropdownId);
+        } else {
+            dropdown.style.display = 'block';
+        }
+    }
+});
+
+// Close dropdowns when focus moves from one input field to another
+document.addEventListener('focusin', function (event) {
+    var previousField = event.relatedTarget;
+    if (previousField && previousField.tagName === 'INPUT') {
+        var dropdowns = document.querySelectorAll('.dropdown');
+		dropdowns.forEach(function (dropdown) {
+			dropdown.style.display = 'none';
+		});
+    }
+});
+
 
 // Function to reset the body of the page and change it to loading.
 function submitForm() {
@@ -435,4 +466,3 @@ document.getElementById('dataForm').addEventListener('submit', function(event) {
 
   checkInputs();
 });
-
