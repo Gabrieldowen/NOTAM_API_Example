@@ -43,7 +43,7 @@
 			<li draggable="true">MIL</li>
 			<li draggable="true">SAA</li>
 		</ul>
-		<button type="button" onclick="">Apply Rank</button>
+		<button type="button" onclick="applyRanking()">Apply Rank</button>
 	</div>
 </div>
 
@@ -73,6 +73,7 @@
                 <p><strong>Number: </strong>{{ notam.number }}</p>
                 <p><strong>coordinates: </strong>{{ notam.coordinates }}</p>
                 <p><strong>Type: </strong>{{ notam.type }}</p>
+                <p><string>Classification: </string>{{ notam.classification }}</p>
                 <p id="sectionID{{loop.index}}">
                     <button class="btn custom-btn btn-sm" onclick="translateText('{{ loop.index }}')">
                         <i class="fa-solid fa-robot"></i>

@@ -49,3 +49,10 @@ def assign_color_to_notam(notams):
 
         else:
             notam.color = '#bad4b7' # green
+
+def sort_by_color(notams):
+    color_priority = {'#ff7f7f': 0, '#ffd966': 1}
+
+    notams.sort(key=lambda x: color_priority.get(x.color, 2))
+
+    return notams
