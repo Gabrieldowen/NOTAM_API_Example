@@ -192,6 +192,34 @@ document.addEventListener('focusin', function (event) {
   }
 });
 
+// Show dropdown when clicking on input field if it exists, otherwise call updateAirportOptions
+document.addEventListener('click', function (event) {
+    var inputField = event.target.closest('.form-control');
+
+    if (inputField) {
+        var dropdown = inputField.nextElementSibling;
+        if (dropdown.children.length <= 0) {
+            var inputId = inputField.id;
+            var dropdownId = inputId + 'Dropdown';
+            updateAirportOptions(inputId, dropdownId);
+        } else {
+            dropdown.style.display = 'block';
+        }
+    }
+});
+
+// Close dropdowns when focus moves from one input field to another
+document.addEventListener('focusin', function (event) {
+    var previousField = event.relatedTarget;
+    if (previousField && previousField.tagName === 'INPUT') {
+        var dropdowns = document.querySelectorAll('.dropdown');
+		dropdowns.forEach(function (dropdown) {
+			dropdown.style.display = 'none';
+		});
+    }
+});
+
+
 // Function to reset the body of the page and change it to loading.
 function submitForm() {
 // Store the form data.
@@ -465,5 +493,3 @@ event.preventDefault(); // Prevent default form submission
 
 checkInputs();
 });
-
-

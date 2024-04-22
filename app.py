@@ -187,7 +187,6 @@ def apply_sorting():
     # Return the sorted NOTAM list as JSON data
     return jsonify(sorted_notams_dict)
 
-
 @app.route('/translateText', methods=['POST'])
 def translateText():
     if request.method == 'POST':  

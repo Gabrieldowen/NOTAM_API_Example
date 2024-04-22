@@ -349,5 +349,3 @@ function translateText(textID) {
 function returnToForm() {
     window.location.href = "/";
 }
-
-  
