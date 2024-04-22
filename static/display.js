@@ -165,6 +165,10 @@ function updateNotamsList(notams) {
         numberParagraph.innerHTML = '<strong>Number: </strong>' + notam.number;
         accordionContent.appendChild(numberParagraph);
 
+        var coordinateParagraph = document.createElement('p');
+        coordinateParagraph.innerHTML = '<strong>Coordinates: </strong>' + notam.coordinates;
+        accordionContent.appendChild(coordinateParagraph);
+
         var typeParagraph = document.createElement('p');
         typeParagraph.innerHTML = '<strong>Type: </strong>' + notam.type;
         accordionContent.appendChild(typeParagraph);
