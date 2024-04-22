@@ -15,17 +15,59 @@
 </div>
 
 <div class="container mt-5">
+    <button id="filterButton" onmouseenter="showFilterOptions()" onmouseleave="hideFilterOptions()" class="btn btn-primary">Filter</button>
+    <button id="rankButton" onmouseenter="showRankList()" onmouseleave="hideRankList()" class="btn btn-primary">Rank</button>
+	
+    <div id="filterOptions" class="dropdown-menu" onmouseenter="showFilterOptions()" onmouseleave="hideFilterOptions()">
+        <form>
+            <input type="checkbox" id="closed_runways" name="filter_options" value="closed_runways">
+            <label for="closed_runways" title="Remove subsequent NOTAMs related to closed runway">Closed Runways</label><br>
+            <input type="checkbox" id="obstacle_notams" name="filter_options" value="obstacle_notams">
+            <label for="obstacle_notams" title="Remove ALL NOTAMs related to obstacles">Obstacle NOTAMs</label><br>
+            <input type="checkbox" id="high_obstacle_notams" name="filter_options" value="high_obstacle_notams">
+            <label for="high_obstacle_notams" title="Keep ONLY NOTAMs above 500ft">High Obstacle NOTAMs</label><br>
+            <input type="checkbox" id="lighting_marking_notams" name="filter_options" value="lighting_marking_notams">
+            <label for="lighting_marking_notams" title="Remove ALL NOTAMs marked as lighting or marking">Lighting & Marking NOTAMs</label><br>
+            <input type="checkbox" id="cancelled_notams" name="filter_options" value="cancelled_notams">
+            <label for="cancelled_notams" title="remove ALL NOTAMs marked as Cancelled">Remove Cancelled NOTAMs</label><br>
+            <input type="hidden" id="notamsJson" value="{{ notams_json }}">
+            <button type="button" onclick="applyFilters()">Apply Filters</button>
+        </form>
+    </div>
+	
+	<div class="sortable-list" id="sortableListContainer" onmouseenter="showListContainer()" onmouseleave="hideListContainer()">
+		<ul id="notamBoxes">
+			<li draggable="true">FDC</li>
+			<li draggable="true">INTL</li>
+			<li draggable="true">DOM</li>
+			<li draggable="true">MIL</li>
+			<li draggable="true">SAA</li>
+		</ul>
+		<button type="button" onclick="">Apply Rank</button>
+	</div>
+</div>
+
+<div class="container mt-5" id="notamList">
     <h1 style="margin-left: -2px;">NOTAM Information</h1>
     <p>Total number of Notams fetched: {{ notams|length }}</p>
+    <p>{{ closedR|length }} deal with Runway Closures</p>
 
     <div class="m-2" style="height: 300px; width: 100%;" id="map"></div>
-
 
     <div class="accordion">
         {% for notam in notams %}
         <div class="accordion-item">
             <input type="checkbox" class="custom-checkbox" id="item{{ loop.index }}">
-            <label for="item{{ loop.index }}" class="accordion-header custom-checkbox-label">Notam ID: {{ notam.id }} Type: {{notam.type}}</label>
+            <label for="item{{ loop.index }}" style="background-color: {{ notam.color }};" class="accordion-header custom-checkbox-label">
+                {% if notam.color == '#ff7f7f' %}
+                    <i class="fas fa-exclamation-triangle" style="color: black;"></i>
+                {% elif notam.color == '#bad4b7' %}
+                    <i class="fas fa-check-square" style="color: black;"></i>
+                {% elif notam.color == '#ffd966' %}
+                    <i class="fas fa-exclamation-circle" style="color: black;"></i>
+                {% endif %}
+                Notam ID: {{ notam.id }} Type: {{notam.type}}
+            </label>
             <div class="accordion-content">
                 <p><strong>Series: </strong>{{ notam.series }}</p>
                 <p><strong>Number: </strong>{{ notam.number }}</p>
@@ -64,6 +106,4 @@
 <script src="static/map.js" ></script>
 <script src="static/display.js"></script>
 
-
 {% endblock %}
-

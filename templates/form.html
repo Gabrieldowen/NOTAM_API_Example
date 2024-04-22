@@ -10,7 +10,7 @@
                 <div class="col-md-6 mb-3">
                     <label for="effectiveStartDate" class="form-label"><strong>Effective Start Date</strong></label>
                     <input type="text" class="form-control datetimepicker" id="effectiveStartDate" name="effectiveStartDate" placeholder="YYYY-MM-DD HH:MM:SS" autocomplete="off">
-                    <span id="error-message1""> </span>
+                    <span id="error-message1"> </span>
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="effectiveEndDate" class="form-label"><strong>Effective End Date</strong></label>
@@ -69,6 +69,25 @@
     </div>
 </div>
 
+<div class="hiddenObj">
+    <group>
+        <div class="ticks">
+            <span style="--i:0;"></span>
+            <span style="--i:1;"></span>
+            <span style="--i:2;"></span>
+            <span style="--i:3;"></span>
+            <span style="--i:4;"></span>
+            <span style="--i:5;"></span>
+            <span style="--i:6;"></span>
+            <span style="--i:7;"></span>
+            <span style="--i:8;"></span>
+            <span style="--i:9;"></span>
+            <span style="--i:10;"></span>
+            <span style="--i:11;"></span>
+        </div>
+    </group> 
+</div>
+
 
 <script>
     var airportIATA = {{ airportIATA | safe }};
@@ -76,5 +95,4 @@
 
 <!-- Form script file reference. -->
 <script src="static/form.js" ></script>
-
 {% endblock %}
