@@ -76,14 +76,22 @@ function loadMap(notamCoords) {
             fillColor: '#f03',
             fillOpacity: 0.5,
             radius: 500
-        }).addTo(notamLayer);
+        }).addTo(notamLayer).on("click", function(e) {
+            openNotam(e, point[2]); // Pass the NOTAM ID to openNotam
+        });
     });
 }
 
+function openNotam(e, notamId) {
+    var clickedCircle = e.target;
+
+  // do something, like:
+  clickedCircle.bindPopup("some content "+notamId).openPopup();
+}
 
 
 // this function parses the existing coordinates to a format that can be used by leaflet
-function parseCoord(coordString) {
+function parseCoord(coordString, notamId) {
     // Extract degrees and minutes for latitude
     var latDegrees = parseInt(coordString.substring(0, 2), 10);
     var latMinutes = parseInt(coordString.substring(2, 4), 10);
@@ -107,7 +115,8 @@ function parseCoord(coordString) {
     }
     var latDecimal = parseFloat(latDecimal);
     var lonDecimal = parseFloat(lonDecimal);
-    return [latDecimal, lonDecimal];
+    
+    return [latDecimal, lonDecimal, notamId];
 }
 
 function processCoordinates(notams) {
@@ -142,7 +151,7 @@ function processCoordinates(notams) {
             var latDecimal = parseFloat(latDecimal);
             var lonDecimal = parseFloat(lonDecimal);
 
-            processCoords.push([latDecimal, lonDecimal]);
+            processCoords.push([latDecimal, lonDecimal, notam.id]);
         }
     });
 

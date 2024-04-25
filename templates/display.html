@@ -103,7 +103,7 @@
     var notamCoords = [];
     {% for notam in notams %}
         if ("{{ notam.coordinates }}" != "None")
-        notamCoords.push([parseCoord("{{ notam.coordinates }}")]);
+        notamCoords.push([parseCoord("{{ notam.coordinates }}", "{{notam.id}}")]);
     {% endfor %}
     
     loadMap(notamCoords);
