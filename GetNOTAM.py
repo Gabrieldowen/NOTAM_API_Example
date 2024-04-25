@@ -30,8 +30,13 @@ def getNotam(effectiveStartDate, effectiveEndDate, longitude, latitude, pageNum,
   headers = {'client_id': credentials.clientID, 'client_secret': credentials.clientSecret}
 
   req = requests.get(url, headers=headers)
-    
-  parsed_req = req.json()
+  
+  if req.status_code != 200:
+    print(f"Error: {req.status_code}")
+    print(req.text)
+    return None
+  else:
+    parsed_req = req.json()
     
   return parsed_req
 
