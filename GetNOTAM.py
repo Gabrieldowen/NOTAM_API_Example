@@ -37,8 +37,7 @@ def getNotam(effectiveStartDate, effectiveEndDate, longitude, latitude, pageNum,
     return None
   else:
     parsed_req = req.json()
-    
-  return parsed_req
+    return parsed_req
 
 #buildNotam: does multiple API calls of a location given in inputs and combines all Jsons of each page into a single Json file
 #@returns: combinded_core_notam_data, the combinded Json of all pages for one location

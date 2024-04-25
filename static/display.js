@@ -95,6 +95,25 @@ function updateNotamsList(notams) {
     var notamsContainer = document.getElementById('notamList');
     notamsContainer.innerHTML = ''; // Clear previous list
     
+    // rebuild map 
+    // clearNotams();
+    // alert("cleared map");
+    var notamCoords = processCoordinates(notams);
+
+    // Create the new content for the replacement
+    var newContent = document.createElement('div');
+    newContent.className = 'm-2'; // Set the class attribute
+    newContent.style.height = '300px'; // Set the height style
+    newContent.style.width = '100%'; // Set the width style
+    newContent.id = 'map'; // Set the id attribute
+
+    // Replace the div with the new content
+    var divToReplace = document.getElementById('map');
+    divToReplace.replaceWith(newContent);
+
+    loadMap(notamCoords);
+
+
     // Add the title and total number of NOTAMs
     var title = document.createElement('h1');
     title.style.marginLeft = '-2px';
