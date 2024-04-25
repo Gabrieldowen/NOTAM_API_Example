@@ -1,4 +1,6 @@
 from math import sin, cos, radians, asin, atan2, sqrt, degrees, ceil, floor
+import geojson as gj
+import json
 
 def calculateBearing(startLat, startLon, destLat, destLon):
     startLatRad = radians(startLat)
@@ -93,6 +95,20 @@ def getPath( startLat, startLong, destLat, destLong, radius, pathWidth):
  
     return coordList
        
+def createGeoJSON(coordList):
+
+    # Extract latitude and longitude from coordList
+    features= []
+    for latitude, longitude in coordList:
+         features.append(gj.Feature(geometry=gj.Point((longitude, latitude))))
+    
+    feature_collection = gj.FeatureCollection(features)
+
+        # Write GeoJSON to a file
+    # with open('static/TestData/points.geojson', 'w') as f:
+    #     json.dump(feature_collection, f)
+
+    return feature_collection
 
 
 # THIS IS AN EXAMPLE
@@ -104,5 +120,6 @@ if __name__ == '__main__':
                    radius = 100, 
                    pathWidth = 50)
 
-    for i,item in enumerate(pathList):
-        print(f"point #{i+1}) {item}\n")
+    # for i,item in enumerate(pathList):
+    #     print(f"point #{i+1}) {item}\n")
+    createGeoJSON(pathList)

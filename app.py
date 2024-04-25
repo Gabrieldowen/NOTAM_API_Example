@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, session, jsonify
+from flask import Flask, render_template, request, session, jsonify, redirect
 from flask_session import Session
 import Models
 import ParseNOTAM
@@ -9,6 +9,7 @@ import GetNOTAM
 import time
 import translateNOTAM
 import os
+from multiprocessing import Pool, cpu_count
 from collections import defaultdict
 
 app = Flask(__name__)
@@ -67,8 +68,18 @@ def submit_form():
 
             #after the lat and longs are gathered in coordList, buildNotam is used to gather all the notams for the path
             for latitude, longitude in coordList:
-                new_data = GetNOTAM.buildNotam(NotamRequest.effectiveStartDate, NotamRequest.effectiveEndDate, longitude, latitude, NotamRequest.radius)
-                apiOutputs.extend(new_data)
+                NotamRequest.calledPoints.append((latitude, longitude))
+
+            # map inputs for parrallel processing
+            inputs = [(NotamRequest.effectiveStartDate, NotamRequest.effectiveEndDate, longitude, latitude, NotamRequest.radius) for latitude, longitude in coordList]  # List of tuples with your inputs
+            with Pool(cpu_count()) as pool:
+                apiOutputsList = pool.starmap(GetNOTAM.buildNotam, inputs)
+
+            # flatten the list of lists
+            apiOutputs = [item for sublist in apiOutputsList for item in sublist]
+
+        # converts points along called path to geojson
+        NotamRequest.calledPoints = MinimalCirclesPath.createGeoJSON(NotamRequest.calledPoints)
 
     
 
@@ -90,9 +101,10 @@ def submit_form():
 
         # Remove previous session data
         session.clear()
+        
         # Store initial NOTAMs in session
         session['initial_notams'] = [notam.to_dict() for notam in Notams]
-
+        session['called_points'] = NotamRequest.calledPoints
         return ''
 
 @app.route('/display', methods=['GET'])
@@ -100,8 +112,9 @@ def display():
     # Get the Notams from the session.
     Notams = [Models.Notam(notam_dict) for notam_dict in session.get('initial_notams', [])]
     closedR = filterNotam.extract_closed_runways(Notams)
+    calledPoints = session.get('called_points')
     
-    return render_template('display.html', notams = Notams, closedR = closedR)
+    return render_template('display.html', notams = Notams, closedR = closedR, calledPoints = calledPoints)
 
 
 @app.route('/apply_filters', methods=['POST'])

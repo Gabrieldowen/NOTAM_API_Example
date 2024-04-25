@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<script type="text/javascript" src="static/map.js"></script>
 <style>
     .custom-btn {
         background-color: #aeb2eb;
@@ -17,7 +18,7 @@
     <button id="filterButton" onmouseenter="showFilterOptions()" onmouseleave="hideFilterOptions()" class="btn btn-primary">Filter</button>
     <button id="rankButton" onmouseenter="showRankList()" onmouseleave="hideRankList()" class="btn btn-primary">Rank</button>
 	
-    <div id="filterOptions" class="dropdown-menu" onmouseenter="showFilterOptions()" onmouseleave="hideFilterOptions()">
+    <div id="filterOptions" style="z-index: 9999;" class="dropdown-menu" onmouseenter="showFilterOptions()" onmouseleave="hideFilterOptions()">
         <form>
             <input type="checkbox" id="closed_runways" name="filter_options" value="closed_runways">
             <label for="closed_runways" title="Remove subsequent NOTAMs related to closed runway">Closed Runways</label><br>
@@ -34,7 +35,7 @@
         </form>
     </div>
 	
-	<div class="sortable-list" id="sortableListContainer" onmouseenter="showListContainer()" onmouseleave="hideListContainer()">
+	<div class="sortable-list" style="z-index: 9999;" id="sortableListContainer" onmouseenter="showListContainer()" onmouseleave="hideListContainer()">
 		<ul id="notamBoxes">
 			<li draggable="true">FDC</li>
 			<li draggable="true">INTL</li>
@@ -45,11 +46,16 @@
 		<button type="button" onclick="applyRanking()">Apply Rank</button>
 	</div>
 </div>
+<div class="container mt-5">
+    <h1 style="margin-left: -2px;">NOTAM Information</h1>
+    <div class="m-2" style="height: 300px; width: 100%;" id="map"></div>
+</div>
 
 <div class="container mt-5" id="notamList">
-    <h1 style="margin-left: -2px;">NOTAM Information</h1>
     <p>Total number of Notams fetched: {{ notams|length }}</p>
     <p>{{ closedR|length }} deal with Runway Closures</p>
+
+
     <div class="accordion">
         {% for notam in notams %}
         <div class="accordion-item">
@@ -67,8 +73,9 @@
             <div class="accordion-content">
                 <p><strong>Series: </strong>{{ notam.series }}</p>
                 <p><strong>Number: </strong>{{ notam.number }}</p>
+                <p><strong>Coordinates: </strong>{{ notam.coordinates }}</p>
                 <p><strong>Type: </strong>{{ notam.type }}</p>
-                <p><string>Classification: </string>{{ notam.classification }}</p>
+                <p><strong>Classification: </strong>{{ notam.classification }}</p>
                 <p id="sectionID{{loop.index}}">
                     <button class="btn custom-btn btn-sm" onclick="translateText('{{ loop.index }}')">
                         <i class="fa-solid fa-robot"></i>
@@ -86,6 +93,26 @@
     </div>
 </div>
 
+<script>
+    var calledPoints = '{{calledPoints|tojson}}';
+    calledPoints = JSON.parse(calledPoints);
+
+    // converts all the coordinates to valid format
+    // var notamCoords = processCoordinates('{{ notams }}'); 
+
+    var notamCoords = [];
+    {% for notam in notams %}
+        if ("{{ notam.coordinates }}" != "None")
+        notamCoords.push([parseCoord("{{ notam.coordinates }}")]);
+    {% endfor %}
+    
+    loadMap(notamCoords);
+
+
+
+
+</script>
+<script src="static/map.js" ></script>
 <script src="static/display.js"></script>
 
 {% endblock %}
