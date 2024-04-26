@@ -140,14 +140,15 @@ function updateNotamsList(notams) {
         var checkbox = document.createElement('input');
         checkbox.type = 'checkbox';
         checkbox.classList.add('custom-checkbox');
+
         // Unique id for each notam
-        checkbox.id = 'item' + notamItemNumber;
+        checkbox.id = notam.id //'item' + notamItemNumber;
         accordionItem.appendChild(checkbox);
 
         var label = document.createElement('label');
         label.classList.add('accordion-header', 'custom-checkbox-label');
         // Unique id for each notam
-        label.setAttribute('for', 'item' + notamItemNumber);
+        label.setAttribute('for', notam.id);
 
         label.style.backgroundColor = notam.color;
 
@@ -209,7 +210,7 @@ function updateNotamsList(notams) {
                 translateText(itemNumber);
             });
         }
-        handleTranslationButtonClick(notamItemNumber);
+        handleTranslationButtonClick(notam.id);
         sectionParagraph.appendChild(translationButton);
 
         var textParagraph = document.createElement('a');
