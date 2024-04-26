@@ -97,11 +97,11 @@ function loadMap(notamCoords) {
             
 
             if (item && accordianList) {
+                item.click();
 
                 // Move the item to the top of its parent container
                 accordianList.insertBefore(item, accordianList.firstChild);
 
-                item.click();
                 toggleAccordion(item);
             } 
 
