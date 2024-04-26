@@ -127,6 +127,7 @@ function updateNotamsList(notams) {
     // Create div element for accordion
     var accordion = document.createElement("div");
     accordion.classList.add("accordion");
+    accordion.id = "accordionList";
     notamsContainer.appendChild(accordion);
 
     // Notam item number for each notam to have a different id
@@ -135,6 +136,7 @@ function updateNotamsList(notams) {
 	// Populate the container with the filtered NOTAMs
     notams.forEach(function(notam) {
         var accordionItem = document.createElement('div');
+        accordionItem.id = "accordion_" + notam.id;
         accordionItem.classList.add('accordion-item');
 
         var checkbox = document.createElement('input');

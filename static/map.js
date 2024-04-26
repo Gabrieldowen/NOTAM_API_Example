@@ -77,17 +77,49 @@ function loadMap(notamCoords) {
             fillOpacity: 0.5,
             radius: 500
         }).addTo(notamLayer).on("click", function(e) {
-            openNotam(e, point[2]); // Pass the NOTAM ID to openNotam
+            // popup for clicked point
+            //clickedCircle.bindPopup("some content "+point[2]).openPopup();
+
+            // get the item with the id of the notam id
+            var itemID = "accordion_" + point[2];
+            var item = document.getElementById(itemID);
+            var accordianList = document.getElementById("accordionList");
+
+            // error handling
+            if (!item) {
+                console.error("Element with ID " + itemID + " not found!");
+                return;
+            }
+            if (!accordianList) {
+                console.error("accordianList with ID " + "accordionList" + " not found!");
+                return;
+            }
+            
+
+            if (item && accordianList) {
+
+                // Move the item to the top of its parent container
+                accordianList.insertBefore(item, accordianList.firstChild);
+
+                item.click();
+                toggleAccordion(item);
+            } 
+
         });
     });
 }
 
-function openNotam(e, notamId) {
-    var clickedCircle = e.target;
-
-  // do something, like:
-  clickedCircle.bindPopup("some content "+notamId).openPopup();
+function toggleAccordion(item) {
+    var content = item.querySelector('.accordion-content');
+    if (content) {
+        console.log("Toggling accordion content!");
+        content.click();
+    }
+    else {
+        console.error("Element with class 'accordion-content' not found!");
+    }
 }
+
 
 
 // this function parses the existing coordinates to a format that can be used by leaflet
@@ -115,7 +147,7 @@ function parseCoord(coordString, notamId) {
     }
     var latDecimal = parseFloat(latDecimal);
     var lonDecimal = parseFloat(lonDecimal);
-    
+
     return [latDecimal, lonDecimal, notamId];
 }
 
@@ -162,22 +194,5 @@ function processCoordinates(notams) {
 function updateNotamMapPoints(notamCoords){
     // remove the existing points
     map.removeLayer(notamLayer);
-    
-    // // create a new leaflet layer for the notam points
-    // notamLayer = L.layerGroup().addTo(map);
-
-    // // add the new points
-    // notamCoords.forEach(function(coord) {
-    //     // Split the coordinate string
-    //     var point = coord.toString().split(",");
-        
-    //     // Create a circle marker for each point and add it to the map
-    //     var circle = L.circle([parseFloat(point[0]), parseFloat(point[1])], {
-    //         color: 'red',
-    //         fillColor: '#f03',
-    //         fillOpacity: 0.5,
-    //         radius: 500
-    //     }).addTo(notamLayer);
-    // });
 
 }
