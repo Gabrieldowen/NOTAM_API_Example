@@ -1,17 +1,5 @@
-// the mapping 
-// Check if Leaflet library is imported
-// Creating map options
-// the mapping 
-// Check if Leaflet library is imported
-// Creating map options
 
-// $(document).ready( function() {
-//     if (document.getElementById("map")) {
-//         if(calledPoints !== null && calledPoints !== undefined && calledPoints !== ''){
-//             loadMap();
-//         }
-//     }
-// });
+// This file contains the functions to create the map and the points on the map
 function loadMap(notamCoords) {
     
     // map settings
@@ -49,9 +37,10 @@ function loadMap(notamCoords) {
 
         // save each point to a array for the line
         line.push(point);
+    
         
     });
-
+    var x =0;
 
 
     // create a line from the points
@@ -100,43 +89,62 @@ function loadMap(notamCoords) {
 
                 // Move the item to the top of its parent container
                 accordianList.insertBefore(item, accordianList.firstChild);
-
-                item.click();
-                toggleAccordion(item);
+                
+                // simulate clicking the header to open the accordion
+                item.getElementsByClassName("accordion-header")[0].click();
             } 
 
         });
     });
 }
 
-function toggleAccordion(item) {
-    var content = item.querySelector('.accordion-content');
-    if (content) {
-        console.log("Toggling accordion content!");
-        content.click();
-    }
-    else {
-        console.error("Element with class 'accordion-content' not found!");
-    }
-}
-
 
 
 // this function parses the existing coordinates to a format that can be used by leaflet
 function parseCoord(coordString, notamId) {
+
+    // seperate the lat from the long
+    var coords = coordString.split(/(?<=N|S)/);
+    var latString = coords[0];
+    var lonString = coords[1];
+
+    // add leading zeros to the minutes if they are missing
+    if(lonString.length == 7){
+        lonString = '0' + lonString;
+        
+    }
+    
+    
     // Extract degrees and minutes for latitude
-    var latDegrees = parseInt(coordString.substring(0, 2), 10);
-    var latMinutes = parseInt(coordString.substring(2, 4), 10);
-    var latDecimal = latDegrees + latMinutes / 60;
+    var latDegrees = parseInt(latString.substring(0, 2), 10);
+    var latMinutes = parseInt(latString.substring(2, 4), 10);
+
+    // extract seconds if there are some
+    if(latString.length > 6){
+        var latSeconds = parseInt(latString.substring(4, 6), 10);
+    } else {
+        var latSeconds = 0;
+    }
+
+    var latDecimal = latDegrees + latMinutes / 60 + latSeconds / 3600;
 
     // Extract degrees and minutes for longitude
-    var lonDegrees = parseInt(coordString.substring(5, 8), 10);
-    var lonMinutes = parseInt(coordString.substring(8, 10), 10);
-    var lonDecimal = lonDegrees + lonMinutes / 60;
+    var lonDegrees = parseInt(lonString.substring(0, 3), 10);
+    var lonMinutes = parseInt(lonString.substring(3, 5), 10);
+
+    // extract seconds if there are some
+    if(lonString.length > 6){
+        var lonSeconds = parseInt(lonString.substring(6, 7), 10);
+    } else {
+        lonSeconds = 0;
+    }
+
+    var lonDecimal = lonDegrees + lonMinutes / 60 + lonSeconds / 3600;
 
     // Determine direction for latitude and longitude
-    var latDirection = coordString.charAt(4); // 'N' for north
-    var lonDirection = coordString.charAt(10); // 'E' for east
+    var latDirection = latString.charAt(latString.length - 1); // 'N' for north
+    var lonDirection = lonString.charAt(lonString.length - 1); // 'E' for east
+
 
     // Add the direction for latitude
     if (latDirection === 'S') {
@@ -148,6 +156,11 @@ function parseCoord(coordString, notamId) {
     var latDecimal = parseFloat(latDecimal);
     var lonDecimal = parseFloat(lonDecimal);
 
+    if (isNaN(latDecimal) || isNaN(lonDecimal)) {
+        console.log("Invalid coordinates: " + coordString);
+        return [0, 0, notamId];
+    }
+
     return [latDecimal, lonDecimal, notamId];
 }
 
@@ -156,43 +169,37 @@ function processCoordinates(notams) {
     var processCoords = [];
     notams.forEach(function(notam) {
         if (notam.coordinates != undefined || notam.coordinates != null) {
-            // Extract degrees and minutes for latitude
-            var latDegrees = parseInt(notam.coordinates.substring(0, 2), 10);
-            var latMinutes = parseInt(notam.coordinates.substring(2, 4), 10);
-            var latDecimal = latDegrees + latMinutes / 60;
+            // // Extract degrees and minutes for latitude
+            // var latDegrees = parseInt(notam.coordinates.substring(0, 2), 10);
+            // var latMinutes = parseInt(notam.coordinates.substring(2, 4), 10);
+            // var latDecimal = latDegrees + latMinutes / 60;
 
-            // Extract degrees and minutes for longitude
-            var lonDegrees = parseInt(notam.coordinates.substring(5, 8), 10);
-            var lonMinutes = parseInt(notam.coordinates.substring(8, 10), 10);
-            var lonDecimal = lonDegrees + lonMinutes / 60;
+            // // Extract degrees and minutes for longitude
+            // var lonDegrees = parseInt(notam.coordinates.substring(5, 8), 10);
+            // var lonMinutes = parseInt(notam.coordinates.substring(8, 10), 10);
+            // var lonDecimal = lonDegrees + lonMinutes / 60;
 
-            // Determine direction for latitude and longitude
-            var latDirection = notam.coordinates.charAt(4); // 'N' for north
-            var lonDirection = notam.coordinates.charAt(10); // 'E' for east
+            // // Determine direction for latitude and longitude
+            // var latDirection = notam.coordinates.charAt(4); // 'N' for north
+            // var lonDirection = notam.coordinates.charAt(10); // 'E' for east
 
-            // Add the direction for latitude
-            if (latDirection === 'S') {
-                latDecimal = -latDecimal;
-            }
+            // // Add the direction for latitude
+            // if (latDirection === 'S') {
+            //     latDecimal = -latDecimal;
+            // }
 
-            // Add the direction for longitude
-            if (lonDirection === 'W') {
-                lonDecimal = -lonDecimal;
-            }
+            // // Add the direction for longitude
+            // if (lonDirection === 'W') {
+            //     lonDecimal = -lonDecimal;
+            // }
 
-            var latDecimal = parseFloat(latDecimal);
-            var lonDecimal = parseFloat(lonDecimal);
+            // var latDecimal = parseFloat(latDecimal);
+            // var lonDecimal = parseFloat(lonDecimal);
 
-            processCoords.push([latDecimal, lonDecimal, notam.id]);
+            processCoords.push(parseCoord(notam.coordinates, notam.id));
         }
     });
 
     return processCoords;
-
-}
-
-function updateNotamMapPoints(notamCoords){
-    // remove the existing points
-    map.removeLayer(notamLayer);
 
 }
