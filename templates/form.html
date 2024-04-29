@@ -1,46 +1,11 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<style>
-        body {
-            /* Set background image */
-            background-image: url('static/images/sky_background.jpg');
-            /* Set background image size to cover entire page */
-            background-size: 100% 100%;
-            /* Center the background image */
-            background-position: center;
-            /* Add a background color as fallback */
-            background-color: #f8f9fa; /* You can change this color as needed */
-            /* Prevent background image from repeating */
-            background-repeat: no-repeat;
-            /* Fixed background attachment */
-            background-attachment: fixed;
 
-        }
-</style>
-<div class="container" style="transform: translateY(10px);" id="formPageContent">
-    
+<div class="container" style="transform: translateY(10px);">
+    <h1 id = "Title">NOTAM Sorter</h1>
       <div class="container mt-5" style="transform: translateY(-20px);">
-        <div class="row">
-        
-        <div class="col-md-6">
-            <div class="card mx-5" style="background-color: rgba(255, 255, 255, 0.5);  border: none;">
-                <div class="card-header">
-                    Overview
-                </div>
-                <div class="card-body">
-            Our project aims to develop a user-friendly NOTAM (Notice to Airmen) display system tailored for pilots. NOTAMs are crucial for pilots as they contain important information about potential hazards, changes, or other factors affecting flight safety. However, the current methods of accessing NOTAMs can be cumbersome and time-consuming. Our system seeks to streamline this process and provide pilots with a more efficient way to access and interpret NOTAMs.
-            </div>
-            </div>
-        </div>
-
-        <div class="col-md-6">
-        <div class="card">
-            <div class="card-header">
-                NOTAMyWatch
-            </div>
-            <div class="card-body">
-        <form id="dataForm" class="my-3" action="/submit_form" method="post">
+        <form id = "dataForm" action="/submit_form" method="post">
 	        <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="effectiveStartDate" class="form-label"><strong>Effective Start Date</strong></label>
@@ -61,19 +26,15 @@
                     <span id="error-message3"> </span>
                 </div>
                 <div class="col-md-6 mb-3">
-                    <label for="destAirport" class="form-label">
-                        <strong class="mx-1">Destination Airport</strong> 
-                        <!-- <button type="button" id="addButton" style="background: none; border: none;outline: none;" onclick="addDestination()">+</button> -->
-                    </label>
+                    <label for="destAirport" class="form-label"><strong>Destination Airport</strong></label>
                     <input type="text" class="form-control" id="destAirport" name="destAirport" placeholder="JFK" autocomplete="off" oninput="updateAirportOptions('destAirport', 'destAirportDropdown')">
-                    
                     <div class="dropdown" id="destAirportDropdown"></div>
                     <span id="error-message4"> </span>
                 </div>
              </div>	
 		<div id="additionalDestinations"></div>
-
-                <div class="row" style="transform: translateY(10px);">
+            	<button type="button" id="addButton" class="btn btn-secondary submit" onclick="addDestination()">Add Another Destination</button>
+            <div class="row" style="transform: translateY(10px);">
                 <div class="col-md-6 mb-3">
                     <label for="radius" class="form-label"><strong>Circle Radius</strong></label>
                     <input type="text" class="form-control" id="radius" name="radius">
@@ -102,14 +63,9 @@
                     </select>
                 </div>
             </div>
-            <button type="submit" id="submitButton" class="btn btn-primary">Submit</button>
-            <button type="button" id="addButton"  class="btn btn-secondary" onclick="addDestination()">Add Another Destination</button>
-
+            <button type="submit" id="submitButton" class="btn btn-primary submit">Submit</button>
             </div>
         </form>
-        </div>
-        </div>
-    </div>
     </div>
 </div>
 

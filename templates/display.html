@@ -9,7 +9,12 @@
     }
 </style>
 
-<div class="container mt-5" id="formPage">
+<div style="display: flex; ">
+    <input type="image" id="plane" src="static/images/plane.png" onclick="returnToForm()" alt="Submit">
+    <span class="custom-text">Go Back</span>
+</div>
+
+<div class="container mt-5">
     <button id="filterButton" onmouseenter="showFilterOptions()" onmouseleave="hideFilterOptions()" class="btn btn-primary">Filter</button>
     <button id="rankButton" onmouseenter="showRankList()" onmouseleave="hideRankList()" class="btn btn-primary">Rank</button>
 	
