@@ -200,7 +200,7 @@ function updateNotamsList(notams) {
         accordionContent.appendChild(classificationParagraph);
 
         var sectionParagraph = document.createElement('p');
-        sectionParagraph.id = `sectionID${notamItemNumber}`;
+        sectionParagraph.id = `sectionID${notam.id}`;
         accordionContent.appendChild(sectionParagraph);
 
         // Create button element for translation
@@ -216,11 +216,11 @@ function updateNotamsList(notams) {
         sectionParagraph.appendChild(translationButton);
 
         var textParagraph = document.createElement('a');
-        textParagraph.innerHTML = `<strong> Text: </strong><a id="textID${notamItemNumber}">${notam.text}</a>`;
+        textParagraph.innerHTML = `<strong> Text: </strong><a id="textID${notam.id}">${notam.text}</a>`;
         sectionParagraph.appendChild(textParagraph);
 
         var translationParagraph = document.createElement('p');
-        translationParagraph.id = `translation${notamItemNumber}`;
+        translationParagraph.id = `translation${notam.id}`;
         accordionContent.appendChild(translationParagraph);
 
         var startParagraph = document.createElement('p');
