@@ -301,6 +301,11 @@ document.querySelector('label[for="destAirport"]').remove();
 document.getElementById('destAirport').remove();
 document.querySelector('label[for="startAirport"]').remove();
 
+document.getElementById('description').remove();
+document.getElementById('customColumnBg').style.display = 'none';
+
+
+
 for (let i = 2; i <= 4; i++) {
   document.getElementById('destinationLocation' + i);
 }
