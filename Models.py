@@ -24,7 +24,7 @@ class Notam:
         self.coordinates = data.get('coordinates', None)
         self.radius = data.get('radius', None)
         self.color = '#bad4b7' if data is None else data.get('color', '#bad4b7') # default color is green
-    
+
     def to_dict(self):
         return {
             'id': self.id,
@@ -72,3 +72,4 @@ class NotamRequest:
         self.sortOrder =  data.get('sortOrder', None)
         self.radius = int(data.get('radius', 100)) if data.get('radius', None) is not None and data.get('radius', '') != '' else 100
         self.pathWidth = int(data.get('pathWidth', 50)) if data.get('pathWidth', None) is not None and data.get('pathWidth', '') != '' else 50
+        self.calledPoints = []

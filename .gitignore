@@ -2,8 +2,6 @@
 __pycache__/
 *.py[cod]
 *$py.class
-Sessions/
-static/TestData/DEN-DAL_2024-03-27_10
 
 # C extensions
 *.so
@@ -154,3 +152,6 @@ cython_debug/
 #.idea/
 
 credentials.py
+/Sessions
+static/TestData/points.geojson
+/static/TestData
