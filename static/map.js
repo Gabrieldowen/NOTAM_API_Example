@@ -4,11 +4,18 @@ function loadMap(notamCoords) {
     
     // map settings
     var coordinatesLength = calledPoints.features.length;
-    middlePoint = parseInt(coordinatesLength/2)
-    var zoom  = 4
+
+    // save points and swap since they are in the wrong order
+    var firstPoint = L.latLng([ calledPoints.features[0].geometry.coordinates[1],  calledPoints.features[0].geometry.coordinates[0]]);
+    var lastPoint = L.latLng([ calledPoints.features[coordinatesLength-1].geometry.coordinates[1],  calledPoints.features[coordinatesLength-1].geometry.coordinates[0]]);
+    
 
     // centers the map at the middle point of the called points
-    var map = L.map('map').setView([ calledPoints.features[middlePoint].geometry.coordinates[1],  calledPoints.features[middlePoint].geometry.coordinates[0]], zoom );
+    var map = L.map('map').fitBounds(L.latLngBounds(lastPoint, firstPoint));
+
+    // zoom out slightly
+    map.zoomOut(1);
+
 
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -32,7 +39,7 @@ function loadMap(notamCoords) {
                 color: 'blue',
                 fillColor: '#0000FF',
                 fillOpacity: 0.25,
-                radius: 100 * 1852 // nautical miles to meters
+                radius: circleRadius * 1852 // nautical miles to meters
             }).addTo(map)
 
         // save each point to a array for the line
@@ -111,7 +118,6 @@ function parseCoord(coordString, notamId) {
     // add leading zeros to the minutes if they are missing
     if(lonString.length == 7){
         lonString = '0' + lonString;
-        
     }
     
     
