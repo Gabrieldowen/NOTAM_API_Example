@@ -4,50 +4,70 @@
   font-weight: 700;
   color: #000000;
   padding: 0.2em 0.5em;
-  background-color: #ffffff;
+  background-color: #00e5ff; /* Light blue */
   border-radius: 10px;
-  border-color: #0400ff;
-  
+  border-color: #00e5ff;
   transition: all 0.3s;
 }
 
 /* Hover animation for submit buttons */
-.submit:hover{
-  transform: translateY(-10px);
-  background-color: #000000;
-  color: #ffffff;
+.submit:hover {
+  transform: translateY(-5px); /* Slight lift on hover */
+  background-color: #0099cc; /* Darker shade of blue */
+  color: #ffffff; /* White text on hover */
 }
 
 /* The button to delete destinations */
-.delete{
-  color: #000000;
-
-  margin-left: 4px;
-  background-image: url('images/minus.png');  
-  background-size: 50%;
-  border-width: 1px;
-  box-shadow: 0 0 0px 1px rgb(255, 0, 0);
-  background-position: center ;   
-  background-repeat: no-repeat;
-  border-color: rgb(255, 0, 0); 
-
-  width: 15px; 
-  height: 15px;  
-
-  border-radius: 50%; 
-  position: relative; 
-  top: -5px; 
-  right: 0px;
-
-  transition: all 0.2s;
+.delete {
+  background-color: transparent; /* Transparent background */
+  border: none; /* No border */
+  margin: 0; /* No margin */
+  padding: 0; /* No padding */
+  text-align: center; /* Center text alignment */
+  font: inherit; /* Inherit font */
+  border-radius: 50%; /* Round border radius */
+  appearance: none; /* Remove default button appearance */
+  width: 30px; /* Set width */
+  height: 30px; /* Set height */
+  background-image: url('images/minus.png'); /* Set background image */
+  background-repeat: no-repeat; /* Prevent background image from repeating */
+  background-size: 50%; /* Adjust size of the minus icon */
+  background-position: center; /* Center the background image */
+  cursor: pointer; /* Change cursor to pointer on hover */
+  transition: background-color 0.2s; /* Smooth transition for background color */
+  position: relative; /* Enable positioning */
+  left: 10px; /* Move the button 10px to the right */
 }
 
-.delete:hover{
-  background-color: #ff0000;
-  color: #ffffff;
-  border: 1px double #000000;
-  background-image: url('images/minusWhite.png'); 
+/* Hover state */
+.delete:hover {
+    background-color: rgb(245, 207, 207);
+    transform: scale(1.2);
+    box-shadow: 0 0 4px #111;
+    transition: .3s;
 }
+
+
+/* Description box style */
+.description-box {
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  margin: 35px;
+  font-family: 'Roboto Mono', monospace;
+  color: #333;
+}
+
+.description-box h2 {
+  color: #0056b3;
+}
+
+.description-box p {
+  font-size: 16px;
+  line-height: 1.5;
+}
+
 
 
 /* Arrow to go back */
@@ -315,4 +335,87 @@ label:hover::after {
 /* Disable tooltips for labels inside the dropdown menu */
 .dropdown-menu label[title]::after {
   display: none;
+}
+
+/* Header */
+header {
+  padding: 10px 0;
+  box-shadow: 0 2px 4px rgba(0,0,0,.1);
+}
+
+body, html {
+  height: 100%;
+  margin: 0;
+}
+
+.container-fluid {
+  height: 100%;
+}
+
+.right-form-container {
+  background: linear-gradient(to bottom, #87CEEB 0%, #ffffff 100%);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  margin-top: 30px; /* Adjust as needed */
+}
+
+/* Additional styles for a more aesthetic appearance */
+.navbar {
+  margin-bottom: 20px; /* Adds some spacing below the header */
+}
+
+body {
+  background-image: url('images/back2.png');
+  background-size: cover;
+  background-repeat: repeat-x;
+  animation: floatClouds 60s linear infinite;
+}
+/* make background follow when crolling */
+body {
+  background-attachment: fixed;
+}
+
+.description-box {
+  padding: 20px;
+  background-color: #f8f9fa; /* Light grey background, similar to the navbar */
+  border-radius: 5px; /* Soften the edges */
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+  margin: 35px; /* Provide some space around the box */
+  font-family: Arial, sans-serif; /* Professional font */
+  color: #333; /* Dark grey text for readability */
+}
+
+.description-box h2 {
+  color: #0056b3; /* Blue color to match the header logo */
+}
+
+/* Ensure the rest of the text is legible and professional */
+.description-box p {
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+/* Apply Roboto Mono throughout the application */
+body, button, input, select, textarea, h1, h2, h3, h4, h5, h6, p, label, span, a, li, ul, ol, table, th, td, tr, code, pre, blockquote, figcaption{
+  font-family: 'Roboto Mono', monospace; /* Fallback to monospace if the web font fails to load */
+}
+
+/* Common button style */
+.custom-button {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #000000;
+  padding: 0.2em 0.5em;
+  background-color: #00e5ff; /* Light blue */
+  border-radius: 10px;
+  border-color: #00e5ff;
+  transition: all 0.3s;
+}
+
+/* Hover animation for buttons */
+.custom-button:hover {
+  transform: translateY(-5px); /* Slight lift on hover */
+  background-color: #0099cc; /* Darker shade of blue */
+  color: #ffffff; /* White text on hover */
 }

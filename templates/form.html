@@ -1,92 +1,109 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
-<div class="container" style="transform: translateY(10px);">
-    <h1 id = "Title">NOTAM Sorter</h1>
-      <div class="container mt-5" style="transform: translateY(-20px);">
-        <form id = "dataForm" action="/submit_form" method="post">
-	        <div class="row">
-                <div class="col-md-6 mb-3">
-                    <label for="effectiveStartDate" class="form-label"><strong>Effective Start Date</strong></label>
-                    <input type="text" class="form-control datetimepicker" id="effectiveStartDate" name="effectiveStartDate" placeholder="YYYY-MM-DD HH:MM:SS" autocomplete="off">
-                    <span id="error-message1"> </span>
-                </div>
-                <div class="col-md-6 mb-3">
-                    <label for="effectiveEndDate" class="form-label"><strong>Effective End Date</strong></label>
-                    <input type="text" class="form-control datetimepicker" id="effectiveEndDate" name="effectiveEndDate" placeholder="YYYY-MM-DD HH:MM:SS" autocomplete="off">
-                    <span id="error-message2"> </span>
-                </div>
-            </div>
-	    <div class="row">
-                <div class="col-md-6 mb-3">
-                    <label for="startAirport" class="form-label"><strong>Start Airport</strong></label>
-                    <input type="text" class="form-control" id="startAirport" name="startAirport" placeholder="LAX" autocomplete="off" oninput="updateAirportOptions('startAirport', 'startAirportDropdown')">
-                    <div class="dropdown" id="startAirportDropdown"></div>
-                    <span id="error-message3"> </span>
-                </div>
-                <div class="col-md-6 mb-3">
-                    <label for="destAirport" class="form-label"><strong>Destination Airport</strong></label>
-                    <input type="text" class="form-control" id="destAirport" name="destAirport" placeholder="JFK" autocomplete="off" oninput="updateAirportOptions('destAirport', 'destAirportDropdown')">
-                    <div class="dropdown" id="destAirportDropdown"></div>
-                    <span id="error-message4"> </span>
-                </div>
-             </div>	
-		<div id="additionalDestinations"></div>
-            	<button type="button" id="addButton" class="btn btn-secondary submit" onclick="addDestination()">Add Another Destination</button>
-            <div class="row" style="transform: translateY(10px);">
-                <div class="col-md-6 mb-3">
-                    <label for="radius" class="form-label"><strong>Circle Radius</strong></label>
-                    <input type="text" class="form-control" id="radius" name="radius">
-                    <span id="error-messageR"> </span>
-                </div>
-                <div class="col-md-6 mb-3">
-                    <label for="pathWidth" class="form-label"><strong>Path Width</strong></label>
-                    <input type="text" class="form-control" id="pathWidth" name="pathWidth">
-                    <span id="error-messageW"> </span>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6 mb-3">
-                    <label for="sortBy" class="form-label"><strong>Sort By</strong></label>
-                    <select class="form-select" id="sortBy" name="sortBy">
-                        <option value="impact">Impact on Flight Operations</option>
-			<option value="severity">Severity</option>
-                        <option value="type">Type of NOTAM</option>
-                    </select>
-                </div>
-                <div class="col-md-6 mb-3">
-                    <label for="sortOrder" class="form-label"><strong>Sort Order</strong></label>
-                    <select class="form-select" id="sortOrder" name="sortOrder">
-                        <option value="ascending">Ascending</option>
-                        <option value="descending">Descending</option>
-                    </select>
-                </div>
-            </div>
-            <button type="submit" id="submitButton" class="btn btn-primary submit">Submit</button>
-            </div>
-        </form>
+<!-- Header Section -->
+<header class="navbar navbar-expand-lg navbar-light bg-light">
+    
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+            <img src="{{ url_for('static', filename='images/Logo.png') }}" alt="Logo" width="50" height="50">
+            <span style="font-weight: bold; color: rgb(29, 113, 209); font-family: 'Roboto Mono', monospace; font-size: 20px;">NOTAMMyWatch</span>
+        </a>
+        <div id="flying-plane"></div>
     </div>
+</header>
+
+<div class="container-fluid h-100">
+    <div class="row h-100">
+        <!-- Description column -->
+        <div class="col-md-6">
+            <div class="description-box">
+                <h2>What is a NOTAM?</h2>
+                <p>NOTAMs, or Notices to Airmen, are essential advisories that convey information critical to aircraft operations, such as potential hazards along a flight route or temporary changes at an airport.</p>
+                <h2>About Us</h2>
+                <p>This Capstone project was developed by Team G at the University of Oklahoma, in collaboration with MSCI and Dr. Grounds. We aimed to create an effective solution for filtering NOTAMs, making them more accessible and easier to read for private pilots.</p>
+                <h2>Our Solution</h2>
+                <p>Our website offers a targeted selection of NOTAMs, allowing pilots to access and read pertinent information easily. Additionally, we provide an AI-driven translation feature to help interpret these notices more clearly, enhancing comprehension and pilot preparedness.</p>
+            </div>
+        </div>
+
+        <!-- Form column with custom background -->
+        <div class="col-md-6">
+            <div class="right-form-container">
+                <h1 id="Title">NOTAM Sorter</h1>
+                <form id="dataForm" action="/submit_form" method="post">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="effectiveStartDate" class="form-label"><strong>Effective Start Date</strong></label>
+                            <input type="text" class="form-control datetimepicker" id="effectiveStartDate" name="effectiveStartDate" placeholder="YYYY-MM-DD HH:MM:SS" autocomplete="off">
+                            <span id="error-message1"></span>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="effectiveEndDate" class="form-label"><strong>Effective End Date</strong></label>
+                            <input type="text" class="form-control datetimepicker" id="effectiveEndDate" name="effectiveEndDate" placeholder="YYYY-MM-DD HH:MM:SS" autocomplete="off">
+                            <span id="error-message2"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="startAirport" class="form-label"><strong>Start Airport</strong></label>
+                            <input type="text" class="form-control" id="startAirport" name="startAirport" placeholder="LAX" autocomplete="off" oninput="updateAirportOptions('startAirport', 'startAirportDropdown')">
+                            <div class="dropdown" id="startAirportDropdown"></div>
+                            <span id="error-message3"></span>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="destAirport" class="form-label"><strong>Destination Airport</strong></label>
+                            <input type="text" class="form-control" id="destAirport" name="destAirport" placeholder="JFK" autocomplete="off" oninput="updateAirportOptions('destAirport', 'destAirportDropdown')">
+                            <div class="dropdown" id="destAirportDropdown"></div>
+                            <span id="error-message4"></span>
+                        </div>
+                    </div>
+                    <div id="additionalDestinations"></div>
+                    <button type="button" id="addButton" class="btn btn-secondary submit" onclick="addDestination()">Add Another Destination</button>
+                    <div class="row" style="transform: translateY(10px);">
+                        <div class="col-md-6 mb-3">
+                            <label for="radius" class="form-label"><strong>Circle Radius</strong></label>
+                            <input type="text" class="form-control" id="radius" name="radius">
+                            <span id="error-messageR"></span>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="pathWidth" class="form-label"><strong>Path Width</strong></label>
+                            <input type="text" class="form-control" id="pathWidth" name="pathWidth">
+                            <span id="error-messageW"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="sortBy" class="form-label"><strong>Sort By</strong></label>
+                            <select class="form-select" id="sortBy" name="sortBy">
+                                <option value="impact">Impact on Flight Operations</option>
+                                <option value="severity">Severity</option>
+                                <option value="type">Type of NOTAM</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="sortOrder" the form-label"><strong>Sort Order</strong></label>
+                            <select class="form-select" id="sortOrder" name="sortOrder">
+                                <option value="ascending">Ascending</option>
+                                <option value="descending">Descending</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" id="submitButton" class="btn btn-primary submit">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
 </div>
 
-<div class="hiddenObj">
-    <group>
-        <div class="ticks">
-            <span style="--i:0;"></span>
-            <span style="--i:1;"></span>
-            <span style="--i:2;"></span>
-            <span style="--i:3;"></span>
-            <span style="--i:4;"></span>
-            <span style="--i:5;"></span>
-            <span style="--i:6;"></span>
-            <span style="--i:7;"></span>
-            <span style="--i:8;"></span>
-            <span style="--i:9;"></span>
-            <span style="--i:10;"></span>
-            <span style="--i:11;"></span>
-        </div>
-    </group> 
-</div>
+<footer class="footer" style="position: fixed; bottom: 0; left: 0; width: 100%;">
+    <div class="container">
+        <p class="text-muted">
+            <strong>Disclaimer:</strong> The information provided on this website is for demonstration purposes only and may not be accurate or up-to-date. It is not intended for use in real-flight situations. Pilots should always rely on official sources for flight planning and decision-making. The creators of this website are not responsible for any consequences resulting from the use of this sample data.
+        </p>
+    </div>
+</footer>
 
 
 <script>
@@ -94,5 +111,5 @@
 </script>
 
 <!-- Form script file reference. -->
-<script src="static/form.js" ></script>
+<script src="{{ url_for('static', filename='form.js') }}"></script>
 {% endblock %}

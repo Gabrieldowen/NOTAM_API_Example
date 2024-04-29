@@ -39,9 +39,34 @@ var destinationDelete = document.createElement('button');
 destinationDelete.id = 'deleteButton' + destinationCounter;
 destinationDelete.className = 'delete';
 destinationDelete.type = 'button';
+
+// Create SVG element
+var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+svg.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+svg.setAttribute("width", "25");
+svg.setAttribute("height", "25");
+svg.setAttribute("fill", "none");
+svg.setAttribute("viewBox", "0 0 24 24");
+svg.setAttribute("stroke", "currentColor");
+svg.setAttribute("stroke-width", "2");
+
+// Create path element for the SVG icon
+var path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+path.setAttribute("stroke-linecap", "round");
+path.setAttribute("stroke-linejoin", "round");
+path.setAttribute("d", "M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16");
+
+// Append path to the SVG element
+svg.appendChild(path);
+
+// Append SVG to the button
+destinationDelete.appendChild(svg);
+
+// Add onclick event to the button
 destinationDelete.onclick = function() {
   deleteDestination(destinationRow.id);
 };
+
 
 destinationRow.appendChild(destinationInput);
 additionalDestinationsDiv.appendChild(destinationRow);
@@ -80,11 +105,35 @@ if (destinationCounter != 2){
 
   let destText = document.getElementById('additionalDestinations').querySelector('#' + 'destinationLocationText' + (destinationCounter - 1));
 
-  // Create a button to delete this destination if needed so.
-  let destinationDelete = document.createElement('button');
-  destinationDelete.id = 'deleteButton' + (destinationCounter - 1);
+  // Create the button to delete the current row.
+  var destinationDelete = document.createElement('button');
+  destinationDelete.id = 'deleteButton' + destinationCounter;
   destinationDelete.className = 'delete';
   destinationDelete.type = 'button';
+
+  // Create SVG element
+  var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  svg.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+  svg.setAttribute("width", "25");
+  svg.setAttribute("height", "25");
+  svg.setAttribute("fill", "none");
+  svg.setAttribute("viewBox", "0 0 24 24");
+  svg.setAttribute("stroke", "currentColor");
+  svg.setAttribute("stroke-width", "2");
+
+  // Create path element for the SVG icon
+  var path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+  path.setAttribute("stroke-linecap", "round");
+  path.setAttribute("stroke-linejoin", "round");
+  path.setAttribute("d", "M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16");
+
+  // Append path to the SVG element
+  svg.appendChild(path);
+
+  // Append SVG to the button
+  destinationDelete.appendChild(svg);
+
+  // Add onclick event to the button
   destinationDelete.onclick = function() {
     deleteDestination(destinationRow.id);
   };

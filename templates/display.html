@@ -8,15 +8,21 @@
         color: #fff;
     }
 </style>
-
-<div style="display: flex; ">
-    <input type="image" id="plane" src="static/images/plane.png" onclick="returnToForm()" alt="Submit">
-    <span class="custom-text">Go Back</span>
-</div>
+<header class="navbar navbar-expand-lg navbar-light bg-light">
+    
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+            <img src="{{ url_for('static', filename='images/Logo.png') }}" alt="Logo" width="50" height="50">
+            NOTAMMyWatch
+        </a>
+        <div id="flying-plane"></div>
+        <button class="custom-button" onclick="returnToForm()">Go Back</button>
+    </div>
+</header>
 
 <div class="container mt-5">
-    <button id="filterButton" onmouseenter="showFilterOptions()" onmouseleave="hideFilterOptions()" class="btn btn-primary">Filter</button>
-    <button id="rankButton" onmouseenter="showRankList()" onmouseleave="hideRankList()" class="btn btn-primary">Rank</button>
+    <button id="filterButton" onmouseenter="showFilterOptions()" onmouseleave="hideFilterOptions()" class="custom-button">Filter</button>
+    <button id="rankButton" onmouseenter="showRankList()" onmouseleave="hideRankList()" class="custom-button">Rank</button>
 	
     <div id="filterOptions" style="z-index: 9999;" class="dropdown-menu" onmouseenter="showFilterOptions()" onmouseleave="hideFilterOptions()">
         <form>
