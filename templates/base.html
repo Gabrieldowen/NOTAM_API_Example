@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NOTAM Sorter</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='static/styles.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/css/bootstrap-datepicker.min.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer">
@@ -37,7 +38,8 @@
     
 </head>
 <body>
-    {% block content %}{% endblock %}
-    
+    {% block content %}
+    {% endblock %}
 </body>
+
 </html>

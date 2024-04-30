@@ -8,26 +8,32 @@
         color: #fff;
     }
 </style>
-
-<div style="display: flex; ">
-    <input type="image" id="plane" src="static/images/plane.png" onclick="returnToForm()" alt="Submit">
-    <span class="custom-text">Go Back</span>
-</div>
+<header class="navbar navbar-expand-lg navbar-light bg-light">
+    
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+            <img src="{{ url_for('static', filename='images/Logo.png') }}" alt="Logo" width="50" height="50">
+            <span style="font-weight: bold; color: rgb(29, 113, 209); font-family: 'Roboto Mono', monospace; font-size: 20px;">MY NOTAM WATCH</span>
+        </a>
+        <div id="flying-plane"></div>
+        <button class="custom-button" onclick="returnToForm()">Go Back</button>
+    </div>
+</header>
 
 <div class="container mt-5">
-    <button id="filterButton" onmouseenter="showFilterOptions()" onmouseleave="hideFilterOptions()" class="btn btn-primary">Filter</button>
-    <button id="rankButton" onmouseenter="showRankList()" onmouseleave="hideRankList()" class="btn btn-primary">Rank</button>
+    <button id="filterButton" onmouseenter="showFilterOptions()" onmouseleave="hideFilterOptions()" class="custom-button">Filter</button>
+    <button id="rankButton" onmouseenter="showRankList()" onmouseleave="hideRankList()" class="custom-button">Rank</button>
 	
     <div id="filterOptions" style="z-index: 9999;" class="dropdown-menu" onmouseenter="showFilterOptions()" onmouseleave="hideFilterOptions()">
         <form>
             <input type="checkbox" id="closed_runways" name="filter_options" value="closed_runways">
-            <label for="closed_runways" title="Remove subsequent NOTAMs related to closed runway">Closed Runways</label><br>
+            <label for="closed_runways" title="Remove subsequent NOTAMs related to closed runway">Remove Closed Runways</label><br>
             <input type="checkbox" id="obstacle_notams" name="filter_options" value="obstacle_notams">
-            <label for="obstacle_notams" title="Remove ALL NOTAMs related to obstacles">Obstacle NOTAMs</label><br>
+            <label for="obstacle_notams" title="Remove ALL NOTAMs related to obstacles">Remove Obstacle NOTAMs</label><br>
             <input type="checkbox" id="high_obstacle_notams" name="filter_options" value="high_obstacle_notams">
-            <label for="high_obstacle_notams" title="Keep ONLY NOTAMs above 500ft">High Obstacle NOTAMs</label><br>
+            <label for="high_obstacle_notams" title="Keep ONLY NOTAMs above 500ft">Keep Only High Obstacle NOTAMs</label><br>
             <input type="checkbox" id="lighting_marking_notams" name="filter_options" value="lighting_marking_notams">
-            <label for="lighting_marking_notams" title="Remove ALL NOTAMs marked as lighting or marking">Lighting & Marking NOTAMs</label><br>
+            <label for="lighting_marking_notams" title="Remove ALL NOTAMs marked as lighting or marking">Remove Lighting & Marking NOTAMs</label><br>
             <input type="checkbox" id="cancelled_notams" name="filter_options" value="cancelled_notams">
             <label for="cancelled_notams" title="remove ALL NOTAMs marked as Cancelled">Remove Cancelled NOTAMs</label><br>
             <input type="hidden" id="notamsJson" value="{{ notams_json }}">
