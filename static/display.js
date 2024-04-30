@@ -127,6 +127,7 @@ function updateNotamsList(notams) {
     // Create div element for accordion
     var accordion = document.createElement("div");
     accordion.classList.add("accordion");
+    accordion.id = "accordionList";
     notamsContainer.appendChild(accordion);
 
     // Notam item number for each notam to have a different id
@@ -135,19 +136,21 @@ function updateNotamsList(notams) {
 	// Populate the container with the filtered NOTAMs
     notams.forEach(function(notam) {
         var accordionItem = document.createElement('div');
+        accordionItem.id = "accordion_" + notam.id;
         accordionItem.classList.add('accordion-item');
 
         var checkbox = document.createElement('input');
         checkbox.type = 'checkbox';
         checkbox.classList.add('custom-checkbox');
+
         // Unique id for each notam
-        checkbox.id = 'item' + notamItemNumber;
+        checkbox.id = notam.id //'item' + notamItemNumber;
         accordionItem.appendChild(checkbox);
 
         var label = document.createElement('label');
         label.classList.add('accordion-header', 'custom-checkbox-label');
         // Unique id for each notam
-        label.setAttribute('for', 'item' + notamItemNumber);
+        label.setAttribute('for', notam.id);
 
         label.style.backgroundColor = notam.color;
 
@@ -197,7 +200,7 @@ function updateNotamsList(notams) {
         accordionContent.appendChild(classificationParagraph);
 
         var sectionParagraph = document.createElement('p');
-        sectionParagraph.id = `sectionID${notamItemNumber}`;
+        sectionParagraph.id = `sectionID${notam.id}`;
         accordionContent.appendChild(sectionParagraph);
 
         // Create button element for translation
@@ -209,15 +212,15 @@ function updateNotamsList(notams) {
                 translateText(itemNumber);
             });
         }
-        handleTranslationButtonClick(notamItemNumber);
+        handleTranslationButtonClick(notam.id);
         sectionParagraph.appendChild(translationButton);
 
         var textParagraph = document.createElement('a');
-        textParagraph.innerHTML = `<strong> Text: </strong><a id="textID${notamItemNumber}">${notam.text}</a>`;
+        textParagraph.innerHTML = `<strong> Text: </strong><a id="textID${notam.id}">${notam.text}</a>`;
         sectionParagraph.appendChild(textParagraph);
 
         var translationParagraph = document.createElement('p');
-        translationParagraph.id = `translation${notamItemNumber}`;
+        translationParagraph.id = `translation${notam.id}`;
         accordionContent.appendChild(translationParagraph);
 
         var startParagraph = document.createElement('p');

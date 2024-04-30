@@ -52,6 +52,7 @@ def submit_form():
             NotamRequest.radius = int(NotamRequest.radius)
             NotamRequest.pathWidth = int(NotamRequest.pathWidth)
 
+
             coordList = MinimalCirclesPath.getPath(startLat, 
                                                        startLong,
                                                        destLat,
@@ -105,6 +106,7 @@ def submit_form():
         # Store initial NOTAMs in session
         session['initial_notams'] = [notam.to_dict() for notam in Notams]
         session['called_points'] = NotamRequest.calledPoints
+        session['circleRadius'] = NotamRequest.radius
         return ''
 
 @app.route('/display', methods=['GET'])
@@ -113,8 +115,9 @@ def display():
     Notams = [Models.Notam(notam_dict) for notam_dict in session.get('initial_notams', [])]
     closedR = filterNotam.extract_closed_runways(Notams)
     calledPoints = session.get('called_points')
+    circleRadius = session.get('circleRadius')
     
-    return render_template('display.html', notams = Notams, closedR = closedR, calledPoints = calledPoints)
+    return render_template('display.html', notams = Notams, closedR = closedR, calledPoints = calledPoints, circleRadius = circleRadius)
 
 
 @app.route('/apply_filters', methods=['POST'])
