@@ -68,8 +68,6 @@
   line-height: 1.5;
 }
 
-
-
 /* Arrow to go back */
 #plane{
   background-size: contain; 
@@ -390,11 +388,41 @@ body {
   color: #0056b3; /* Blue color to match the header logo */
 }
 
-/* Ensure the rest of the text is legible and professional */
 .description-box p {
   font-size: 16px;
   line-height: 1.5;
 }
+
+.hover-info {
+  position: relative; /* Set the position relative for proper tooltip positioning */
+  cursor: pointer; /* Changes the cursor on hover to indicate interactivity */
+  color: #0099cc;
+}
+
+.tooltip {
+  visibility: hidden;
+  width: 160px;
+  background-color: #0099cc;
+  color: rgb(255, 255, 255);
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 120%; /* Adjust position as needed */
+  left: 50%;
+  margin-left: -80px;
+  font-size: 14px; /* Ensure the font size is consistent with paragraph text */
+  line-height: 1.4;
+  transition: visibility 0.2s, opacity 0.2s ease-in-out; /* Smooth transition for tooltip */
+  opacity: 0;
+}
+
+.hover-info:hover .tooltip {
+  visibility: visible;
+  opacity: 1; /* Fully visible when hovered */
+}
+
 
 /* Apply Roboto Mono throughout the application */
 body, button, input, select, textarea, h1, h2, h3, h4, h5, h6, p, label, span, a, li, ul, ol, table, th, td, tr, code, pre, blockquote, figcaption{
@@ -419,3 +447,4 @@ body, button, input, select, textarea, h1, h2, h3, h4, h5, h6, p, label, span, a
   background-color: #0099cc; /* Darker shade of blue */
   color: #ffffff; /* White text on hover */
 }
+
