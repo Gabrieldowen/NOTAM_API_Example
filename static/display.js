@@ -1,6 +1,9 @@
 var filterOptionsTimeout; // Variable to store the timeout reference
 
 function showFilterOptions() {
+    var rankListContainer = document.getElementById("sortableListContainer");
+    rankListContainer.style.display = "none";
+	
     clearTimeout(filterOptionsTimeout); // Clear any existing timeout
     var filterOptionsDiv = document.getElementById("filterOptions");
     filterOptionsDiv.style.display = "block";
@@ -263,6 +266,9 @@ function updateRankNumbers() {
 }
 
 function showRankList() {
+    var filterOptionsDiv = document.getElementById("filterOptions");
+    filterOptionsDiv.style.display = "none";
+	
     clearTimeout(rankListTimeout); // Clear any existing timeout
     var rankButton = document.getElementById("rankButton");
     var rankListContainer = document.getElementById("sortableListContainer");
