@@ -20,6 +20,12 @@ function applyFilters() {
     var highObstacleNotamsChecked = document.getElementById("high_obstacle_notams").checked;
     var lightingMarkingNotamsChecked = document.getElementById("lighting_marking_notams").checked;
     var cancelledNotamsChecked = document.getElementById("cancelled_notams").checked;
+    var keywordToKeepChecked = document.getElementById("with_keyword").checked;
+    var keywordToRemoveChecked = document.getElementById("filter_out_keyword").checked;
+	
+    // Get the keywords entered by the user
+    var keywordToKeep = document.getElementById("keyword_to_keep").value;
+    var keywordToRemove = document.getElementById("keyword_to_remove").value;
 
     // Get the order of NOTAM types from the sortable list
     var notamTypesOrder = [];
@@ -35,7 +41,9 @@ function applyFilters() {
         highObstacleNotams: highObstacleNotamsChecked,
         lightingMarkingNotams: lightingMarkingNotamsChecked,
         cancelledNotams : cancelledNotamsChecked,
-		notamTypesOrder: notamTypesOrder
+        notamTypesOrder: notamTypesOrder,
+        keywordToKeep: keywordToKeepChecked  ? keywordToKeep : null,
+        keywordToRemove: keywordToRemoveChecked ? keywordToRemove : null
     };
 
     // Convert the filters object to JSON string
@@ -342,6 +350,27 @@ function initializeDragAndDrop() {
             }
         ).element;
     };
+}
+
+function showKeywordInputKeep() {
+    var keywordInput = document.getElementById("keyword_to_keep");
+    if (document.getElementById("with_keyword").checked) {
+        keywordInput.style.display = "block";
+    } else {
+        keywordInput.style.display = "none";
+		keywordInput.value = ""; // Clear the input field
+    }
+}
+
+function showKeywordInputRemove() {
+    var keywordInput = document.getElementById("keyword_to_remove");
+	
+	if (document.getElementById("filter_out_keyword").checked) {
+        keywordInput.style.display = "block";
+    } else {
+        keywordInput.style.display = "none";
+		keywordInput.value = ""; // Clear the input field
+    }
 }
 
 // function to translate the text asynchronously. This way you do not need to refresh the page
