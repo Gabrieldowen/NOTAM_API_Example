@@ -27,13 +27,13 @@
     <div id="filterOptions" style="z-index: 9999;" class="dropdown-menu" onmouseenter="showFilterOptions()" onmouseleave="hideFilterOptions()">
         <form>
             <input type="checkbox" id="closed_runways" name="filter_options" value="closed_runways">
-            <label for="closed_runways" title="Remove subsequent NOTAMs related to closed runway">Closed Runways</label><br>
+            <label for="closed_runways" title="Remove subsequent NOTAMs related to closed runway">Remove Closed Runways</label><br>
             <input type="checkbox" id="obstacle_notams" name="filter_options" value="obstacle_notams">
-            <label for="obstacle_notams" title="Remove ALL NOTAMs related to obstacles">Obstacle NOTAMs</label><br>
+            <label for="obstacle_notams" title="Remove ALL NOTAMs related to obstacles">Remove Obstacle NOTAMs</label><br>
             <input type="checkbox" id="high_obstacle_notams" name="filter_options" value="high_obstacle_notams">
-            <label for="high_obstacle_notams" title="Keep ONLY NOTAMs above 500ft">High Obstacle NOTAMs</label><br>
+            <label for="high_obstacle_notams" title="Keep ONLY NOTAMs above 500ft">Keep Only High Obstacle NOTAMs</label><br>
             <input type="checkbox" id="lighting_marking_notams" name="filter_options" value="lighting_marking_notams">
-            <label for="lighting_marking_notams" title="Remove ALL NOTAMs marked as lighting or marking">Lighting & Marking NOTAMs</label><br>
+            <label for="lighting_marking_notams" title="Remove ALL NOTAMs marked as lighting or marking">Remove Lighting & Marking NOTAMs</label><br>
             <input type="checkbox" id="cancelled_notams" name="filter_options" value="cancelled_notams">
             <label for="cancelled_notams" title="remove ALL NOTAMs marked as Cancelled">Remove Cancelled NOTAMs</label><br>
             <input type="hidden" id="notamsJson" value="{{ notams_json }}">
