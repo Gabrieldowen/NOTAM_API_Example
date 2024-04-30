@@ -36,6 +36,12 @@
             <label for="lighting_marking_notams" title="Remove ALL NOTAMs marked as lighting or marking">Remove Lighting & Marking NOTAMs</label><br>
             <input type="checkbox" id="cancelled_notams" name="filter_options" value="cancelled_notams">
             <label for="cancelled_notams" title="remove ALL NOTAMs marked as Cancelled">Remove Cancelled NOTAMs</label><br>
+            <input type="checkbox" id="with_keyword" name="filter_options" onclick="showKeywordInputKeep()">
+            <label for="with_keyword">Keep NOTAMs with Keyword</label>
+            <input type="text" id="keyword_to_keep" style="display: none;" autocomplete="off"><br>
+            <input type="checkbox" id="filter_out_keyword" name="filter_options" onclick="showKeywordInputRemove()">
+            <label for="filter_out_keyword">Remove NOTAMs with Keyword</label>
+            <input type="text" id="keyword_to_remove" style="display: none;" autocomplete="off"><br>
             <input type="hidden" id="notamsJson" value="{{ notams_json }}">
             <button type="button" onclick="applyFilters()">Apply Filters</button>
         </form>

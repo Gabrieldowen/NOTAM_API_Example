@@ -147,6 +147,14 @@ def apply_filters():
     if filter_options.get('cancelledNotams') == True:
         filtered_Notams = filterNotam.filter_cancelled(filtered_Notams)
     
+    if filter_options.get('keywordToKeep'):
+        keywordToKeep = filter_options.get('keywordToKeep').upper()
+        filtered_Notams = filterNotam.filter_keyword(filtered_Notams, keywordToKeep)
+    
+    if filter_options.get('keywordToRemove'):
+        keywordToRemove = filter_options.get('keywordToRemove').upper()
+        filtered_Notams = filterNotam.filter_out_keyword(filtered_Notams, keywordToRemove)
+    
     # Update session with filtered NOTAMs
     session['filtered_notams'] = [notam.to_dict() for notam in filtered_Notams]
     
