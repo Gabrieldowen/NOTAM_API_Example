@@ -274,47 +274,7 @@ function submitForm() {
 // Store the form data.
 const formData = new FormData(document.getElementById('dataForm'));
 
-// Remove all the text and input boxes
-document.getElementById('Title').remove();
-
-document.getElementById('effectiveStartDate').remove();
-document.querySelector('label[for="effectiveStartDate"]').remove();
-
-document.getElementById('effectiveEndDate').remove();
-document.querySelector('label[for="effectiveEndDate"]').remove();
-    
-document.getElementById('radius').remove();
-document.querySelector('label[for="radius"]').remove();
-
-document.getElementById('pathWidth').remove();
-document.querySelector('label[for="pathWidth"]').remove();
-    
-document.getElementById('sortOrder').remove();
-document.querySelector('label[for="sortOrder"]').remove();
-    
-document.getElementById('sortBy').remove();
-document.querySelector('label[for="sortBy"]').remove();
-    
-document.getElementById('startAirport').remove();
-document.querySelector('label[for="destAirport"]').remove();
-    
-document.getElementById('destAirport').remove();
-document.querySelector('label[for="startAirport"]').remove();
-
-document.getElementById('description').remove();
-document.getElementById('customColumnBg').style.display = 'none';
-
-
-
-for (let i = 2; i <= 4; i++) {
-  document.getElementById('destinationLocation' + i);
-}
-
-document.getElementById('submitButton').remove();
-document.getElementById('addButton').remove();
-// Remove all the additional destinations
-document.getElementById('additionalDestinations').remove();
-
+document.getElementById('container').style.display = 'none';
 
 var hiddenElements = document.querySelectorAll('.hiddenObj');
 
