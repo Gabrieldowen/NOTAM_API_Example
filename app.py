@@ -52,6 +52,7 @@ def submit_form():
             NotamRequest.radius = int(NotamRequest.radius)
             NotamRequest.pathWidth = int(NotamRequest.pathWidth)
 
+
             coordList = MinimalCirclesPath.getPath(startLat, 
                                                        startLong,
                                                        destLat,
@@ -105,6 +106,7 @@ def submit_form():
         # Store initial NOTAMs in session
         session['initial_notams'] = [notam.to_dict() for notam in Notams]
         session['called_points'] = NotamRequest.calledPoints
+        session['circleRadius'] = NotamRequest.radius
         return ''
 
 @app.route('/display', methods=['GET'])
@@ -113,8 +115,9 @@ def display():
     Notams = [Models.Notam(notam_dict) for notam_dict in session.get('initial_notams', [])]
     closedR = filterNotam.extract_closed_runways(Notams)
     calledPoints = session.get('called_points')
+    circleRadius = session.get('circleRadius')
     
-    return render_template('display.html', notams = Notams, closedR = closedR, calledPoints = calledPoints)
+    return render_template('display.html', notams = Notams, closedR = closedR, calledPoints = calledPoints, circleRadius = circleRadius)
 
 
 @app.route('/apply_filters', methods=['POST'])
@@ -143,6 +146,14 @@ def apply_filters():
      
     if filter_options.get('cancelledNotams') == True:
         filtered_Notams = filterNotam.filter_cancelled(filtered_Notams)
+    
+    if filter_options.get('keywordToKeep'):
+        keywordToKeep = filter_options.get('keywordToKeep').upper()
+        filtered_Notams = filterNotam.filter_keyword(filtered_Notams, keywordToKeep)
+    
+    if filter_options.get('keywordToRemove'):
+        keywordToRemove = filter_options.get('keywordToRemove').upper()
+        filtered_Notams = filterNotam.filter_out_keyword(filtered_Notams, keywordToRemove)
     
     # Update session with filtered NOTAMs
     session['filtered_notams'] = [notam.to_dict() for notam in filtered_Notams]
@@ -195,5 +206,5 @@ def translateText():
         return jsonify({'text' : translatedText})
 
 if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 5000))
+    port = int(os.environ.get('PORT', 8080))
     app.run(host='0.0.0.0', port=port, debug=True)

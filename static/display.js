@@ -1,6 +1,9 @@
 var filterOptionsTimeout; // Variable to store the timeout reference
 
 function showFilterOptions() {
+    var rankListContainer = document.getElementById("sortableListContainer");
+    rankListContainer.style.display = "none";
+	
     clearTimeout(filterOptionsTimeout); // Clear any existing timeout
     var filterOptionsDiv = document.getElementById("filterOptions");
     filterOptionsDiv.style.display = "block";
@@ -20,6 +23,12 @@ function applyFilters() {
     var highObstacleNotamsChecked = document.getElementById("high_obstacle_notams").checked;
     var lightingMarkingNotamsChecked = document.getElementById("lighting_marking_notams").checked;
     var cancelledNotamsChecked = document.getElementById("cancelled_notams").checked;
+    var keywordToKeepChecked = document.getElementById("with_keyword").checked;
+    var keywordToRemoveChecked = document.getElementById("filter_out_keyword").checked;
+	
+    // Get the keywords entered by the user
+    var keywordToKeep = document.getElementById("keyword_to_keep").value;
+    var keywordToRemove = document.getElementById("keyword_to_remove").value;
 
     // Get the order of NOTAM types from the sortable list
     var notamTypesOrder = [];
@@ -35,7 +44,9 @@ function applyFilters() {
         highObstacleNotams: highObstacleNotamsChecked,
         lightingMarkingNotams: lightingMarkingNotamsChecked,
         cancelledNotams : cancelledNotamsChecked,
-		notamTypesOrder: notamTypesOrder
+        notamTypesOrder: notamTypesOrder,
+        keywordToKeep: keywordToKeepChecked  ? keywordToKeep : null,
+        keywordToRemove: keywordToRemoveChecked ? keywordToRemove : null
     };
 
     // Convert the filters object to JSON string
@@ -127,6 +138,7 @@ function updateNotamsList(notams) {
     // Create div element for accordion
     var accordion = document.createElement("div");
     accordion.classList.add("accordion");
+    accordion.id = "accordionList";
     notamsContainer.appendChild(accordion);
 
     // Notam item number for each notam to have a different id
@@ -135,19 +147,21 @@ function updateNotamsList(notams) {
 	// Populate the container with the filtered NOTAMs
     notams.forEach(function(notam) {
         var accordionItem = document.createElement('div');
+        accordionItem.id = "accordion_" + notam.id;
         accordionItem.classList.add('accordion-item');
 
         var checkbox = document.createElement('input');
         checkbox.type = 'checkbox';
         checkbox.classList.add('custom-checkbox');
+
         // Unique id for each notam
-        checkbox.id = 'item' + notamItemNumber;
+        checkbox.id = notam.id //'item' + notamItemNumber;
         accordionItem.appendChild(checkbox);
 
         var label = document.createElement('label');
         label.classList.add('accordion-header', 'custom-checkbox-label');
         // Unique id for each notam
-        label.setAttribute('for', 'item' + notamItemNumber);
+        label.setAttribute('for', notam.id);
 
         label.style.backgroundColor = notam.color;
 
@@ -197,7 +211,7 @@ function updateNotamsList(notams) {
         accordionContent.appendChild(classificationParagraph);
 
         var sectionParagraph = document.createElement('p');
-        sectionParagraph.id = `sectionID${notamItemNumber}`;
+        sectionParagraph.id = `sectionID${notam.id}`;
         accordionContent.appendChild(sectionParagraph);
 
         // Create button element for translation
@@ -209,15 +223,15 @@ function updateNotamsList(notams) {
                 translateText(itemNumber);
             });
         }
-        handleTranslationButtonClick(notamItemNumber);
+        handleTranslationButtonClick(notam.id);
         sectionParagraph.appendChild(translationButton);
 
         var textParagraph = document.createElement('a');
-        textParagraph.innerHTML = `<strong> Text: </strong><a id="textID${notamItemNumber}">${notam.text}</a>`;
+        textParagraph.innerHTML = `<strong> Text: </strong><a id="textID${notam.id}">${notam.text}</a>`;
         sectionParagraph.appendChild(textParagraph);
 
         var translationParagraph = document.createElement('p');
-        translationParagraph.id = `translation${notamItemNumber}`;
+        translationParagraph.id = `translation${notam.id}`;
         accordionContent.appendChild(translationParagraph);
 
         var startParagraph = document.createElement('p');
@@ -252,6 +266,9 @@ function updateRankNumbers() {
 }
 
 function showRankList() {
+    var filterOptionsDiv = document.getElementById("filterOptions");
+    filterOptionsDiv.style.display = "none";
+	
     clearTimeout(rankListTimeout); // Clear any existing timeout
     var rankButton = document.getElementById("rankButton");
     var rankListContainer = document.getElementById("sortableListContainer");
@@ -339,6 +356,27 @@ function initializeDragAndDrop() {
             }
         ).element;
     };
+}
+
+function showKeywordInputKeep() {
+    var keywordInput = document.getElementById("keyword_to_keep");
+    if (document.getElementById("with_keyword").checked) {
+        keywordInput.style.display = "block";
+    } else {
+        keywordInput.style.display = "none";
+		keywordInput.value = ""; // Clear the input field
+    }
+}
+
+function showKeywordInputRemove() {
+    var keywordInput = document.getElementById("keyword_to_remove");
+	
+	if (document.getElementById("filter_out_keyword").checked) {
+        keywordInput.style.display = "block";
+    } else {
+        keywordInput.style.display = "none";
+		keywordInput.value = ""; // Clear the input field
+    }
 }
 
 // function to translate the text asynchronously. This way you do not need to refresh the page
